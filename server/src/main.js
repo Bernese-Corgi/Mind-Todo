@@ -4,7 +4,8 @@ import Router from 'koa-router';
 import bodyParser from 'koa-bodyparser';
 import api from './api';
 import mongoose from 'mongoose';
-import jwtMiddleware from './lib/jwtMiddleware';
+// import User from './model/user';
+// import jwtMiddleware from './lib/jwtMiddleware';
 
 /* ------------------------------- 환경 변수 파일 참조 ------------------------------ */
 // process.env 내부 값에 대한 레퍼런스
@@ -33,7 +34,7 @@ router.use('/api', api.routes());
 // bodyParser 적용
 app.use(bodyParser());
 // jwtMiddleware 적용
-app.use(jwtMiddleware);
+// app.use(jwtMiddleware);
 
 /* app 인스턴스에 라우터 적용 ---------------------------- */
 app.use(router.routes()).use(router.allowedMethods());
