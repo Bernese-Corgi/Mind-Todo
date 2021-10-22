@@ -34,3 +34,11 @@ UserSchema.methods.serialize = function () {
   delete data.hashedPassword;
   return data;
 };
+
+// TODO 토큰 생성 메서드
+// TODO 비밀번호 일치 확인 메서드
+
+/* ------------------------------ create model ------------------------------ */
+const User = mongoose.model('User', UserSchema);
+
+export default User;
