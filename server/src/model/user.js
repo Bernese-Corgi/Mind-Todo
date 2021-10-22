@@ -43,6 +43,25 @@ UserSchema.methods.serialize = function () {
 // TODO 토큰 생성 메서드
 // TODO 비밀번호 일치 확인 메서드
 
+/* ----------------------------- static methods ----------------------------- */
+/**
+ * 주어진 username이 데이터베이스에 존재하는지 찾는다.
+ * @param username 데이터베이스에 일치하는 document가 있는지 찾을 username
+ * @returns 주어진 인수와 일치하는 document가 데이터베이스에 하나 이상 있으면 해당 document를, 없으면 null을 반환
+ */
+UserSchema.statics.findByUsername = function (username) {
+  return this.findOne({ username });
+};
+
+/**
+ * 주어진 email이 데이터베이스에 존재하는지 찾는다.
+ * @param email 데이터베이스에 일치하는 document가 있는지 찾을 email
+ * @returns 주어진 인수와 일치하는 document가 데이터베이스에 하나 이상 있으면 해당 document를, 없으면 null을 반환
+ */
+UserSchema.statics.findByEmail = function (email) {
+  return this.findOne({ email });
+};
+
 /* ------------------------------ create model ------------------------------ */
 const User = mongoose.model('User', UserSchema);
 
