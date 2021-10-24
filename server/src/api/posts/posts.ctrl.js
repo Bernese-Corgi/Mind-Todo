@@ -48,8 +48,10 @@ export const write = async (ctx) => {
   }
 };
 
+/* --------------------------- read specific post --------------------------- */
+// GET api/posts/:id
 export const read = async (ctx) => {
-  //
+  ctx.body = ctx.state.post;
 };
 
 export const update = async (ctx) => {
