@@ -1,7 +1,7 @@
 import { model, Schema } from 'mongoose';
 
 const PostSchema = new Schema({
-  publisher: {
+  publisherId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
