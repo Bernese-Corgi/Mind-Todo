@@ -1,11 +1,11 @@
 import Router from 'koa-router';
-import { signup } from './auth.ctrl';
+import * as authCtrl from './auth.ctrl';
 
 const auth = new Router();
 
-auth.post('/signup', signup);
-auth.post('/signin');
-auth.get('/check');
-auth.post('/signout');
+auth.post('/signup', authCtrl.signup);
+auth.post('/signin', authCtrl.signin);
+auth.get('/check', authCtrl.check);
+auth.post('/signout', authCtrl.signout);
 
 export default auth;
