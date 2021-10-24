@@ -59,7 +59,14 @@ UserSchema.methods.setTokenAndCookies = function (ctx) {
   });
 };
 
-// TODO 비밀번호 일치 확인 메서드
+/**
+ * 인수로 받은 비밀번호가 해당 계정의 비밀번호와 일치하는지 검사
+ * @param {*} password 일치하는지 확인할 비밀번호
+ * @returns 해당 사용자의 해시된 비밀번호와 일치하는지 비교하고 일치 여부를 boolean으로 반환
+ */
+UserSchema.methods.checkPassword = async function (password) {
+  return await bcrypt.compare(password, this.hashedPassword);
+};
 
 /* ----------------------------- static methods ----------------------------- */
 /**
