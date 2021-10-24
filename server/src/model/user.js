@@ -1,5 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 /* --------------------------------- schema --------------------------------- */
 const UserSchema = new Schema({
@@ -40,7 +41,24 @@ UserSchema.methods.serialize = function () {
   return data;
 };
 
-// TODO 토큰 생성 메서드
+/**
+ * 토큰을 생성 및 발행하고, 현재 컨텍스트의 쿠키에 토큰을 담는다.
+ * @param {*} ctx 현재 미들웨어의 koa context 객체
+ */
+UserSchema.methods.setTokenAndCookies = function (ctx) {
+  // 토큰 생성
+  const token = jwt.sign(
+    { _id: this._id /* username: this.username, eamil: this.email*/ },
+    process.env.JWT_SECRET,
+    { expiresIn: '7d' },
+  );
+  // 토큰을 쿠키에 set
+  ctx.cookies.set('access_token', token, {
+    maxAge: 1000 * 60 * 24 * 7,
+    httpOnly: true,
+  });
+};
+
 // TODO 비밀번호 일치 확인 메서드
 
 /* ----------------------------- static methods ----------------------------- */
