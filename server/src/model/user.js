@@ -1,5 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 /* --------------------------------- schema --------------------------------- */
 const UserSchema = new Schema({
@@ -7,7 +8,12 @@ const UserSchema = new Schema({
     type: String,
     required: true,
     minLength: 2,
-    maxlength: 255,
+    maxlength: 30,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
   },
   hashedPassword: {
     type: String,
@@ -35,8 +41,51 @@ UserSchema.methods.serialize = function () {
   return data;
 };
 
-// TODO 토큰 생성 메서드
-// TODO 비밀번호 일치 확인 메서드
+/**
+ * 토큰을 생성 및 발행하고, 현재 컨텍스트의 쿠키에 토큰을 담는다.
+ * @param {*} ctx 현재 미들웨어의 koa context 객체
+ */
+UserSchema.methods.setTokenAndCookies = function (ctx) {
+  // 토큰 생성
+  const token = jwt.sign(
+    { _id: this._id /* username: this.username, eamil: this.email*/ },
+    process.env.JWT_SECRET,
+    { expiresIn: '7d' },
+  );
+  // 토큰을 쿠키에 set
+  ctx.cookies.set('access_token', token, {
+    maxAge: 1000 * 60 * 24 * 7,
+    httpOnly: true,
+  });
+};
+
+/**
+ * 인수로 받은 비밀번호가 해당 계정의 비밀번호와 일치하는지 검사
+ * @param {*} password 일치하는지 확인할 비밀번호
+ * @returns 해당 사용자의 해시된 비밀번호와 일치하는지 비교하고 일치 여부를 boolean으로 반환
+ */
+UserSchema.methods.checkPassword = async function (password) {
+  return await bcrypt.compare(password, this.hashedPassword);
+};
+
+/* ----------------------------- static methods ----------------------------- */
+/**
+ * 주어진 username이 데이터베이스에 존재하는지 찾는다.
+ * @param username 데이터베이스에 일치하는 document가 있는지 찾을 username
+ * @returns 주어진 인수와 일치하는 document가 데이터베이스에 하나 이상 있으면 해당 document를, 없으면 null을 반환
+ */
+UserSchema.statics.findByUsername = function (username) {
+  return this.findOne({ username });
+};
+
+/**
+ * 주어진 email이 데이터베이스에 존재하는지 찾는다.
+ * @param email 데이터베이스에 일치하는 document가 있는지 찾을 email
+ * @returns 주어진 인수와 일치하는 document가 데이터베이스에 하나 이상 있으면 해당 document를, 없으면 null을 반환
+ */
+UserSchema.statics.findByEmail = function (email) {
+  return this.findOne({ email });
+};
 
 /* ------------------------------ create model ------------------------------ */
 const User = mongoose.model('User', UserSchema);
