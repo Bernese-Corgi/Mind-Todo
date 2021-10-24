@@ -1,8 +1,19 @@
 import { Post } from '../../model';
 import { postValidation } from '../../utils/validation';
 
+/* -------------------------------- list post ------------------------------- */
+// GET /api/post
 export const list = async (ctx) => {
-  //
+  // TODO 쿼리 파라미터로 포스트 필터링
+  // TODO 페이지네이션
+  try {
+    // post 컬렉션에서 post list 받아오기
+    const posts = await Post.find().sort({ _id: -1 });
+    // posts를 응답
+    ctx.body = posts;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
 };
 
 /* ------------------------------- write post ------------------------------- */
