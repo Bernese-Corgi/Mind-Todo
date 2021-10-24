@@ -21,3 +21,12 @@ export const signinValidation = (data) => {
   });
   return schema.validate(data);
 };
+
+export const postValidation = (data) => {
+  const schema = Joi.object({
+    title: Joi.string().required(),
+    body: Joi.string().required(),
+    tags: Joi.array().items(Joi.string()),
+  });
+  return schema.validate(data);
+};
