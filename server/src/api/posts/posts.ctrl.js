@@ -38,6 +38,7 @@ export const write = async (ctx) => {
     body,
     tags,
     publisherId: ctx.state.user,
+    // TODO node id 넣기
   });
 
   try {
@@ -90,6 +91,17 @@ export const update = async (ctx) => {
   }
 };
 
+/* ------------------------------- remove post ------------------------------ */
+// DELETE /api/posts/:id
 export const remove = async (ctx) => {
-  //
+  // params에서 id를 받아온다.
+  const { id } = ctx.params;
+  try {
+    // params에서 받아온 id와 일치하는 post를 삭제
+    await Post.findByIdAndRemove(id).exec();
+    // No Content
+    ctx.status = 204;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
 };
