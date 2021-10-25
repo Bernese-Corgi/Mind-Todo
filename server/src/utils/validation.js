@@ -1,5 +1,7 @@
 import Joi from 'joi';
 
+/* ----------------------------- auth validation ---------------------------- */
+// 회원가입 검증
 export const signupValidation = (data) => {
   const schema = Joi.object({
     username: Joi.string().alphanum().min(3).max(30).required(),
@@ -14,6 +16,7 @@ export const signupValidation = (data) => {
   return schema.validate(data);
 };
 
+// 로그인 검증
 export const signinValidation = (data) => {
   const schema = Joi.object({
     username: Joi.string().alphanum().min(3).max(30).required(),
@@ -22,10 +25,22 @@ export const signinValidation = (data) => {
   return schema.validate(data);
 };
 
+/* ----------------------------- post validation ---------------------------- */
+// write post 검증
 export const postValidation = (data) => {
   const schema = Joi.object({
     title: Joi.string().required(),
     body: Joi.string().required(),
+    tags: Joi.array().items(Joi.string()),
+  });
+  return schema.validate(data);
+};
+
+// update post 검증
+export const postUpdateValidation = (data) => {
+  const schema = Joi.object({
+    title: Joi.string(),
+    body: Joi.string(),
     tags: Joi.array().items(Joi.string()),
   });
   return schema.validate(data);

@@ -1,5 +1,5 @@
 import { Post } from '../../model';
-import { postValidation } from '../../utils/validation';
+import { postUpdateValidation, postValidation } from '../../utils/validation';
 
 /* -------------------------------- list post ------------------------------- */
 // GET /api/post
@@ -59,7 +59,7 @@ export const read = async (ctx) => {
 // PATCH /api/posts/:id
 export const update = async (ctx) => {
   // request body 스키마 검증
-  const validatedData = postValidation(ctx.request.body);
+  const validatedData = postUpdateValidation(ctx.request.body);
   // request body의 스키마가 검증되지 않으면 에러를 발생시킨다.
   if (validatedData.error) {
     ctx.status = 400;
