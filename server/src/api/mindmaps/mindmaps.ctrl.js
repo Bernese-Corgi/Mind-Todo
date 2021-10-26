@@ -20,7 +20,32 @@ export const listMindmap = async (ctx) => {
 /* --------------------------------- 마인드맵 작성 -------------------------------- */
 // POST /api/mindmaps
 export const writeMindmap = async (ctx) => {
-  //
+  // request body 스키마 검증
+  const { error } = validateRequest('write_mindmap', ctx.request.body);
+  // request body의 스키마가 검증되지 않으면 에러를 발생시킨다.
+  if (error) {
+    ctx.status = 400;
+    ctx.body = error;
+    return;
+  }
+
+  // request body에서 title 참조
+  const { title } = ctx.request.body;
+
+  // mindmap document 생성
+  const mindmap = new Mindmap({
+    title,
+    publisherId: ctx.state.user,
+  });
+
+  try {
+    // mindmap document 저장
+    await mindmap.save();
+    // mindmap instance 응답
+    ctx.body = mindmap;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
 };
 
 /* ------------------------- 개별 마인드맵 조회 (= 전체 노드 조회) ------------------------ */
