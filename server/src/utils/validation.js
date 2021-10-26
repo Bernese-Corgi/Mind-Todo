@@ -45,3 +45,21 @@ export const postUpdateValidation = (data) => {
   });
   return schema.validate(data);
 };
+
+/* ----------------------------- todo validation ---------------------------- */
+// write todo 검증
+export const todoValidation = (data) => {
+  const schema = Joi.object({
+    content: Joi.string().required(),
+  });
+  return schema.validate(data);
+};
+
+// update todo 검증
+export const todoUpdateValidation = (data) => {
+  const schema = Joi.object({
+    content: Joi.string(),
+    completed: Joi.boolean(),
+  });
+  return schema.validate(data);
+};
