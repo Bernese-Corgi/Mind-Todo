@@ -1,7 +1,20 @@
+import { Mindmap } from '../../model';
+import { validateRequest } from '../../utils';
+
 /* ------------------------------- 마인드맵 목록 조회 ------------------------------- */
 // GET /api/mindmaps
 export const listMindmap = async (ctx) => {
-  //
+  // TODO 필터링
+  // TODO 페이지네이션
+  try {
+    // mind map 컬렉션에서 list 받아오기
+    const mindmaps = await Mindmap.find().sort({ _id: -1 });
+
+    // mindmap list를 응답
+    ctx.body = mindmaps;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
 };
 
 /* --------------------------------- 마인드맵 작성 -------------------------------- */
