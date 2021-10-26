@@ -16,7 +16,7 @@ const TreeSchema = new Schema({
 });
 
 const MindmapSchema = new Schema({
-  publisher: {
+  publisherId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
