@@ -8,8 +8,8 @@ export const checkLoggedIn = async (ctx, next) => {
   return next();
 };
 
-/* ----------------------------- 로그인 중인 사용자인지 확인 ---------------------------- */
-export const checkOwnPost = (model) => (ctx, next) => {
+/* ------------------------------ 직접 작성한 것인지 검사 ----------------------------- */
+export const checkOwn = (model) => (ctx, next) => {
   // 현재 ctx 상태에서 user 정보 참조
   const { user } = ctx.state;
 
