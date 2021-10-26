@@ -83,6 +83,18 @@ export const update = async (ctx) => {
   }
 };
 
+/* ------------------------------- remove todo ------------------------------ */
+// DELETE /api/todos/:id
 export const remove = async (ctx) => {
-  // DELETE /api/todos/:id
+  // params에서 id를 받아온다.
+  const { id } = ctx.params;
+
+  try {
+    // params에서 받아온 id와 일치하는 todo 삭제
+    await Todo.findByIdAndRemove(id).exec();
+    // No content
+    ctx.status = 204;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
 };
