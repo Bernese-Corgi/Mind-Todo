@@ -1,5 +1,5 @@
 import { Post } from '../../model';
-import { postUpdateValidation, postValidation } from '../../utils/validation';
+import { validateRequest } from '../../utils';
 
 /* -------------------------------- list post ------------------------------- */
 // GET /api/post
@@ -20,12 +20,11 @@ export const list = async (ctx) => {
 // POST /api/posts
 export const write = async (ctx) => {
   // request body 스키마 검증
-  const validatedData = postValidation(ctx.request.body);
-
+  const { error } = validateRequest('write_post', ctx.request.body);
   // request body의 스키마가 검증되지 않으면 에러를 발생시킨다.
-  if (validatedData.error) {
+  if (error) {
     ctx.status = 400;
-    ctx.body = validatedData.error;
+    ctx.body = error;
     return;
   }
 
@@ -59,11 +58,11 @@ export const read = async (ctx) => {
 // PATCH /api/posts/:id
 export const update = async (ctx) => {
   // request body 스키마 검증
-  const validatedData = postUpdateValidation(ctx.request.body);
+  const { error } = validateRequest('update_post', ctx.request.body);
   // request body의 스키마가 검증되지 않으면 에러를 발생시킨다.
-  if (validatedData.error) {
+  if (error) {
     ctx.status = 400;
-    ctx.body = validatedData.error;
+    ctx.body = error;
     return;
   }
 

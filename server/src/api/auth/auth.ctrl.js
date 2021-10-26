@@ -1,14 +1,15 @@
 import { User } from '../../model';
-import { signinValidation, signupValidation } from '../../utils/validation';
+import { validateRequest } from '../../utils';
 
-/* -------------------------------- Auth api -------------------------------- */
+/* ---------------------------------- 회원가입 ---------------------------------- */
 // sign up, POST /api/signup
 export const signup = async (ctx) => {
   // request body 스키마 검증
-  const validatedData = signupValidation(ctx.request.body);
-  if (validatedData.error) {
+  const { error } = validateRequest('signup', ctx.request.body);
+  // request body의 스키마가 검증되지 않으면 에러를 발생시킨다.
+  if (error) {
     ctx.status = 400;
-    ctx.body = validatedData.error;
+    ctx.body = error;
     return;
   }
 
@@ -50,13 +51,15 @@ export const signup = async (ctx) => {
   }
 };
 
+/* ----------------------------------- 로그인 ---------------------------------- */
 // sign in, POST /api/signin
 export const signin = async (ctx) => {
   // request body 스키마 검증
-  const validatedData = signinValidation(ctx.request.body);
-
-  if (validatedData.error) {
+  const { error } = validateRequest('signin', ctx.request.body);
+  // request body의 스키마가 검증되지 않으면 에러를 발생시킨다.
+  if (error) {
     ctx.status = 400;
+    ctx.body = error;
     return;
   }
 
@@ -95,6 +98,7 @@ export const signin = async (ctx) => {
   }
 };
 
+/* --------------------------------- 로그인 확인 --------------------------------- */
 // check, GET /api/check
 // 현재 로그인 중인지 확인
 export const check = async (ctx) => {
@@ -109,6 +113,7 @@ export const check = async (ctx) => {
   ctx.body = user;
 };
 
+/* ---------------------------------- 로그아웃 ---------------------------------- */
 // sign out, POST /api/signout
 export const signout = async (ctx) => {
   // 쿠키 삭제

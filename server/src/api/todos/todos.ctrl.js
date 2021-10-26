@@ -1,11 +1,12 @@
 import { Todo } from '../../model';
-import { todoUpdateValidation, todoValidation } from '../../utils/validation';
+import { validateRequest } from '../../utils';
 
 /* -------------------------------- todo list ------------------------------- */
 // GET /api/todos
 export const list = async (ctx) => {
   // TODO 쿼리 파라미터로 투두 필터링 (+ nodeId)
   // TODO 페이지네이션
+
   try {
     // todos 컬렉션에서 todo list 받아오기
     const todos = await Todo.find().sort({ _id: -1 });
@@ -20,12 +21,11 @@ export const list = async (ctx) => {
 // POST /api/todos
 export const write = async (ctx) => {
   // request body 검증
-  const validatedData = todoValidation(ctx.request.body);
-
+  const { error } = validateRequest('write_todo', ctx.request.body);
   // request body의 스키마가 검증되지 않으면 bad request 에러
-  if (validatedData.error) {
+  if (error) {
     ctx.status = 400;
-    ctx.body = validatedData.error;
+    ctx.body = error;
     return;
   }
 
@@ -50,12 +50,11 @@ export const write = async (ctx) => {
 // PATCH /api/todos/:id
 export const update = async (ctx) => {
   // request body 스키마 검증
-  const validatedData = todoUpdateValidation(ctx.request.body);
-
+  const { error } = validateRequest('update_todo', ctx.request.body);
   // request body의 스키마가 검증되지 않으면 에러를 발생시킨다.
-  if (validatedData.error) {
+  if (error) {
     ctx.status = 400;
-    ctx.body = validatedData.error;
+    ctx.body = error;
     return;
   }
 
