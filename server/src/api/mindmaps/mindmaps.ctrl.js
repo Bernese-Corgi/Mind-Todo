@@ -67,14 +67,14 @@ export const udpateMindmap = async (ctx) => {
   }
 
   // 파라미터에서 id 추출
-  const { id } = ctx.params;
+  const { mindmapId } = ctx.params;
 
   // 현재 request body 데이터 (수정된 내용) 복사
   const nextData = { ...ctx.request.body };
 
   try {
     // params에서 추출한 id로 mindmap을 찾고, 수정된 데이터를 넣는다.
-    const mindmap = await Mindmap.findByIdAndUpdate(id, nextData, {
+    const mindmap = await Mindmap.findByIdAndUpdate(mindmapId, nextData, {
       new: true, // 업데이트된 데이터를 반환
     }).exec();
 
@@ -95,11 +95,11 @@ export const udpateMindmap = async (ctx) => {
 // DELETE /api/mindmaps/:mindmapId
 export const removeMindmap = async (ctx) => {
   // params에서 id를 받아온다.
-  const { id } = ctx.params;
+  const { mindmapId } = ctx.params;
 
   try {
     // params에서 받아온 id와 일치하는 post를 삭제
-    await Mindmap.findByIdAndRemove(id).exec();
+    await Mindmap.findByIdAndRemove(mindmapId).exec();
     // No Content
     ctx.status = 204;
   } catch (e) {
