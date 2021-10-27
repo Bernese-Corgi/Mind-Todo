@@ -43,6 +43,25 @@ const validationSchema = {
     content: Joi.string(),
     completed: Joi.boolean(),
   },
+  // mindmap 작성 검증 스키마
+  write_mindmap: {
+    title: Joi.string().required(),
+  },
+  // mindmap 수정 검증 스키마
+  update_mindmap: {
+    title: Joi.string(),
+  },
+  // node 작성 검증 스키마
+  write_node: {
+    name: Joi.string().required(),
+    // TODO 모델이랑 맞추기
+    parentId: Joi.string(),
+  },
+  // node 수정 검증 스키마
+  udpate_node: {
+    name: Joi.string(),
+    // TODO parent 위치 변경 가능하게 한다면 이부분에 parent 추가
+  },
 };
 
 const validateRequest = (schemaName, data) => {
