@@ -1,4 +1,5 @@
 import { Mindmap } from '../../model';
+import { Node, Tree } from '../../model/Mindmap';
 import { validateRequest } from '../../utils';
 
 /* ------------------------------- 마인드맵 목록 조회 ------------------------------- */
@@ -110,7 +111,62 @@ export const removeMindmap = async (ctx) => {
 /* -------------------------------- 개별 노드 작성 -------------------------------- */
 // POST /api/mindmaps/:mindmapId
 export const writeNode = async (ctx) => {
-  //
+  // request body 스키마 검증
+  const { error } = validateRequest('write_node', ctx.request.body);
+  // request body의 스키마가 검증되지 않으면 에러를 발생시킨다.
+  if (error) {
+    ctx.status = 400;
+    ctx.body = error;
+    return;
+  }
+
+  // params에서 mindmapId 참조
+  const { mindmapId } = ctx.params;
+
+  // request body에서 데이터 추출
+  const { name, parentId } = ctx.request.body;
+
+  // node 인스턴스 생성
+  const node = new Node({ name, mindmapId });
+
+  // node 인스턴스를 바탕으로 tree 인스턴스 생성
+  const tree = new Tree({
+    nodeId: node._id,
+    parentId,
+  });
+
+  try {
+    // node와 tree documents 데이터 베이스에 저장
+    await node.save();
+    await tree.save();
+
+    // mindmap id로 mindmap 정보 불러오기
+    const mindmap = await Mindmap.findById(mindmapId);
+    // mindmap 객체 복사 후 tree 데이터 추가
+    const nextMindmap = { body: [...mindmap.body, tree] };
+
+    // 생성된 tree 데이터를 넣기 위해 mindmap 수정하기
+    const updatedMindmap = await Mindmap.findByIdAndUpdate(
+      mindmapId,
+      nextMindmap,
+      { new: true },
+    ).exec();
+
+    // id 값으로 mindmap 데이터를 찾을 수 없으면 Not Found
+    if (!updatedMindmap) {
+      ctx.status = 404;
+      ctx.body = 'mindmap의 id가 잘못되었습니다.';
+      return;
+    }
+
+    // update된 mindmap을 데이터베이스에 저장
+    await updatedMindmap.save();
+
+    // node 데이터를 응답
+    ctx.body = node;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
 };
 
 /* -------------------------------- 개별 노드 조회 -------------------------------- */
