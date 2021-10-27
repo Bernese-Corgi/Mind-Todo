@@ -94,7 +94,17 @@ export const udpateMindmap = async (ctx) => {
 /* ------------------------------- 개별 마인드맵 삭제 ------------------------------- */
 // DELETE /api/mindmaps/:mindmapId
 export const removeMindmap = async (ctx) => {
-  //
+  // params에서 id를 받아온다.
+  const { id } = ctx.params;
+
+  try {
+    // params에서 받아온 id와 일치하는 post를 삭제
+    await Mindmap.findByIdAndRemove(id).exec();
+    // No Content
+    ctx.status = 204;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
 };
 
 /* -------------------------------- 개별 노드 작성 -------------------------------- */
