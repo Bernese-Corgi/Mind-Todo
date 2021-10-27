@@ -57,7 +57,38 @@ export const readMindmap = async (ctx) => {
 /* --------------------------- 개별 마인드맵 수정 (타이틀 수정) -------------------------- */
 // PATCH /api/mindmaps/:mindmapId
 export const udpateMindmap = async (ctx) => {
-  //
+  // request body 스키마 검증
+  const { error } = validateRequest('update_mindmap', ctx.request.body);
+  // request body의 스키마가 검증되지 않으면 에러를 발생시킨다.
+  if (error) {
+    ctx.status = 400;
+    ctx.body = error;
+    return;
+  }
+
+  // 파라미터에서 id 추출
+  const { id } = ctx.params;
+
+  // 현재 request body 데이터 (수정된 내용) 복사
+  const nextData = { ...ctx.request.body };
+
+  try {
+    // params에서 추출한 id로 mindmap을 찾고, 수정된 데이터를 넣는다.
+    const mindmap = await Mindmap.findByIdAndUpdate(id, nextData, {
+      new: true, // 업데이트된 데이터를 반환
+    }).exec();
+
+    // id로 mindmap을 찾을 수 없으면 not found
+    if (!mindmap) {
+      ctx.status = 404;
+      return;
+    }
+
+    // 수정된 데이터를 응답
+    ctx.body = mindmap;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
 };
 
 /* ------------------------------- 개별 마인드맵 삭제 ------------------------------- */
