@@ -51,7 +51,7 @@ export const writeMindmap = async (ctx) => {
 /* ------------------------- 개별 마인드맵 조회 (= 전체 노드 조회) ------------------------ */
 // GET /api/mindmaps/:mindmapId
 export const readMindmap = async (ctx) => {
-  //
+  ctx.body = ctx.state.mindmap;
 };
 
 /* --------------------------- 개별 마인드맵 수정 (타이틀 수정) -------------------------- */
