@@ -7,7 +7,7 @@ import { Post } from '../../model';
 const posts = new Router();
 
 posts.get('/', postsCtrl.list);
-posts.post('/', checkLoggedIn, postsCtrl.write);
+posts.post('/:nodeId', checkLoggedIn, postsCtrl.write);
 
 const post = new Router();
 

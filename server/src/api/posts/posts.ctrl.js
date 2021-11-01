@@ -1,4 +1,5 @@
 import { Post } from '../../model';
+import { Node } from '../../model/Mindmap';
 import { validateRequest } from '../../utils';
 
 /* -------------------------------- list post ------------------------------- */
@@ -37,11 +38,24 @@ export const write = async (ctx) => {
     body,
     tags,
     publisherId: ctx.state.user,
-    // TODO node id 넣기
+    nodeId: ctx.params.nodeId,
   });
 
+  // node 도큐먼트에 post 정보 넣기
+  const updatedNode = await Node.updateNodeChild(ctx.params.nodeId, post);
+
+  // id 값으로 node 데이터를 찾을 수 없으면 Not Found
+  if (!updatedNode) {
+    ctx.status = 404;
+    ctx.body = 'node를 찾을 수 없습니다.';
+    return;
+  }
+
   try {
+    // post document 저장
     await post.save();
+    await updatedNode.save();
+    // post 응답
     ctx.body = post;
   } catch (e) {
     ctx.throw(500, e);

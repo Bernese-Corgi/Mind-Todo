@@ -5,7 +5,10 @@ const PostSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
-  // TODO Mindmap의 node 데이터와 관계 설정
+  nodeId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Node',
+  },
   title: {
     type: String,
     required: true,

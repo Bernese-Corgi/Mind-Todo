@@ -22,7 +22,7 @@ mindmap.delete('/', mindmapsCtrl.removeMindmap);
 // 개별 노드 작성
 mindmap.post('/', mindmapsCtrl.writeNode);
 // /api/mindmaps/:mindmapId
-mindmaps.use('/:mindmapId', getById(Mindmap, 'mindmapId'), mindmap.routes());
+mindmaps.use('/:mindmapId', getById(Mindmap), mindmap.routes());
 
 /* ---------------------------------- 개별 노드 --------------------------------- */
 const node = new Router();
@@ -33,6 +33,6 @@ node.patch('/', mindmapsCtrl.updateNode);
 // 개별 노드 삭제
 node.delete('/', mindmapsCtrl.removeNode);
 // /api/mindmaps/:mindmapId/:nodeId
-mindmap.use('/:nodeId', getById(Node, 'nodeId'), node.routes());
+mindmaps.use('/:mindmapId/:nodeId', getById(Node), node.routes());
 
 export default mindmaps;

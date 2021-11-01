@@ -7,7 +7,7 @@ import * as todosCtrl from './todos.ctrl';
 const todos = new Router();
 
 todos.get('/', checkLoggedIn, todosCtrl.list);
-todos.post('/', checkLoggedIn, todosCtrl.write);
+todos.post('/:nodeId', checkLoggedIn, todosCtrl.write);
 
 const todo = new Router();
 todo.patch('/', checkLoggedIn, checkOwn(Todo), todosCtrl.update);
