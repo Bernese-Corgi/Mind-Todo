@@ -186,7 +186,38 @@ export const readNode = async (ctx) => {
 /* -------------------------------- 개별 노드 수정 -------------------------------- */
 // PATCH /api/mindmaps/:mindmapId/:nodeId
 export const updateNode = async (ctx) => {
-  //
+  // reqeust body 스키마 검증
+  const { error } = validateRequest('update_node', ctx.request.body);
+  // request body의 스키마가 검증되지 않으면 에러를 발생시킨다.
+  if (error) {
+    ctx.status = 400;
+    ctx.body = error;
+    return;
+  }
+
+  // params에서 nodeId 참조
+  const { nodeId } = ctx.params;
+
+  try {
+    // params에서 추출한 id로 node를 찾고, 수정된 데이터를 업데이트한다.
+    const node = await Node.findByIdAndUpdate(
+      nodeId,
+      { ...ctx.request.body },
+      { new: true }, // 업데이트된 데이터를 반환
+    ).exec();
+
+    // id로 node를 찾을 수 없으면 not found
+    if (!node) {
+      ctx.status = 404;
+      ctx.body = `존재하지 않는 node입니다.`;
+      return;
+    }
+
+    // 수정된 데이터를 응답
+    ctx.body = node;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
 };
 
 /* -------------------------------- 개별 노드 삭제 -------------------------------- */
