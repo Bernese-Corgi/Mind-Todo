@@ -80,6 +80,39 @@ NodeSchema.statics.updateNodeChild = async function (
   }).exec();
 };
 
+/**
+ * nodeId로 node를 찾아서 그 내부의 todos 정보를 풀어서 반환한다.
+ * @param {*} nodeId 찾을 node의 id
+ * @returns 해당하는 node의 내부에 저장된 todos 정보
+ */
+NodeSchema.statics.findTodosByNodeId = async function (nodeId) {
+  const node = await this.findById(nodeId);
+  const { todos } = await Node.findOne({ todos: node.todos }).populate('todos');
+  return todos;
+};
+
+/**
+ * nodeId로 node를 찾아서 그 내부의 post 정보를 풀어서 반환한다.
+ * @param {*} nodeId 찾을 node의 id
+ * @returns 해당하는 node의 내부에 저장된 post 정보
+ */
+NodeSchema.statics.findPostByNodeId = async function (nodeId) {
+  const node = await this.findById(nodeId);
+  const { post } = await Node.findOne({ post: node.post }).populate('todos');
+  return post;
+};
+
+/* ------------------------------ Node 인스턴스 메서드 ----------------------------- */
+/**
+ * 인스턴스(도큐먼트)에서 post와 todos를 찾아서 객체로 묶어 반환한다.
+ * @returns post, todos를 객체로 묶어서 반환한다.
+ */
+NodeSchema.methods.findPostAndTodosByNode = async function () {
+  const { post } = await Node.findOne({ post: this.post }).populate('post');
+  const { todos } = await Node.findOne({ todos: this.todos }).populate('todos');
+  return { post, todos };
+};
+
 export const Node = model('Node', NodeSchema);
 export const Tree = model('Tree', TreeSchema);
 
