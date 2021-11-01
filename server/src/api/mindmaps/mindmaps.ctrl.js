@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import { Mindmap } from '../../model';
 import { Node, Tree } from '../../model/Mindmap';
 import { validateRequest } from '../../utils';
@@ -173,43 +172,12 @@ export const writeNode = async (ctx) => {
 /* -------------------------------- 개별 노드 조회 -------------------------------- */
 // GET /api/mindmaps/:mindmapId/:nodeId
 export const readNode = async (ctx) => {
-  const { mindmapId, nodeId } = ctx.params;
-
-  if (!mongoose.Types.ObjectId.isValid(mindmapId)) {
-    ctx.status = 400;
-    // TODO 수정하기
-    ctx.body = `url의 /:mindmapId params의 값이 ObjectId 형식에 맞지 않습니다.`;
-    return;
-  }
-
-  if (!mongoose.Types.ObjectId.isValid(nodeId)) {
-    ctx.status = 400;
-    ctx.body = `url의 /:nodeId params의 값이 ObjectId 형식에 맞지 않습니다.`;
-    return;
-  }
-
+  const node = ctx.state.node;
   try {
-    const mindmap = await Mindmap.findById(mindmapId);
-
-    if (!mindmap) {
-      ctx.status = 404;
-      ctx.body = '존재하지 않는 마인드맵입니다.';
-      return;
-    }
-    ctx.state.mindmap = mindmap;
-
-    const node = await Node.findById(nodeId);
-
-    if (!node) {
-      ctx.status = 404;
-      ctx.body = '존재하지 않는 node 입니다.';
-      return;
-    }
-    ctx.state.node = node;
-
-    // TODO post, todo 찾기
-
-    ctx.body = node;
+    // post, todos 정보 가져오기
+    const { post, todos } = await node.findPostAndTodosByNode();
+    // node, post, todos 정보를 응답
+    ctx.body = { node, post, todos };
   } catch (e) {
     ctx.throw(500, e);
   }
