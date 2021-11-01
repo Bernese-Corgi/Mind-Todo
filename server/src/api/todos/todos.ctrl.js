@@ -1,4 +1,5 @@
 import { Todo } from '../../model';
+import { Node } from '../../model/mindmap';
 import { validateRequest } from '../../utils';
 
 /* -------------------------------- todo list ------------------------------- */
@@ -33,12 +34,26 @@ export const write = async (ctx) => {
   const { content } = ctx.request.body;
 
   // todo 인스턴스 생성
-  // TODO node id 넣기
-  const todo = new Todo({ content, publisherId: ctx.state.user });
+  const todo = new Todo({
+    content,
+    publisherId: ctx.state.user,
+    nodeId: ctx.params.nodeId,
+  });
+
+  // node 도큐먼트에 todo 정보 넣기
+  const updatedNode = await Node.updateNodeChild(ctx.params.nodeId, todo);
+
+  // id 값으로 node 데이터를 찾을 수 없으면 Not Found
+  if (!updatedNode) {
+    ctx.status = 404;
+    ctx.body = 'node를 찾을 수 없습니다.';
+    return;
+  }
 
   try {
     // todo document 저장
     await todo.save();
+    await updatedNode.save();
     // todo 응답
     ctx.body = todo;
   } catch (e) {
