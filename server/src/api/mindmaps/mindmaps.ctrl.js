@@ -99,7 +99,7 @@ export const removeMindmap = async (ctx) => {
   const { mindmapId } = ctx.params;
 
   try {
-    // params에서 받아온 id와 일치하는 post를 삭제
+    // params에서 받아온 mindmapId와 일치하는 mindmap을 삭제
     await Mindmap.findByIdAndRemove(mindmapId).exec();
     // No Content
     ctx.status = 204;
@@ -223,5 +223,13 @@ export const updateNode = async (ctx) => {
 /* -------------------------------- 개별 노드 삭제 -------------------------------- */
 // DELETE /api/mindmaps/:mindmapId/:nodeId
 export const removeNode = async (ctx) => {
-  //
+  try {
+    // params에서 받아온 nodeId와 일치하는 node 삭제
+    await Node.findByIdAndRemove(ctx.params.nodeId).exec();
+
+    // No Content
+    ctx.status = 204;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
 };
