@@ -183,6 +183,6 @@ const theme: DefaultTheme = {
   media,
 };
 
-export const styled = baseStyled as ThemedStyledInterface<DefaultTheme>;
+export const Styled = baseStyled as ThemedStyledInterface<DefaultTheme>;
 
 export default theme;
