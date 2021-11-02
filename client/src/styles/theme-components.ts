@@ -1,7 +1,7 @@
 import * as styledComponents from 'styled-components';
 
 const {
-  default: styled,
+  default: Styled,
   css,
   keyframes,
   ThemeProvider,
@@ -9,4 +9,4 @@ const {
 
 export { css, keyframes, ThemeProvider };
 
-export default styled;
+export default Styled;

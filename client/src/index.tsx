@@ -6,12 +6,15 @@ import reportWebVitals from './reportWebVitals';
 import GlobalStyle from 'styles/global-style';
 import { ThemeProvider } from 'styled-components';
 import theme from 'styles/theme';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <>
     <GlobalStyle />
     <ThemeProvider theme={theme}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </ThemeProvider>
   </>,
   document.getElementById('root')
