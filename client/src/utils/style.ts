@@ -2,7 +2,7 @@ import theme from 'styles/theme';
 
 const { colors, fonts, paddings, margins } = theme;
 
-export const handleHoverColorType = (shape: string) => {
+export const handleHoverColorType = (shape: string | undefined) => {
   switch (shape) {
     case 'edit':
       return colors.green;

@@ -4,12 +4,12 @@ import theme from 'styles/theme';
 import { handleColorType, handleHoverColorType } from 'utils/style';
 import Sprite from './assets/sprites.svg';
 
-interface IconProps {
+export type IconProps = {
   id?: string;
   title?: string;
   shape: string;
   color?: string;
-}
+};
 
 const Svg = styled.svg<IconProps>`
   ${({ color, shape }) => css`
