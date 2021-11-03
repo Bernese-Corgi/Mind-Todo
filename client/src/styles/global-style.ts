@@ -125,6 +125,7 @@ export const GlobalStyle = createGlobalStyle`
     /* outline: none; */
   }
   button {
+    font-size: 10px;
     user-select: none;
     cursor: pointer;
     /* outline: none; */

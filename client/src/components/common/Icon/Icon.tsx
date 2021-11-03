@@ -1,24 +1,22 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import theme from 'styles/theme';
 import { handleColorType, handleHoverColorType } from 'utils/style';
 import Sprite from './assets/sprites.svg';
 
-interface IconProps {
+export type IconProps = {
   id?: string;
   title?: string;
   shape: string;
   color?: string;
-}
+};
 
 const Svg = styled.svg<IconProps>`
   ${({ color, shape }) => css`
     color: ${handleColorType(color)};
     width: 1em;
     height: 1em;
-    transition: 200ms;
-    transition-timing-function: ease-in-out;
-    -webkit-transition: 200ms;
-    -webkit-transition-timing-function: ease-in-out;
+    ${theme.transition('200ms', 'ease-in-out')}
 
     &:hover {
       color: ${handleHoverColorType(shape)};

@@ -117,6 +117,13 @@ const positions = {
   },
 };
 
+const transition = (sec = '200ms', timing = 'ease-in-out') => `
+  transition: ${sec};
+  transition-timing-function: ${timing};
+  -webkit-transition: ${sec};
+  -webkit-transition-timing-function: ${timing};
+`;
+
 /* --------------------------- Responsive setting --------------------------- */
 const sizes = {
   mobile: 320,
@@ -179,6 +186,7 @@ const theme: DefaultTheme = {
   borders,
   flexes,
   positions,
+  transition,
   sizes,
   media,
 };
