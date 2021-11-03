@@ -4,6 +4,9 @@ import theme from 'styles/theme';
 import { Icon } from '..';
 import { IconProps } from '../Icon/Icon';
 
+const { fonts, colors, borders, margins, paddings, boxShadow, transition } =
+  theme;
+
 interface ButtonProps {
   type?: 'button' | 'submit' | 'reset' | undefined;
   value?: string;
@@ -11,7 +14,7 @@ interface ButtonProps {
   round?: 'round' | 'square';
   fullWidth?: boolean;
   textOnly?: boolean;
-  primary?: boolean;
+  secondary?: boolean;
   onClick?: () => void;
 }
 
@@ -20,30 +23,31 @@ type IconButtonProps = IconProps & {
 };
 
 const defButtonStyle = css`
-  margin: ${theme.margins.base};
-  font-weight: ${theme.fonts.weight.bold};
-  padding: ${theme.paddings.sm} ${theme.paddings.lg};
+  margin: ${margins.base};
+  font-weight: ${fonts.weight.bold};
+  padding: ${paddings.sm} ${paddings.lg};
 `;
 
-const handleDefButtonStyle = ({ round, primary, textOnly, fullWidth }) => css`
-  border-radius: ${theme.borders.radius[round || 'square']};
+const handleDefButtonStyle = ({ round, secondary, textOnly, fullWidth }) => css`
+  border-radius: ${borders.radius[round || 'square']};
   width: ${fullWidth ? '100%' : 'fit-content'};
   margin-left: 0;
   margin-right: 0;
-  background-color: ${primary
-    ? theme.colors.primary.base
-    : theme.colors.secondary.base};
-  background-color: ${textOnly && 'transparent'};
-  color: ${textOnly ? theme.colors.gray.dark : theme.colors.white};
-  ${theme.transition('200ms', 'ease-in-out')}
+  background-color: ${textOnly
+    ? 'transparent'
+    : secondary
+    ? colors.secondary.base
+    : colors.primary.base};
+  color: ${textOnly ? colors.gray.dark : colors.white};
+  ${transition('200ms', 'ease-in-out')}
 
   &:hover {
-    box-shadow: ${theme.boxShadow.default};
+    box-shadow: ${boxShadow.default};
   }
 
   &:disabled {
-    background-color: ${theme.colors.gray.light};
-    color: ${theme.colors.gray.base};
+    background-color: ${colors.gray.light};
+    color: ${colors.gray.base};
     cursor: not-allowed;
     box-shadow: none;
   }
@@ -51,17 +55,15 @@ const handleDefButtonStyle = ({ round, primary, textOnly, fullWidth }) => css`
 
 export const StyledButton = styled.button<ButtonProps>`
   ${defButtonStyle}
-
-  ${({ round, primary, textOnly, fullWidth }) =>
-    handleDefButtonStyle({ round, primary, textOnly, fullWidth })}
+  ${({ round, secondary, textOnly, fullWidth }) =>
+    handleDefButtonStyle({ round, secondary, textOnly, fullWidth })}
 `;
 
 export const StyledLink = styled(Link)<LinkProps & ButtonProps>`
   display: inline-block;
   ${defButtonStyle}
-
-  ${({ round, primary, textOnly, fullWidth }) =>
-    handleDefButtonStyle({ round, primary, textOnly, fullWidth })}
+  ${({ round, secondary, textOnly, fullWidth }) =>
+    handleDefButtonStyle({ round, secondary, textOnly, fullWidth })}
 `;
 
 export const StyledIconButton = styled(Icon)<IconButtonProps>``;
