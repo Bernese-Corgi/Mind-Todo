@@ -1,26 +1,19 @@
 import { Link, LinkProps } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import theme from 'styles/theme';
-import { Icon } from '..';
-import { IconProps } from '../Icon/Icon';
+import { handleHoverColorType } from 'utils/style';
+import { ButtonProps, IconButtonProps, LinkButtonProps } from './Button';
 
-const { fonts, colors, borders, margins, paddings, boxShadow, transition } =
-  theme;
-
-interface ButtonProps {
-  type?: 'button' | 'submit' | 'reset' | undefined;
-  value?: string;
-  children: React.ReactNode;
-  round?: 'round' | 'square';
-  fullWidth?: boolean;
-  textOnly?: boolean;
-  secondary?: boolean;
-  onClick?: () => void;
-}
-
-type IconButtonProps = IconProps & {
-  onClick?: () => void;
-};
+const {
+  fonts,
+  colors,
+  borders,
+  margins,
+  paddings,
+  boxShadow,
+  transition,
+  flexes,
+} = theme;
 
 const defButtonStyle = css`
   margin: ${margins.base};
@@ -59,11 +52,29 @@ export const StyledButton = styled.button<ButtonProps>`
     handleDefButtonStyle({ round, secondary, textOnly, fullWidth })}
 `;
 
-export const StyledLink = styled(Link)<LinkProps & ButtonProps>`
+export const StyledLinkButton = styled.button<LinkButtonProps & ButtonProps>`
   display: inline-block;
   ${defButtonStyle}
   ${({ round, secondary, textOnly, fullWidth }) =>
     handleDefButtonStyle({ round, secondary, textOnly, fullWidth })}
 `;
 
-export const StyledIconButton = styled(Icon)<IconButtonProps>``;
+export const StyledIconButton = styled.button<IconButtonProps>`
+  ${flexes.center}
+  padding: ${paddings.base};
+  margin: ${margins.sm};
+
+  ${({ shape, fontSize }) => {
+    return css`
+      font-size: ${fontSize || '1em'};
+
+      &:hover Svg {
+        color: ${handleHoverColorType(shape)};
+      }
+    `;
+  }}
+`;
+
+StyledButton.displayName = 'StyledButton';
+StyledLinkButton.displayName = 'StyledLinkButton';
+StyledIconButton.displayName = 'StyledIconButton';
