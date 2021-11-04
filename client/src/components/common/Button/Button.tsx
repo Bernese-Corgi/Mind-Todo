@@ -15,11 +15,12 @@ export type ButtonProps = {
   round?: 'round' | 'square';
   fullWidth?: boolean;
   textOnly?: boolean;
-  secondary?: boolean;
+  primary?: boolean;
   onClick?: () => void;
 };
 
 export type IconButtonProps = {
+  type?: 'button' | 'submit' | 'reset' | undefined;
   shape?: string;
   fontSize?: string;
   onClick?: () => void;
@@ -29,43 +30,60 @@ export type LinkButtonProps = {
   linkTo?: string | object;
 };
 
-const Button = (props: ButtonProps & IconButtonProps & LinkButtonProps) => {
+const Button = ({
+  type = 'button',
+  value = '',
+  children,
+  round = 'square',
+  fullWidth = false,
+  textOnly = false,
+  primary,
+  onClick,
+  shape = 'cancel',
+  fontSize = '1.4rem',
+  linkTo,
+  ...restProps
+}: ButtonProps & IconButtonProps & LinkButtonProps) => {
   /* ------------------------------- Link Button ------------------------------ */
-  if (props.linkTo)
+  if (linkTo)
     return (
       <StyledLinkButton
-        type={props.type}
-        value={props.value}
-        round={props.round}
-        fullWidth={props.fullWidth}
-        textOnly={props.textOnly}
-        secondary={props.secondary}>
-        <Link to={props.linkTo}>{props.children}</Link>
+        type={type}
+        value={value}
+        round={round}
+        fullWidth={fullWidth}
+        textOnly={textOnly}
+        primary={primary}
+        {...restProps}>
+        <Link to={linkTo}>{children}</Link>
       </StyledLinkButton>
     );
 
   /* ------------------------------- Icon Button ------------------------------ */
-  if (props.shape)
+  if (shape)
     return (
       <StyledIconButton
-        shape={props.shape}
-        fontSize={props.fontSize}
-        onClick={props.onClick}>
-        <Icon shape={props.shape} />
+        type={type}
+        shape={shape}
+        fontSize={fontSize}
+        onClick={onClick}
+        {...restProps}>
+        <Icon shape={shape} />
       </StyledIconButton>
     );
 
   /* ----------------------------- Default Button ----------------------------- */
   return (
     <StyledButton
-      type={props.type}
-      value={props.value}
-      round={props.round}
-      fullWidth={props.fullWidth}
-      textOnly={props.textOnly}
-      secondary={props.secondary}
-      onClick={props.onClick}>
-      {props.children}
+      type={type}
+      value={value}
+      round={round}
+      fullWidth={fullWidth}
+      textOnly={textOnly}
+      primary={primary}
+      onClick={onClick}
+      {...restProps}>
+      {children}
     </StyledButton>
   );
 };
