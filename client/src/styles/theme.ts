@@ -10,6 +10,8 @@ const colors = {
     base: '#D2B48C',
     light: '#DFD9D3',
     dark: '#645645',
+    highSat: '#bc8f54',
+    lowSat: '#c6b298',
   },
   secondary: {
     base: '#7B86AA',
@@ -67,6 +69,7 @@ const paddings = {
 
 const boxShadow = {
   default: '0 0.4em 1.5em rgba(0, 0, 0, 0.2)',
+  wide: '0 0.4em 5em rgba(0, 0, 0, 0.1)',
 };
 
 const borders = {

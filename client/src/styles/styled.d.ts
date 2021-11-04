@@ -7,6 +7,8 @@ declare module 'styled-components' {
         base: string;
         light: string;
         dark: string;
+        highSat: string;
+        lowSat: string;
       };
       secondary: {
         base: string;
@@ -60,6 +62,7 @@ declare module 'styled-components' {
     };
     boxShadow: {
       default: string;
+      wide: string;
     };
     borders: {
       radius: {
