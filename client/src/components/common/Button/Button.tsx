@@ -15,7 +15,7 @@ export type ButtonProps = {
   round?: 'round' | 'square';
   fullWidth?: boolean;
   textOnly?: boolean;
-  secondary?: boolean;
+  primary?: boolean;
   onClick?: () => void;
 };
 
@@ -39,7 +39,7 @@ const Button = (props: ButtonProps & IconButtonProps & LinkButtonProps) => {
         round={props.round}
         fullWidth={props.fullWidth}
         textOnly={props.textOnly}
-        secondary={props.secondary}>
+        primary={props.primary}>
         <Link to={props.linkTo}>{props.children}</Link>
       </StyledLinkButton>
     );
@@ -63,7 +63,7 @@ const Button = (props: ButtonProps & IconButtonProps & LinkButtonProps) => {
       round={props.round}
       fullWidth={props.fullWidth}
       textOnly={props.textOnly}
-      secondary={props.secondary}
+      primary={props.primary}
       onClick={props.onClick}>
       {props.children}
     </StyledButton>
