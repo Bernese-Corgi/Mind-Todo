@@ -28,7 +28,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     ref = null
   ) => {
     return (
-      <>
+      <div className="inputLabelWrapper">
         <label htmlFor={id}>{label && label}</label>
         <input
           id={id}
@@ -41,7 +41,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           readOnly={readOnly}
           onChange={onChange}
         />
-      </>
+      </div>
     );
   }
 );
