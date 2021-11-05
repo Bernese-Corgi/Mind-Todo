@@ -120,12 +120,15 @@ export const GlobalStyle = createGlobalStyle`
     cursor: pointer;
   }
   input {
+    font: inherit;
+    /* font-size: 100%; */
     background: transparent;
     border: none;
-    /* outline: none; */
+    outline: none;
   }
   button {
-    font-size: 10px;
+    font: inherit;
+    /* font-size: 100%; */
     user-select: none;
     cursor: pointer;
     /* outline: none; */

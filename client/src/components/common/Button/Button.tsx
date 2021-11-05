@@ -39,7 +39,7 @@ const Button = ({
   textOnly = false,
   primary,
   onClick,
-  shape = 'cancel',
+  shape,
   fontSize = '1.4rem',
   linkTo,
   ...restProps
