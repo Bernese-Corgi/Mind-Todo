@@ -82,7 +82,7 @@ declare module 'styled-components' {
         center: string;
       };
     };
-    transition: (sec: string, timing: string) => string;
+    transition: (sec?: string, timing?: string) => string;
     sizes: {
       [key: string]: number;
     };
