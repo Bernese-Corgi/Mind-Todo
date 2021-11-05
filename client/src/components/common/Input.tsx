@@ -7,6 +7,7 @@ export type InputProps = {
   name?: string;
   value?: string;
   placeholder?: string;
+  autoComplete?: string;
   readOnly?: boolean;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 };
@@ -18,8 +19,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       label,
       type = 'text',
       name,
-      value = '',
+      value,
       placeholder,
+      autoComplete,
       readOnly = false,
       onChange,
     },
@@ -34,6 +36,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           name={name}
           value={value}
           placeholder={placeholder}
+          autoComplete={autoComplete}
           ref={ref}
           readOnly={readOnly}
           onChange={onChange}
