@@ -8,10 +8,13 @@ const jwtMiddleware = async (ctx, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await User.findById(decoded._id);
+
     ctx.state.user = {
       _id: decoded._id,
-      // username: decoded.username,
-      // email: decoded.email,
+      username: user.username,
+      email: user.email,
     };
 
     /* 토큰 재발급 --------------------------------- */
