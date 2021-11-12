@@ -4,13 +4,13 @@ import theme from 'styles/theme';
 /* ---------------------------------- modal --------------------------------- */
 export const StyledDialog = styled.div`
   position: fixed;
-  z-index: 10000;
+  z-index: 1000;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   min-width: 90vw;
   min-height: 40vh;
-  background-color: ${theme.colors.white}90;
+  background-color: ${theme.colors.white};
   border-radius: ${theme.borders.radius.square};
   box-shadow: ${theme.boxShadow.wide};
 
@@ -31,7 +31,7 @@ export const StyledDialog = styled.div`
 /* ----------------------------------- dim ---------------------------------- */
 export const StyledDim = styled.div`
   position: fixed;
-  z-index: 1000;
+  z-index: 999;
   top: 0;
   right: 0;
   bottom: 0;

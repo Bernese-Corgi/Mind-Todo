@@ -11,41 +11,45 @@ const defButtonStyle = css`
   padding: ${paddings.sm} ${paddings.lg};
 `;
 
-const handleDefButtonStyle = ({ round, primary, textOnly, fullWidth }) => css`
-  border-radius: ${borders.radius[round || 'square']};
-  width: ${fullWidth ? '100%' : 'fit-content'};
-  margin-left: 0;
-  margin-right: 0;
-  background-color: ${textOnly
-    ? 'transparent'
-    : primary
-    ? colors.primary.base
-    : colors.gray.light};
-  color: ${textOnly
-    ? colors.gray.dark
-    : primary
-    ? colors.white
-    : colors.gray.base};
+const handleDefButtonStyle = (props: ButtonProps) => {
+  const { round, primary, textOnly, fullWidth } = props;
 
-  ${transition('200ms', 'ease-in-out')}
-
-  &:hover {
+  return css`
+    border-radius: ${borders.radius[round || 'square']};
+    width: ${fullWidth ? '100%' : 'fit-content'};
+    margin-left: 0;
+    margin-right: 0;
     background-color: ${textOnly
       ? 'transparent'
       : primary
-      ? colors.primary.highSat
-      : colors.primary.light};
-    color: ${!primary && colors.gray.dark};
-    text-decoration: ${textOnly && 'underline'};
-  }
+      ? colors.primary.base
+      : colors.gray.light};
+    color: ${textOnly
+      ? colors.gray.dark
+      : primary
+      ? colors.white
+      : colors.gray.base};
 
-  &:disabled {
-    background-color: ${colors.gray.light};
-    color: ${colors.gray.base};
-    cursor: not-allowed;
-    box-shadow: none;
-  }
-`;
+    ${transition('200ms', 'ease-in-out')}
+
+    &:hover {
+      background-color: ${textOnly
+        ? 'transparent'
+        : primary
+        ? colors.primary.highSat
+        : colors.primary.light};
+      color: ${!primary && colors.gray.dark};
+      text-decoration: ${textOnly && 'underline'};
+    }
+
+    &:disabled {
+      background-color: ${colors.gray.light};
+      color: ${colors.gray.base};
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+  `;
+};
 
 export const StyledButton = styled.button<ButtonProps>`
   ${defButtonStyle}

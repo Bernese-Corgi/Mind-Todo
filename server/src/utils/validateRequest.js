@@ -15,7 +15,7 @@ const validationSchema = {
       tlds: { allow: ['com', 'net'] },
     }),
     password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
-    repeat_password: Joi.ref('password'),
+    passwordConfirm: Joi.ref('password'),
   },
   // 로그인 검증 스키마
   signin: {
@@ -65,7 +65,7 @@ const validationSchema = {
 };
 
 const validateRequest = (schemaName, data) => {
-  const schema = Joi.object(validationSchema[schemaName]);
+  const schema = Joi.object().keys(validationSchema[schemaName]);
 
   return schema.validate(data);
 };

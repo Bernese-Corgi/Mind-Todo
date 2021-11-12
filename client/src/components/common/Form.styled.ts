@@ -5,15 +5,23 @@ const StyledForm = styled.form`
   ${theme.flexes.mixin('column', 'start', 'start')}
   display: block;
   font-size: 1.5rem;
+  width: 70%;
+  margin-right: auto;
+  margin-left: auto;
+
+  .inputLabelWrapper {
+    width: 100%;
+    margin-top: 1.4em;
+  }
 
   & label {
-    margin-top: 1.4em;
     margin-left: 0.3em;
   }
 
   & input {
-    width: 80%;
-    margin-top: 0.4em;
+    display: block;
+    width: 100%;
+    margin-top: 0.5em;
     padding: 0.5em;
     border: 1px solid ${theme.colors.gray.base}40;
     border-radius: ${theme.borders.radius.square};
@@ -21,7 +29,7 @@ const StyledForm = styled.form`
     ${theme.transition('130ms')}
 
     &:hover {
-      background-color: ${theme.colors.gray.light};
+      background-color: ${theme.colors.gray.light}30;
     }
 
     &:focus {
