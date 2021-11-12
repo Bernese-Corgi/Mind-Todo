@@ -8,15 +8,15 @@ import {
 } from './Dialog.styled';
 
 interface DialogProps {
-  hasModal: boolean;
-  visible: boolean;
-  portalId: string;
-  className: string;
+  hasModal?: boolean;
+  visible?: boolean;
+  portalId?: string;
+  className?: string;
   onOpen?: (ref: HTMLElement | null) => void;
   onClose?: () => void;
   onDimClickClose?: () => void;
-  label: string;
-  children: React.ReactChild;
+  label?: string;
+  children?: React.ReactChild;
 }
 
 const Dialog = ({
@@ -63,7 +63,7 @@ const Dialog = ({
               {...restProps}>
               {/* ------------------------- close button container ------------------------- */}
               <StyledDialogCloseButton>
-                <Button shape="cancel" />
+                <Button shape="cancel" onClick={onClose} />
               </StyledDialogCloseButton>
 
               {/* ------------------------------- dialog body ------------------------------ */}
