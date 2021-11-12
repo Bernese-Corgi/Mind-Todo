@@ -16,7 +16,7 @@ export const signup = async (ctx) => {
   const { username, email, password } = ctx.request.body;
 
   try {
-    // 데이터베이스에 이미 존재하는 user의 에러 처리
+    // 데이터베이스에 이미 존재하는 user의 에러 처리
     const existsUser = {
       username: await User.findByUsername(username),
       email: await User.findByEmail(email),
@@ -24,11 +24,13 @@ export const signup = async (ctx) => {
     // 존재하는 username이라면 conflict 에러 발생
     if (existsUser.username) {
       ctx.status = 409;
+      ctx.body = 'username';
       return;
     }
     // 존재하는 email이라면 conflict 에러 발생
     if (existsUser.email) {
       ctx.status = 409;
+      ctx.body = 'email';
       return;
     }
 
@@ -76,7 +78,8 @@ export const signin = async (ctx) => {
     const user = await User.findByUsername(username);
 
     if (!user) {
-      ctx.statue = 401;
+      ctx.status = 401;
+      ctx.body = 'username';
       return;
     }
 
@@ -85,6 +88,7 @@ export const signin = async (ctx) => {
 
     if (!valid) {
       ctx.status = 401;
+      ctx.body = 'password';
       return;
     }
 
@@ -103,10 +107,10 @@ export const signin = async (ctx) => {
 // 현재 로그인 중인지 확인
 export const check = async (ctx) => {
   const { user } = ctx.state;
-
   // user가 없으면 인증 실패 상태 코드 설정
   if (!user) {
     ctx.status = 401;
+    ctx.body = user;
     return;
   }
 
