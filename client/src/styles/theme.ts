@@ -40,6 +40,7 @@ const fonts = {
     title: 'Raleway',
   },
   size: {
+    xs: '1.2rem',
     sm: '1.4rem',
     base: '1.6rem',
     lg: '2rem',

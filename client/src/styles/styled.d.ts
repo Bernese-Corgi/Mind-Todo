@@ -36,6 +36,7 @@ declare module 'styled-components' {
         title: string;
       };
       size: {
+        xs: string;
         sm: string;
         base: string;
         lg: string;
