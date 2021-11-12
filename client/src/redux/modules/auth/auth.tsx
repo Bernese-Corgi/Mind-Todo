@@ -10,12 +10,16 @@ export const [SIGN_UP, SIGN_UP_SUCCESS, SIGN_UP_ERROR] =
 export const [SIGN_IN, SIGN_IN_SUCCESS, SIGN_IN_ERROR] =
   createRequestActionTypes('auth/SIGN_IN');
 
+export const INITIALIZE_AUTH = 'auth/INITIALIZE_AUTH';
+
 /* -------------------------- thunk action creator -------------------------- */
 export const signUpAsync = (newUser: authApi.SignUp) =>
   createRequestThunk(SIGN_UP, authApi.signUp, newUser);
 
 export const signInAsync = (user: authApi.SignIn) =>
   createRequestThunk(SIGN_IN, authApi.signIn, user);
+
+export const initializeAuth = () => ({ type: INITIALIZE_AUTH });
 
 /* ---------------------------------- types --------------------------------- */
 // state types
@@ -85,6 +89,9 @@ function authReducer(state = initialState, action /* : AuthActionTypes */) {
         error: payload,
         data: null,
       };
+    // initialize auth
+    case INITIALIZE_AUTH:
+      return initialState;
     default:
       return state;
   }
