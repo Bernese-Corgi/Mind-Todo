@@ -18,7 +18,7 @@ export const finishLoading = requestType => ({
 const initialState = {};
 
 /* 리듀서 ---------------------------------- */
-function loading(state = initialState, action) {
+function loadingReducer(state = initialState, action) {
   switch (action.type) {
     case START_LOADING:
       return { ...state, [action.payload]: true };
@@ -29,4 +29,4 @@ function loading(state = initialState, action) {
   }
 }
 
-export default loading;
+export default loadingReducer;
