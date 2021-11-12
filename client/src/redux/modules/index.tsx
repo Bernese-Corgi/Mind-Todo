@@ -3,6 +3,7 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import authReducer from './auth/auth';
 import userReducer from './auth/user';
+import loadingReducer from './loading';
 
 // 리덕스 상태 지속 설정
 const persistConfig = {
@@ -14,6 +15,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: authReducer,
   user: userReducer,
+  loading: loadingReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
