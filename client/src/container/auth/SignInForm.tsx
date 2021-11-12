@@ -22,10 +22,6 @@ const SignInForm = ({ history }) => {
     auth: '',
   });
 
-  // console.log(auth);
-
-  console.log(values);
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
