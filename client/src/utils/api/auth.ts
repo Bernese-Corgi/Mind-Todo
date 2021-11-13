@@ -1,6 +1,6 @@
 import client from './client';
 
-const URI = '/api';
+const URI = '/api/auth';
 
 export type SignUp = {
   username: string;
@@ -15,11 +15,11 @@ export type SignIn = {
 };
 
 export const signUp = (userInfo: SignUp) =>
-  client.post(`${URI}/auth/signup`, userInfo);
+  client.post(`${URI}/signup`, userInfo);
 
 export const signIn = (userInfo: SignIn) =>
-  client.post(`${URI}/auth/signin`, userInfo);
+  client.post(`${URI}/signin`, userInfo);
 
-export const signOut = () => client.post(`${URI}/auth/signout`);
+export const signOut = () => client.post(`${URI}/signout`);
 
-export const check = () => client.get(`${URI}/auth/check`);
+export const check = () => client.get(`${URI}/check`);
