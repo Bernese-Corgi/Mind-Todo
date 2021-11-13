@@ -14,8 +14,6 @@ interface HeaderbarProps {
 }
 
 const Headerbar = ({ user, onSignOut }: HeaderbarProps) => {
-  console.log(user);
-
   return (
     <Responsive>
       <HeaderbarWrapper>

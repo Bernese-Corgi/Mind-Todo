@@ -16,8 +16,6 @@ const store = createStore(
 
 const persistor = persistStore(store);
 
-console.log(store);
-
 const StoreProvider = props => (
   <Provider store={store}>
     <PersistGate persistor={persistor}>{props.children}</PersistGate>
