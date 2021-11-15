@@ -1,4 +1,5 @@
 import { AuthForm } from 'components/auth';
+import { LoadingIcon } from 'components/common';
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -63,6 +64,8 @@ const SignInForm = ({ history }) => {
       }
     }
   }, [auth.data, history, user.user]);
+
+  if (auth.loading) return <LoadingIcon />;
 
   return (
     <>

@@ -1,5 +1,5 @@
 import { AuthForm } from 'components/auth';
-import { userInfo } from 'os';
+import { LoadingIcon } from 'components/common';
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -116,6 +116,8 @@ const SignUpForm = ({ history }) => {
       }
     }
   }, [auth.data, history, user.user]);
+
+  if (auth.loading) return <LoadingIcon />;
 
   return (
     <>
