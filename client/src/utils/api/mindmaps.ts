@@ -6,7 +6,9 @@ export type Mindmap = {
   title: string;
 };
 
-export const writeMindmap = (mindmaps: Mindmap) =>
-  client.post(`${URI}`, mindmaps);
+export const listMindmap = () => client.get(`${URI}`);
+
+export const writeMindmap = (mindmap: Mindmap) =>
+  client.post(`${URI}`, mindmap);
 
 export const readMindmap = (id: string) => client.get(`${URI}/${id}`);
