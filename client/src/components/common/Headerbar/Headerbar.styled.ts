@@ -3,7 +3,6 @@ import theme from 'styles/theme';
 
 export const HeaderbarWrapper = styled.div`
   ${theme.flexes.row('space-between')}
-  width: 100vw;
   margin: 0;
   padding: 0;
   min-width: 320px;

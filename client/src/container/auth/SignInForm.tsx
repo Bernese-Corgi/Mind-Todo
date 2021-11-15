@@ -57,7 +57,7 @@ const SignInForm = ({ history }) => {
       history.push('/');
 
       try {
-        localStorage.setItem('user', JSON.stringify(auth.data));
+        localStorage.setItem('user', JSON.stringify(user.user));
       } catch (e) {
         console.error(e);
       }

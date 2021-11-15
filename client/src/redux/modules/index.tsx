@@ -4,6 +4,9 @@ import storage from 'redux-persist/lib/storage';
 import authReducer from './auth/auth';
 import userReducer from './auth/user';
 import loadingReducer from './loading';
+import mindmapReducer from './mindmaps/mindmap';
+import mindmapsReducer from './mindmaps/mindmaps';
+import nodesReducer from './mindmaps/nodes';
 
 // 리덕스 상태 지속 설정
 const persistConfig = {
@@ -16,6 +19,9 @@ const rootReducer = combineReducers({
   auth: authReducer,
   user: userReducer,
   loading: loadingReducer,
+  mindmap: mindmapReducer,
+  mindmaps: mindmapsReducer,
+  nodes: nodesReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
