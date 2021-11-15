@@ -38,10 +38,10 @@ const Headerbar = ({ user, onSignOut }: HeaderbarProps) => {
           ) : (
             // 로그인 x
             <>
-              <Button linkTo="/sign-in" primary>
+              <Button linkTo="/auth/sign-in" primary>
                 로그인
               </Button>
-              <Button linkTo="/sign-up" primary>
+              <Button linkTo="/auth/sign-up" primary>
                 회원가입
               </Button>
             </>
