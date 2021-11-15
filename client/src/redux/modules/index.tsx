@@ -5,6 +5,7 @@ import authReducer from './auth/auth';
 import userReducer from './auth/user';
 import loadingReducer from './loading';
 import mindmapReducer from './mindmaps/mindmap';
+import mindmapsReducer from './mindmaps/mindmaps';
 
 // 리덕스 상태 지속 설정
 const persistConfig = {
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   user: userReducer,
   loading: loadingReducer,
   mindmap: mindmapReducer,
+  mindmaps: mindmapsReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
