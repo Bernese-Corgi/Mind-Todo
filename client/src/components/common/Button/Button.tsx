@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 
 export type ButtonProps = {
   type?: 'button' | 'submit' | 'reset' | undefined;
+  form?: string;
   value?: string;
   children?: React.ReactNode;
   round?: 'round' | 'square';
@@ -32,6 +33,7 @@ export type LinkButtonProps = {
 
 const Button = ({
   type = 'button',
+  form,
   value = '',
   children,
   round = 'square',
@@ -76,6 +78,7 @@ const Button = ({
   return (
     <StyledButton
       type={type}
+      form={form}
       value={value}
       round={round}
       fullWidth={fullWidth}
