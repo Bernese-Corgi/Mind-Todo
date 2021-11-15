@@ -1,46 +1,28 @@
-import { Dialog } from 'components/common';
-import SignInForm from 'container/auth/SignInForm';
-import SignUpForm from 'container/auth/SignUpForm';
-import { HomePage } from 'pages';
-import { Route } from 'react-router';
+import React from 'react';
+import AddMindmapDialogContainer from 'container/mindmaps/AddMindmapDialogContainer';
+import { AuthPage, HomePage, MindmapListPage } from 'pages';
+import { Route, Switch } from 'react-router';
 import './App.css';
+import MindmapPage from 'pages/MindmapPage';
+import { HeaderbarContainer } from 'container/common';
 
 function App() {
   return (
     <div className="App">
-      <Route component={HomePage} path="/" />
+      <Route component={HeaderbarContainer} path="/" />
+      <Switch>
+        <Route component={HomePage} exact path="/" />
 
-      <Route
-        render={({ history }) => {
-          return (
-            <Dialog
-              hasModal
-              visible
-              onClose={() => {
-                history.goBack();
-              }}>
-              <SignUpForm />
-            </Dialog>
-          );
-        }}
-        path="/sign-up"
-      />
+        <Route component={AuthPage} path="/auth" />
 
-      <Route
-        render={({ history }) => {
-          return (
-            <Dialog
-              hasModal
-              visible
-              onClose={() => {
-                history.goBack();
-              }}>
-              <SignInForm />
-            </Dialog>
-          );
-        }}
-        path="/sign-in"
-      />
+        <Route exact component={MindmapListPage} path="/mindmaps" />
+        <Route
+          component={AddMindmapDialogContainer}
+          path="/mindmaps/create-mindmap"
+        />
+
+        <Route component={MindmapPage} path="/mindmap" />
+      </Switch>
     </div>
   );
 }
