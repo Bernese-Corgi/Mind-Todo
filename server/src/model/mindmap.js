@@ -22,14 +22,26 @@ const NodeSchema = new Schema({
 });
 
 const TreeSchema = new Schema({
-  nodeId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Node',
+  node: {
+    name: {
+      type: String,
+      required: true,
+    },
+    nodeId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Node',
+    },
   },
-  parentId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Node',
-    default: null,
+  parent: {
+    name: {
+      type: String,
+      default: '',
+    },
+    parentId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Node',
+      default: null,
+    },
   },
 });
 
@@ -53,6 +65,18 @@ const MindmapSchema = new Schema({
 });
 
 /* ------------------------------- Node 정적 메서드 ------------------------------ */
+/**
+ * parentId가 주어지지 않는 경우 root node로 저장하기 위해, name과 parentId를 초기화해서 반환한다.
+ * @param {*} parentId 찾을 parent node의 id
+ * @returns parentNode가 null이면 name과 parentId를 초기값으로 설정해서 node로서 반환하고, parentNode가 존재하면 그대로 반환
+ */
+NodeSchema.statics.findParentNodeById = async function (parentId) {
+  const parentNode = await this.findById(parentId);
+  const defaultParentNode = { name: '', parentId: null };
+
+  return parentNode ? parentNode : defaultParentNode;
+};
+
 /**
  * node에 포함되는 데이터 중, ref로 참조하고 있는 데이터들이 생성될 때, 해당 데이터의 id를 node 도큐먼트 내부에 저장하는 메서드
  * @param {*} id 찾을 node의 id

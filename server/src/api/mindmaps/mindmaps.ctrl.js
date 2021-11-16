@@ -129,10 +129,13 @@ export const writeNode = async (ctx) => {
   // node 인스턴스 생성
   const node = new Node({ name, mindmapId });
 
+  // 부모 노드 id로 parent node 찾기
+  const parentNode = await Node.findParentNodeById(parentId);
+
   // node 인스턴스를 바탕으로 tree 인스턴스 생성
   const tree = new Tree({
-    nodeId: node._id,
-    parentId,
+    node: { name: node.name, nodeId: node._id },
+    parent: { name: parentNode.name, parentId: parentNode._id },
   });
 
   try {
@@ -162,15 +165,8 @@ export const writeNode = async (ctx) => {
     // update된 mindmap을 데이터베이스에 저장
     await updatedMindmap.save();
 
-    const parentNode = await Node.findById(parentId);
-
-    const response = {
-      node: { name: node.name, id: node._id },
-      parent: { name: parentNode.name, id: parentNode._id },
-    };
-
     // node 데이터를 응답
-    ctx.body = response;
+    ctx.body = { node, tree };
   } catch (e) {
     ctx.throw(500, e);
   }
