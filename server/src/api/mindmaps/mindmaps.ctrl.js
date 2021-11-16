@@ -162,8 +162,15 @@ export const writeNode = async (ctx) => {
     // update된 mindmap을 데이터베이스에 저장
     await updatedMindmap.save();
 
+    const parentNode = await Node.findById(parentId);
+
+    const response = {
+      node: { name: node.name, id: node._id },
+      parent: { name: parentNode.name, id: parentNode._id },
+    };
+
     // node 데이터를 응답
-    ctx.body = node;
+    ctx.body = response;
   } catch (e) {
     ctx.throw(500, e);
   }
