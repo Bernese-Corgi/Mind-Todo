@@ -75,6 +75,16 @@ const SignUpForm = ({ history }) => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (
+      !values.username ||
+      !values.email ||
+      !values.password ||
+      !values.passwordConfirm
+    ) {
+      setErrors({ ...errors, auth: '빈 칸을 모두 입력해주세요.' });
+    }
+
     dispatch(signUpAsync(values));
   };
 
