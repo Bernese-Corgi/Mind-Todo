@@ -9,6 +9,7 @@ import {
   writeMindmapAsync,
 } from 'redux/modules/mindmaps/mindmap';
 import { useReduxDispatch } from 'redux/store';
+import { writeNodeAsync } from 'redux/modules/mindmaps/nodes';
 
 const AddMindmapDialogContainer = ({ history }) => {
   const dispatch = useReduxDispatch();
@@ -58,6 +59,8 @@ const AddMindmapDialogContainer = ({ history }) => {
     }
 
     const newMindmap = await dispatch(writeMindmapAsync(values));
+
+    await dispatch(writeNodeAsync(newMindmap._id, { name: newMindmap.title }));
 
     if (newMindmap) {
       history.push(`/mindmap/${newMindmap._id}`);

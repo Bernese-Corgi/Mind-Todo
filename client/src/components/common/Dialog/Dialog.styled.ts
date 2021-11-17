@@ -1,31 +1,38 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import theme from 'styles/theme';
+import { DialogWrapperProps } from './Dialog';
 
 /* ---------------------------------- modal --------------------------------- */
-export const StyledDialog = styled.div`
-  position: fixed;
-  z-index: 1000;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  min-width: 90vw;
-  min-height: 40vh;
-  background-color: ${theme.colors.white};
-  border-radius: ${theme.borders.radius.square};
-  box-shadow: ${theme.boxShadow.wide};
+const defaultDialogStyle = `
+position: fixed;
+z-index: 1000;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+`;
 
-  ${({ theme }) => theme.media.desktop`
-    min-width: 480px;
-    min-height: 300px;    
-  `}
-  ${({ theme }) => theme.media.tablet`
-    max-width: 480px;
-    max-height: 300px;    
-  `}
-  ${({ theme }) => theme.media.mobile`
-    min-width: 90vw;
-    min-height: 40vh;
-  `}
+export const StyledDialog = styled.div<DialogWrapperProps>`
+  ${({ wrapperStyle }) =>
+    wrapperStyle
+      ? css`
+          ${defaultDialogStyle}
+          ${wrapperStyle}
+        `
+      : css`
+          ${defaultDialogStyle}
+          width: 80vw;
+          max-width: 500px;
+          min-height: 50vh;
+          min-width: 320px;
+
+          background-color: ${theme.colors.white};
+          border-radius: ${theme.borders.radius.square};
+          box-shadow: ${theme.boxShadow.wide};
+
+          ${({ theme }) => theme.media.mobile`
+            min-height: 45vh;
+           `}
+        `}
 `;
 
 /* ----------------------------------- dim ---------------------------------- */
@@ -43,20 +50,21 @@ export const StyledDim = styled.div`
 export const StyledDialogBody = styled.div`
   position: absolute;
   top: 0;
+  left: 0;
   width: 100%;
-  max-height: 100%;
+  height: 100%;
   overflow: auto;
-  padding: 3em;
-`;
-
-export const StyledForm = styled.div`
-  ${theme.flexes.mixin('column', 'start', 'start')}
 `;
 
 /* --------------------------- dialog close button -------------------------- */
 export const StyledDialogCloseButton = styled.div`
   position: absolute;
-  top: calc(3em - 1em);
-  right: calc(3em - 1em);
+  top: 1.5em;
+  right: 1.5em;
   z-index: 10;
 `;
+
+StyledDialog.displayName = 'StyledDialog';
+StyledDim.displayName = 'StyledDim';
+StyledDialogBody.displayName = 'StyledDialogBody';
+StyledDialogCloseButton.displayName = 'StyledDialogCloseButton';
