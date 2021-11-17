@@ -150,6 +150,11 @@ export const GlobalStyle = createGlobalStyle`
   }
   textarea {
     resize: none;
+    font: inherit;
+    border: none;
+    margin: 0;
+    padding: 0;
+    background: transparent;
   }
   blockquote,
   q {
