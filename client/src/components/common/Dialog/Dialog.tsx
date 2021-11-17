@@ -7,7 +7,7 @@ import {
   StyledDialog,
 } from './Dialog.styled';
 
-interface DialogProps {
+type DialogProps = {
   hasModal?: boolean;
   visible?: boolean;
   portalId?: string;
@@ -17,7 +17,11 @@ interface DialogProps {
   onDimClickClose?: () => void;
   label?: string;
   children?: React.ReactChild;
-}
+};
+
+export type DialogWrapperProps = {
+  wrapperStyle?: string;
+};
 
 const Dialog = ({
   hasModal = true,
@@ -28,8 +32,9 @@ const Dialog = ({
   label,
   portalId = 'portal-root',
   children,
+  wrapperStyle,
   ...restProps
-}: DialogProps) => {
+}: DialogProps & DialogWrapperProps) => {
   const dialogRef = useRef<HTMLDivElement>(null);
   const [modalMode] = useState(hasModal);
 
@@ -60,14 +65,15 @@ const Dialog = ({
               aria-label={label}
               aria-modal={modalMode}
               tabIndex={-1}
+              wrapperStyle={wrapperStyle}
               {...restProps}>
+              {/* ------------------------------- dialog body ------------------------------ */}
+              <StyledDialogBody {...restProps}>{children}</StyledDialogBody>
+
               {/* ------------------------- close button container ------------------------- */}
               <StyledDialogCloseButton>
                 <Button shape="cancel" onClick={onClose} />
               </StyledDialogCloseButton>
-
-              {/* ------------------------------- dialog body ------------------------------ */}
-              <StyledDialogBody {...restProps}>{children}</StyledDialogBody>
             </StyledDialog>
 
             {/* ----------------------------------- dim ---------------------------------- */}
