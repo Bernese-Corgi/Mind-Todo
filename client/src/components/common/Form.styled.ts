@@ -1,13 +1,17 @@
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
-const StyledForm = styled.form`
-  ${theme.flexes.mixin('column', 'start', 'start')}
+export const FormWrapper = styled.div`
   display: block;
-  font-size: 1.5rem;
-  width: 70%;
+  width: 90%;
   margin-right: auto;
   margin-left: auto;
+`;
+
+const StyledForm = styled.form`
+  width: 100%;
+  font-size: 1.5rem;
+  ${theme.transition()}
 
   .inputLabelWrapper {
     width: 100%;
@@ -22,6 +26,7 @@ const StyledForm = styled.form`
     display: block;
     width: 100%;
     margin-top: 0.5em;
+    margin-bottom: 0.4em;
     padding: 0.5em;
     border: 1px solid ${theme.colors.gray.base}40;
     border-radius: ${theme.borders.radius.square};
@@ -42,9 +47,22 @@ const StyledForm = styled.form`
     }
   }
 
+  .authErrorMsg {
+    font-size: 0.9em;
+    display: block;
+    width: 100%;
+    border-radius: ${theme.borders.radius.square};
+    text-align: center;
+    padding: 0.3em 0 0.3em 0;
+    margin: 1em auto 0 auto;
+  }
+
   & button {
-    margin-top: 2em;
+    margin-top: 1.2em;
   }
 `;
+
+FormWrapper.displayName = 'FormWrapper';
+StyledForm.displayName = 'StyledForm';
 
 export default StyledForm;
