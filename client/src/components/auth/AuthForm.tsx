@@ -1,4 +1,5 @@
-import { Button, Input, StyledForm } from 'components/common';
+import { Button, ErrorMsg, Input, StyledForm } from 'components/common';
+import { FormWrapper } from 'components/common/Form.styled';
 import React, { ChangeEvent, FormEvent } from 'react';
 import { SignIn, SignUp } from 'utils/api/auth';
 
@@ -19,103 +20,82 @@ const AuthForm = ({
   onChange,
 }: AuthFormProps) => {
   return (
-    <StyledForm onSubmit={onSubmit && (e => onSubmit(e))}>
-      {/* username input ----------------------------- */}
-      <Input
-        id="username"
-        label="username"
-        name="username"
-        value={form?.username}
-        // TODO placeholder 변경
-        placeholder="username을 입력해주세요"
-        onChange={onChange}
-      />
-      {errors.username && (
-        <span style={{ color: 'red', fontSize: '1.2rem', paddingTop: '.5em' }}>
-          {errors.username}
-        </span>
-      )}
+    <FormWrapper>
+      <StyledForm onSubmit={onSubmit && (e => onSubmit(e))}>
+        {/* username input ----------------------------- */}
+        <Input
+          id="username"
+          label="username"
+          name="username"
+          value={form?.username}
+          // TODO placeholder 변경
+          placeholder="username을 입력해주세요"
+          autoComplete="off"
+          onChange={onChange}
+        />
+        <ErrorMsg>{errors.username}</ErrorMsg>
 
-      {/* email input --------------------------------- */}
-      {authType === 'sign-up' && (
-        <>
-          <Input
-            id="email"
-            label="email"
-            name="email"
-            value={authType === 'sign-up' && form?.email}
-            // TODO placeholder 변경
-            placeholder="이메일을 입력해주세요"
-            onChange={onChange}
-          />
-          {errors.email && (
-            <span
-              style={{ color: 'red', fontSize: '1.2rem', paddingTop: '.5em' }}>
-              {errors.email}
-            </span>
-          )}
-        </>
-      )}
+        {/* email input --------------------------------- */}
+        {authType === 'sign-up' && (
+          <>
+            <Input
+              id="email"
+              label="email"
+              name="email"
+              value={authType === 'sign-up' && form?.email}
+              // TODO placeholder 변경
+              placeholder="이메일을 입력해주세요"
+              onChange={onChange}
+            />
+            <ErrorMsg>{errors.email}</ErrorMsg>
+          </>
+        )}
 
-      {/* password input ----------------------------- */}
-      <Input
-        type="password"
-        id="password"
-        label="password"
-        name="password"
-        value={form?.password}
-        // TODO placeholder 변경
-        placeholder="비밀번호를 입력해주세요"
-        autoComplete={
-          authType === 'sign-in' ? 'current-password' : 'new-password'
-        }
-        onChange={onChange}
-      />
-      {errors.password && (
-        <span style={{ color: 'red', fontSize: '1.2rem', paddingTop: '.5em' }}>
-          {errors.password}
-        </span>
-      )}
+        {/* password input ----------------------------- */}
+        <Input
+          type="password"
+          id="password"
+          label="password"
+          name="password"
+          value={form?.password}
+          // TODO placeholder 변경
+          placeholder="비밀번호를 입력해주세요"
+          autoComplete={
+            authType === 'sign-in' ? 'current-password' : 'new-password'
+          }
+          onChange={onChange}
+        />
+        <ErrorMsg>{errors.password}</ErrorMsg>
 
-      {/* password confirm input --------------------- */}
-      {authType === 'sign-up' && (
-        <>
-          <Input
-            type="password"
-            id="passwordConfirm"
-            label="passwordConfirm"
-            name="passwordConfirm"
-            value={form?.passwordConfirm}
-            // TODO placeholder 변경
-            placeholder="비밀번호를 한 번 더 입력해주세요"
-            onChange={onChange}
-          />
-          {errors.passwordConfirm && (
-            <span
-              style={{ color: 'red', fontSize: '1.2rem', paddingTop: '.5em' }}>
-              {errors.passwordConfirm}
-            </span>
-          )}
-        </>
-      )}
+        {/* password confirm input --------------------- */}
+        {authType === 'sign-up' && (
+          <>
+            <Input
+              type="password"
+              id="passwordConfirm"
+              label="passwordConfirm"
+              name="passwordConfirm"
+              value={form?.passwordConfirm}
+              // TODO placeholder 변경
+              placeholder="비밀번호를 한 번 더 입력해주세요"
+              onChange={onChange}
+            />
+            <ErrorMsg>{errors.passwordConfirm}</ErrorMsg>
+          </>
+        )}
 
-      {errors.auth && (
-        <span
-          style={{ color: 'maroon', fontSize: '1.2rem', paddingTop: '1em' }}>
-          {errors.auth}
-        </span>
-      )}
+        <ErrorMsg className="authErrorMsg">{errors.auth}</ErrorMsg>
 
-      {/* submit button ----------------------------- */}
-      <Button
-        type="submit"
-        value="로그인"
-        // TODO 변경 : 로그인, 회원가입 달라지도록
-        children={authType === 'sign-in' ? '로그인' : '등록'}
-        fullWidth
-        primary
-      />
-    </StyledForm>
+        {/* submit button ----------------------------- */}
+        <Button
+          type="submit"
+          // value="로그인"
+          children={authType === 'sign-in' ? '로그인' : '회원가입'}
+          fullWidth
+          primary
+        />
+      </StyledForm>
+    </FormWrapper>
   );
 };
 
