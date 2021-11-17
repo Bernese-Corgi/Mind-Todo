@@ -85,7 +85,7 @@ const flexes = {
     display:flex;
     flex-direction:${direction};
     align-items:${align};
-    justify-content:${justify}
+    justify-content:${justify};
   `,
   center: `
     display: flex;
