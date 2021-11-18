@@ -25,11 +25,39 @@ const SignInForm = ({ history }) => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
     setValues({ ...values, [name]: value });
+
+    if (!!errors.auth) {
+      if (name === 'username') {
+        value.length < 3 || value.length >= 30
+          ? setErrors({
+              ...errors,
+              username: 'username은 3자 이상 30자 이하로 입력해주세요.',
+            })
+          : setErrors({ ...errors, username: '' });
+      }
+
+      if (name === 'password') {
+        const passwordRegex = /^[a-zA-Z0-9]{3,30}$/;
+
+        !passwordRegex.test(value)
+          ? setErrors({
+              ...errors,
+              password: '영어, 숫자로만 3자 이상, 30자 이하로 입력해주세요.',
+            })
+          : setErrors({ ...errors, password: '' });
+      }
+    }
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!values.username || !values.password) {
+      setErrors({ ...errors, auth: '빈 칸을 모두 입력해주세요.' });
+    }
+
     dispatch(signInAsync(values));
   };
 
@@ -38,7 +66,7 @@ const SignInForm = ({ history }) => {
       if (auth.error.response?.status === 401) {
         setErrors({
           ...errors,
-          auth: `${auth.error.response.data}를 확인해주세요.`,
+          auth: `로그인에 실패했습니다. ${auth.error.response.data}를 확인해주세요.`,
         });
         return;
       }
@@ -51,6 +79,7 @@ const SignInForm = ({ history }) => {
       // values 초기화
       dispatch(initializeAuth());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth, dispatch, history]);
 
   useEffect(() => {
