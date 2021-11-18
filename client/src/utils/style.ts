@@ -1,3 +1,4 @@
+import { css } from 'styled-components';
 import theme from 'styles/theme';
 
 const { colors, fonts, paddings, margins } = theme;
@@ -108,3 +109,19 @@ export const handleMarginSize = (size: string | undefined) => {
       return margins.base;
   }
 };
+
+export const handleSvgHoverColor = (
+  hoverColor: string = theme.colors.gray.dark,
+  elem: string = 'button',
+  color: string = theme.colors.gray.dark
+) => css`
+  svg {
+    color: ${color}90;
+  }
+
+  ${elem}:hover {
+    svg {
+      color: ${hoverColor};
+    }
+  }
+`;

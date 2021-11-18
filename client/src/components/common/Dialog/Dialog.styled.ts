@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import theme from 'styles/theme';
+import { handleSvgHoverColor } from 'utils/style';
 import { DialogWrapperProps } from './Dialog';
 
 /* ---------------------------------- modal --------------------------------- */
@@ -59,9 +60,10 @@ export const StyledDialogBody = styled.div`
 /* --------------------------- dialog close button -------------------------- */
 export const StyledDialogCloseButton = styled.div`
   position: absolute;
-  top: 1.5em;
-  right: 1.5em;
+  top: 0.3em;
+  right: 0.3em;
   z-index: 10;
+  ${handleSvgHoverColor()}
 `;
 
 StyledDialog.displayName = 'StyledDialog';
