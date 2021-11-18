@@ -16,8 +16,19 @@ const MenuTabWrapper = styled.div`
     ${theme.flexes.center}
   }
   li {
-    padding: 0.5em 1.5em;
     min-width: max-content;
+    ${theme.transition()}
+
+    &:hover {
+      color: ${theme.colors.primary.lowSat};
+    }
+
+    a {
+      display: block;
+      padding: 0.5em 1.5em;
+      width: 100%;
+      height: 100%;
+    }
   }
 `;
 

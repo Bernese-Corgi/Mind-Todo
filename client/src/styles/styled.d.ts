@@ -72,7 +72,12 @@ declare module 'styled-components' {
       };
     };
     flexes: {
-      mixin: (direction: string, align: string, justify: string) => string;
+      mixin: (
+        direction: string,
+        align: string,
+        justify: string,
+        wrap?: string
+      ) => string;
       center: string;
       row: (justify: string) => string;
       column: (justify: string) => string;
@@ -91,6 +96,10 @@ declare module 'styled-components' {
       mobile: (...args: BackQuoteArgs) => CSSProp | undefined;
       tablet: (...args: BackQuoteArgs) => CSSProp | undefined;
       desktop: (...args: BackQuoteArgs) => CSSProp | undefined;
+    };
+    defElem: {
+      input: (hasBorder?: boolean) => string;
+      errInput: string;
     };
   }
 }
