@@ -81,11 +81,17 @@ const borders = {
 };
 
 const flexes = {
-  mixin: (direction = 'row', align = 'center', justify = 'center') => `
+  mixin: (
+    direction = 'row',
+    align = 'center',
+    justify = 'center',
+    wrap = 'nowrap'
+  ) => `
     display:flex;
     flex-direction:${direction};
     align-items:${align};
     justify-content:${justify};
+    flex-wrap: ${wrap}
   `,
   center: `
     display: flex;
@@ -181,6 +187,41 @@ Object.keys(sizes).reduce((acc: Media, label: string) => {
   return acc;
 }, media);
 
+/* -------------------------- default element style ------------------------- */
+const defElem = {
+  input: (hasBorder: boolean = false) => `
+    display: block;
+    width: 100%;
+    padding: 0.5em;
+    ${
+      hasBorder
+        ? `border: 1px solid ${theme.colors.gray.base}40;`
+        : `border: 1px solid transparent; border-bottom: 1px solid ${colors.gray.base}40;`
+    }
+    border-radius: ${borders.radius.square};
+    color: ${colors.gray.dark};
+    ${transition()}
+    
+    &:hover {
+      background-color: ${colors.gray.light}30;
+    }
+    
+    &:focus {
+      border: 1px solid ${colors.gray.dark}80;
+      outline: none;
+    }
+
+    &::placeholder {
+      font-size: 85%;
+      color: ${colors.gray.dark}90;
+    }
+    `,
+  errInput: `
+    background-color: ${colors.red}10;
+    border: 1px solid ${colors.red};
+    `,
+};
+
 const theme: DefaultTheme = {
   colors,
   fonts,
@@ -193,6 +234,7 @@ const theme: DefaultTheme = {
   transition,
   sizes,
   media,
+  defElem,
 };
 
 export const Styled = baseStyled as ThemedStyledInterface<DefaultTheme>;
