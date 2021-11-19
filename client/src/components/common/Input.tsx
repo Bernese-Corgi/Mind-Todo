@@ -6,10 +6,12 @@ export type InputProps = {
   type?: 'email' | 'password' | 'text';
   name?: string;
   value?: string;
+  errorMsg?: any;
   placeholder?: string;
   autoComplete?: string;
   readOnly?: boolean;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  hideLabel?: boolean;
 };
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -20,16 +22,20 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       type = 'text',
       name,
       value,
+      errorMsg = '',
       placeholder,
       autoComplete,
       readOnly = false,
       onChange,
+      hideLabel = false,
     },
     ref = null
   ) => {
     return (
       <div className="inputLabelWrapper">
-        <label htmlFor={id}>{label && label}</label>
+        <label htmlFor={id} className={`${hideLabel && 'a11yHidden'}`}>
+          {label && label}
+        </label>
         <input
           id={id}
           type={type}
@@ -40,6 +46,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           readOnly={readOnly}
           onChange={onChange}
+          className={`${errorMsg && 'errorInput'}`}
         />
       </div>
     );
