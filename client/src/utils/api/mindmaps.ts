@@ -8,7 +8,7 @@ export type Mindmap = {
 
 export type NodeType = {
   name: string;
-  parentId?: string; // | null
+  parentId?: string;
 };
 
 export const listMindmap = () => client.get(`${URI}`);
@@ -20,3 +20,6 @@ export const readMindmap = (id: string) => client.get(`${URI}/${id}`);
 
 export const writeNode = (mindmapId: string, newNode: NodeType) =>
   client.post(`${URI}/${mindmapId}`, newNode);
+
+export const readNode = (mindmapId: string, nodeId: string) =>
+  client.get(`${URI}/${mindmapId}/${nodeId}`);
