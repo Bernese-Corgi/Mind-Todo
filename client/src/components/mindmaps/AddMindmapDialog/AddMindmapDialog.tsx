@@ -46,8 +46,16 @@ const AddMindmapDialog = ({
           />
           <ErrorMsg>{errorMessage}</ErrorMsg>
           <div className="addMindmapDialogBtnWrapper">
-            <Button round="round" onClick={onClickCancel} children="취소" />
             <Button
+              id="cancelBtn"
+              title="마인드맵 생성 취소"
+              round="round"
+              onClick={onClickCancel}
+              children="취소"
+            />
+            <Button
+              id="addMindmapBtn"
+              title="마인드맵 생성하기"
               form="writeMindmap"
               type="submit"
               round="round"

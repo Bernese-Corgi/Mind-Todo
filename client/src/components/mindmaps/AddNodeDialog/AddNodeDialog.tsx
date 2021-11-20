@@ -42,7 +42,12 @@ const AddNodeDialog = ({
             onChange={onChangeInput}
             className={`${!!errorMsg && 'errorTextArea'}`}
           />
-          <Button shape="confirm" type="submit" />
+          <Button
+            id="addNodeBtn"
+            title="노드 생성하기"
+            shape="confirm"
+            type="submit"
+          />
         </StyledAddNodeForm>
         <ErrorMsg>{errorMsg}</ErrorMsg>
       </AddNodeDialogWrapper>

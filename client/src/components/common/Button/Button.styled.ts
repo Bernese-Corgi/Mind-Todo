@@ -53,15 +53,15 @@ const handleDefButtonStyle = (props: ButtonProps) => {
 
 export const StyledButton = styled.button<ButtonProps>`
   ${defButtonStyle}
-  ${({ round, primary, textOnly, fullWidth }) =>
-    handleDefButtonStyle({ round, primary, textOnly, fullWidth })}
+  ${({ id, title, round, primary, textOnly, fullWidth }) =>
+    handleDefButtonStyle({ id, title, round, primary, textOnly, fullWidth })}
 `;
 
 export const StyledLinkButton = styled.button<LinkButtonProps & ButtonProps>`
   display: inline-block;
   ${defButtonStyle}
-  ${({ round, primary, textOnly, fullWidth }) =>
-    handleDefButtonStyle({ round, primary, textOnly, fullWidth })}
+  ${({ id, title, round, primary, textOnly, fullWidth }) =>
+    handleDefButtonStyle({ id, title, round, primary, textOnly, fullWidth })}
 `;
 
 export const StyledIconButton = styled.button<IconButtonProps>`
