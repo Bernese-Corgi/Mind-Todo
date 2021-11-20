@@ -9,6 +9,8 @@ import {
 import { Link } from 'react-router-dom';
 
 export type ButtonProps = {
+  id: string;
+  title: string;
   type?: 'button' | 'submit' | 'reset' | undefined;
   form?: string;
   value?: string;
@@ -32,6 +34,8 @@ export type LinkButtonProps = {
 };
 
 const Button = ({
+  id,
+  title,
   type = 'button',
   form,
   value = '',
@@ -50,6 +54,8 @@ const Button = ({
   if (linkTo)
     return (
       <StyledLinkButton
+        id={id}
+        title={title}
         type={type}
         value={value}
         round={round}
@@ -70,13 +76,15 @@ const Button = ({
         fontSize={fontSize}
         onClick={onClick}
         {...restProps}>
-        <Icon shape={shape} />
+        <Icon shape={shape} id={id} title={title} />
       </StyledIconButton>
     );
 
   /* ----------------------------- Default Button ----------------------------- */
   return (
     <StyledButton
+      id={id}
+      title={title}
       type={type}
       form={form}
       value={value}

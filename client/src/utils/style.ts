@@ -3,7 +3,12 @@ import theme from 'styles/theme';
 
 const { colors, fonts, paddings, margins } = theme;
 
-export const handleHoverColorType = (shape: string | undefined) => {
+export const handleHoverColorType = (
+  shape: string | undefined,
+  color?: string | undefined
+) => {
+  if (color?.includes('#')) return color;
+
   switch (shape) {
     case 'edit':
       return colors.green;
@@ -25,6 +30,8 @@ export const handleHoverColorType = (shape: string | undefined) => {
 };
 
 export const handleColorType = (color: string | undefined) => {
+  if (color?.includes('#')) return `${color}80`;
+
   switch (color) {
     case 'primary':
       return colors.primary.base;

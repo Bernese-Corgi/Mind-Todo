@@ -1,6 +1,6 @@
 import React from 'react';
 import AddMindmapDialogContainer from 'container/mindmaps/AddMindmapDialogContainer';
-import { AuthPage, HomePage, MindmapListPage } from 'pages';
+import { AuthPage, HomePage, MindmapListPage, NodePage } from 'pages';
 import { Route, Switch } from 'react-router';
 import './App.css';
 import MindmapPage from 'pages/MindmapPage';
@@ -21,7 +21,8 @@ function App() {
           path="/mindmaps/create-mindmap"
         />
 
-        <Route component={MindmapPage} path="/mindmap" />
+        <Route component={MindmapPage} path="/mindmap/:mindmapId" exact />
+        <Route component={NodePage} path="/mindmap/:mindmapId/:nodeId" />
       </Switch>
     </div>
   );

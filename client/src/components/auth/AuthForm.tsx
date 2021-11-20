@@ -88,6 +88,8 @@ const AuthForm = ({
 
         {/* submit button ----------------------------- */}
         <Button
+          id={`sumit${authType === 'sign-in' ? 'SignIn' : 'SignUp'}`}
+          title={`${authType === 'sign-in' ? '로그인' : '회원가입'}하기`}
           type="submit"
           // value="로그인"
           children={authType === 'sign-in' ? '로그인' : '회원가입'}

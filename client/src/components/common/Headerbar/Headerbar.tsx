@@ -19,7 +19,7 @@ const Headerbar = ({ user, onSignOut }: HeaderbarProps) => {
       <HeaderbarWrapper>
         {/* navigation button --------------------------- */}
         <MenuButtonWrapper>
-          <Button shape="bars" />
+          <Button id="navOpen" title="네비게이션 열기" shape="bars" />
         </MenuButtonWrapper>
 
         {/* logo button ------------------------------ */}
@@ -32,18 +32,37 @@ const Headerbar = ({ user, onSignOut }: HeaderbarProps) => {
           {user ? (
             // 로그인 o
             <>
-              <Button textOnly>{user.username}</Button>
-              <Button onClick={onSignOut}>로그아웃</Button>
+              <Button
+                id="userInfoBtn"
+                title="사용자 정보 보기"
+                textOnly
+                children={user.username}
+              />
+              <Button
+                id="signOutBtn"
+                title="로그아웃"
+                onClick={onSignOut}
+                children="로그아웃"
+              />
             </>
           ) : (
             // 로그인 x
             <>
-              <Button linkTo="/auth/sign-in" primary>
-                로그인
-              </Button>
-              <Button linkTo="/auth/sign-up" primary>
-                회원가입
-              </Button>
+              <Button
+                id="signInBtn"
+                title="로그인"
+                linkTo="/auth/sign-in"
+                primary
+                children="
+                  로그인"
+              />
+              <Button
+                id="signUpBtn"
+                title="회원가입"
+                linkTo="/auth/sign-up"
+                primary
+                children="회원가입"
+              />
             </>
           )}
         </AuthButtonWrapper>

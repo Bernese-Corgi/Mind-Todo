@@ -72,7 +72,12 @@ const Dialog = ({
 
               {/* ------------------------- close button container ------------------------- */}
               <StyledDialogCloseButton>
-                <Button shape="cancel" onClick={onClose} />
+                <Button
+                  id={`close-${label}Button`}
+                  title={`${label} 다이얼로그 닫기`}
+                  shape="cancel"
+                  onClick={onClose}
+                />
               </StyledDialogCloseButton>
             </StyledDialog>
 

@@ -17,9 +17,13 @@ const MindmapListContainer = () => {
 
   return (
     <div>
-      <Button linkTo="/mindmaps/create-mindmap" primary>
-        마인드맵 생성하기
-      </Button>
+      <Button
+        id="openAddMindmapDialog"
+        title="마인드맵 생성 다이얼로그 열기"
+        linkTo="/mindmaps/create-mindmap"
+        primary
+        children="마인드맵 생성하기"
+      />
       <MindmapList
         mindmaps={mindmaps.data}
         loading={mindmaps.loading}
