@@ -9,26 +9,43 @@ export type IconProps = {
   title?: string;
   shape: string;
   color?: string;
+  size?: { width: string | number; height: string | number };
+  onClick?: () => void;
 };
 
 const Svg = styled.svg<IconProps>`
-  ${({ color, shape }) => css`
+  ${({ color, shape, onClick, size }) => css`
     color: ${handleColorType(color)};
-    width: 1em;
-    height: 1em;
-    ${theme.transition('200ms', 'ease-in-out')}
+    width: ${size?.width ? size.width : '1em'};
+    height: ${size?.height ? size.height : '1em'};
+    ${theme.transition()}
 
     &:hover {
-      color: ${handleHoverColorType(shape)};
+      color: ${handleHoverColorType(shape, color)};
+      cursor: ${onClick ? 'pointer' : 'initial'};
     }
   `}
 `;
 
-const Icon = ({ id, title, shape, color }: IconProps) => {
+const Icon = ({
+  id,
+  title,
+  shape,
+  color,
+  size,
+  onClick,
+  ...restProps
+}: IconProps) => {
   return (
     <>
-      <Svg id={id} color={color} shape={shape}>
-        <use id={id} xlinkHref={`${Sprite}#icon-${shape}`} aria-label={title} />
+      <Svg id={id} color={color} shape={shape} size={size} onClick={onClick}>
+        <use
+          id={id}
+          aria-label={title}
+          xlinkHref={`${Sprite}#icon-${shape}`}
+          width={size?.width}
+          height={size?.height}
+        />
       </Svg>
     </>
   );
