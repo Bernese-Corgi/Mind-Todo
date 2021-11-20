@@ -91,6 +91,8 @@ NodeSchema.statics.updateNodeChild = async function (
 ) {
   const node = await Node.findById(id);
 
+  // console.log(propName);
+
   const matchKey = Object.keys(node.toObject()).find((key) => {
     return key === (Array.isArray(node[key]) ? `${propName}s` : propName);
   });
@@ -99,9 +101,13 @@ NodeSchema.statics.updateNodeChild = async function (
     ? { [matchKey]: [...node[matchKey], data] }
     : { [matchKey]: data._id };
 
-  return await Node.findByIdAndUpdate(data.nodeId, nextData, {
+  return await Node.findByIdAndUpdate(id, nextData, {
     new: true,
   }).exec();
+};
+
+NodeSchema.statics.savePostInNode = async function (id, data) {
+  return await Node.findByIdAndUpdate(id, { post: data }, { new: true }).exec();
 };
 
 /**
