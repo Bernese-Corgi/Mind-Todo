@@ -1,5 +1,11 @@
 /* ---------------------------------- react --------------------------------- */
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import {
+  ChangeEvent,
+  FormEvent,
+  MouseEventHandler,
+  useEffect,
+  useState,
+} from 'react';
 import { withRouter } from 'react-router';
 /* ---------------------------------- redux --------------------------------- */
 import { useSelector } from 'react-redux';
@@ -16,6 +22,7 @@ import { AddNodeDialog, Mindmap } from 'components/mindmaps';
 /* ---------------------------------- utils --------------------------------- */
 import { isEmptyArray } from 'utils/checkUtils';
 import { stratifiedMindmap } from 'utils/mindmap';
+import ParentSize from '@visx/responsive/lib/components/ParentSizeModern';
 
 const MindmapContainer = ({ history, match }) => {
   const dispatch = useReduxDispatch();
@@ -41,7 +48,10 @@ const MindmapContainer = ({ history, match }) => {
     };
   }, [dispatch, mindmapId]);
 
-  const handleClickAddButton = (e, parentId) => {
+  const handleClickAddButton = (
+    e: MouseEventHandler<SVGGElement>,
+    parentId: string
+  ) => {
     const rootNode = mindmap.data.body[0].node;
     const _parentId = parentId ? parentId : rootNode.nodeId;
 
@@ -73,7 +83,13 @@ const MindmapContainer = ({ history, match }) => {
       })
     );
 
+    dispatch(readMindmapAsync(mindmapId));
+
     setIsWrite(false);
+  };
+
+  const handleClickNode = (e, nodeId) => {
+    history.push(`/mindmap/${mindmapId}/${nodeId}`);
   };
 
   const handleCloseDialog = () => {
@@ -94,12 +110,28 @@ const MindmapContainer = ({ history, match }) => {
 
   return (
     <>
-      <Mindmap
-        mindmap={mindmap.data}
-        onClickAddButton={handleClickAddButton}
-        treeData={treeData}
-        rootNode={nodes.data?.tree}
-      />
+      <section
+        style={{
+          minWidth: '800px',
+          maxWidth: '1000px',
+          height: '90vh',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+        }}>
+        <ParentSize>
+          {({ width, height }) => (
+            <Mindmap
+              width={width}
+              height={height}
+              mindmap={mindmap.data}
+              onClickAddButton={handleClickAddButton}
+              onClickNode={handleClickNode}
+              treeData={treeData}
+              rootNode={nodes.data?.tree}
+            />
+          )}
+        </ParentSize>
+      </section>
 
       {isWrite && (
         <AddNodeDialog
