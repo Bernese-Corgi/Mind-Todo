@@ -6,7 +6,6 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { withRouter } from 'react-router';
 /* ---------------------------------- redux --------------------------------- */
 import { useSelector } from 'react-redux';
 import { useReduxDispatch } from 'redux/store';
@@ -24,7 +23,12 @@ import { isEmptyArray } from 'utils/checkUtils';
 import { stratifiedMindmap } from 'utils/mindmap';
 import ParentSize from '@visx/responsive/lib/components/ParentSizeModern';
 
-const MindmapContainer = ({ history, match }) => {
+interface MindmapContainerProps {
+  history;
+  match;
+}
+
+const MindmapContainer = ({ history, match }: MindmapContainerProps) => {
   const dispatch = useReduxDispatch();
   const { mindmap, nodes } = useSelector((state: RootState) => state);
 
@@ -149,4 +153,4 @@ const MindmapContainer = ({ history, match }) => {
   );
 };
 
-export default withRouter(MindmapContainer);
+export default MindmapContainer;

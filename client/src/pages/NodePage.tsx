@@ -2,10 +2,10 @@ import { NodeContainer } from 'container/nodes';
 import React from 'react';
 import { withRouter } from 'react-router';
 
-const NodePage = ({ match }) => {
+const NodePage = ({ history, match }) => {
   return (
     <>
-      <NodeContainer match={match} />
+      <NodeContainer history={history} match={match} />
     </>
   );
 };

@@ -1,12 +1,12 @@
 import { MindmapContainer } from 'container/mindmaps';
-import { Route } from 'react-router';
+import { withRouter } from 'react-router';
 
-const MindmapPage = () => {
+const MindmapPage = ({ history, match }) => {
   return (
     <>
-      <Route component={MindmapContainer} path="/mindmap/:mindmapId" />
+      <MindmapContainer history={history} match={match} />
     </>
   );
 };
 
-export default MindmapPage;
+export default withRouter(MindmapPage);

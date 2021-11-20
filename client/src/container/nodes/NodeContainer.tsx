@@ -5,7 +5,7 @@ import { RootState } from 'redux/modules';
 import { readNodeAsync } from 'redux/modules/mindmaps/nodes';
 import { useReduxDispatch } from 'redux/store';
 
-const NodeContainer = ({ match }) => {
+const NodeContainer = ({ history, match }) => {
   const dispatch = useReduxDispatch();
   const { mindmap, nodes } = useSelector((state: RootState) => state);
 
@@ -21,7 +21,7 @@ const NodeContainer = ({ match }) => {
 
   return (
     <>
-      <MindmapContainer />
+      <MindmapContainer history={history} match={match} />
     </>
   );
 };
