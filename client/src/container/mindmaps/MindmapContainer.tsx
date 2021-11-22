@@ -114,28 +114,19 @@ const MindmapContainer = ({ history, match }: MindmapContainerProps) => {
 
   return (
     <>
-      <section
-        style={{
-          minWidth: '800px',
-          maxWidth: '1000px',
-          height: '90vh',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-        }}>
-        <ParentSize>
-          {({ width, height }) => (
-            <Mindmap
-              width={width}
-              height={height}
-              mindmap={mindmap.data}
-              onClickAddButton={handleClickAddButton}
-              onClickNode={handleClickNode}
-              treeData={treeData}
-              rootNode={node.data?.tree}
-            />
-          )}
-        </ParentSize>
-      </section>
+      <ParentSize>
+        {({ width, height }) => (
+          <Mindmap
+            width={width}
+            height={height - 5}
+            mindmap={mindmap.data}
+            onClickAddButton={handleClickAddButton}
+            onClickNode={handleClickNode}
+            treeData={treeData}
+            rootNode={node.data?.tree}
+          />
+        )}
+      </ParentSize>
 
       {isWrite && (
         <AddNodeDialog
@@ -146,9 +137,6 @@ const MindmapContainer = ({ history, match }: MindmapContainerProps) => {
           errorMsg={errorMsg}
         />
       )}
-      {/* <Button linkTo="/mindmaps" onClick={handleClick}>
-        뒤로가기
-      </Button> */}
     </>
   );
 };
