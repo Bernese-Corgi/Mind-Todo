@@ -5,10 +5,10 @@ import * as mindmapsApi from 'utils/api/mindmaps';
 
 /* --------------------------------- action --------------------------------- */
 const [WRITE_NODE, WRITE_NODE_SUCCESS, WRITE_NODE_ERROR] =
-  createRequestActionTypes('nodes/WRITE_NODE');
+  createRequestActionTypes('node/WRITE_NODE');
 
 const [READ_NODE, READ_NODE_SUCCESS, READ_NODE_ERROR] =
-  createRequestActionTypes('nodes/READ_NODE');
+  createRequestActionTypes('node/READ_NODE');
 
 /* -------------------------- thunk action creator -------------------------- */
 export const writeNodeAsync = (
@@ -31,7 +31,7 @@ const initialState = {
 };
 
 /* --------------------------------- reducer -------------------------------- */
-function nodesReducer(state = initialState, { type, payload }) {
+function nodeReducer(state = initialState, { type, payload }) {
   switch (type) {
     // loading
     case WRITE_NODE:
@@ -68,4 +68,4 @@ function nodesReducer(state = initialState, { type, payload }) {
   }
 }
 
-export default nodesReducer;
+export default nodeReducer;

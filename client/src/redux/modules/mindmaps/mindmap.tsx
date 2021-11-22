@@ -7,10 +7,10 @@ import * as mindmapsApi from 'utils/api/mindmaps';
 const [WRITE_MINDMAP, WRITE_MINDMAP_SUCCESS, WRITE_MINDMAP_ERROR] =
   createRequestActionTypes('mindmap/WRITE_MINDMAP');
 
-const INITIALIZE_FORM = 'mindmap/INITIALIZE_FORM';
-
 const [READ_MINDMAP, READ_MINDMAP_SUCCESS, READ_MINDMAP_ERROR] =
   createRequestActionTypes('mindmap/READ_MINDMAP');
+
+const INITIALIZE_FORM = 'mindmap/INITIALIZE_FORM';
 
 /* -------------------------- thunk action creator -------------------------- */
 export const writeMindmapAsync = (mindmaps: mindmapsApi.Mindmap) =>

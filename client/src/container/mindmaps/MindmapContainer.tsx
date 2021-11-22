@@ -14,7 +14,7 @@ import {
   initializeMindmapForm,
   readMindmapAsync,
 } from 'redux/modules/mindmaps/mindmap';
-import { writeNodeAsync } from 'redux/modules/mindmaps/nodes';
+import { writeNodeAsync } from 'redux/modules/mindmaps/node';
 /* -------------------------------- component ------------------------------- */
 import { LoadingIcon } from 'components/common';
 import { AddNodeDialog, Mindmap } from 'components/mindmaps';
@@ -30,7 +30,7 @@ interface MindmapContainerProps {
 
 const MindmapContainer = ({ history, match }: MindmapContainerProps) => {
   const dispatch = useReduxDispatch();
-  const { mindmap, nodes } = useSelector((state: RootState) => state);
+  const { mindmap, node } = useSelector((state: RootState) => state);
 
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -131,7 +131,7 @@ const MindmapContainer = ({ history, match }: MindmapContainerProps) => {
               onClickAddButton={handleClickAddButton}
               onClickNode={handleClickNode}
               treeData={treeData}
-              rootNode={nodes.data?.tree}
+              rootNode={node.data?.tree}
             />
           )}
         </ParentSize>
