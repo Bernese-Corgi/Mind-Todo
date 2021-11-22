@@ -5,24 +5,24 @@ import { ReactComponent as BookImg } from './assets/book.svg';
 
 interface WriteActionBtnProps {
   path: string;
-  text?: string;
+  id: string;
+  title: string;
+  descText?: string;
+  btnText?: string;
 }
 
 const WriteActionBtn = ({
   path,
-  text = '아직 작성된 글이 없습니다.',
+  id,
+  title,
+  descText,
+  btnText,
 }: WriteActionBtnProps) => {
   return (
     <StyledWriteActionBtnSect>
+      <p className="descText">{descText}</p>
       <BookImg className="noDataImg" aria-label="비어있는 책 이미지" />
-      <p className="text">{text}</p>
-      <Button
-        linkTo={path}
-        id="goToWritePostPage"
-        title="글 작성하러 가기"
-        children="글 작성하러 가기"
-        textOnly
-      />
+      <Button linkTo={path} id={id} title={title} children={btnText} textOnly />
     </StyledWriteActionBtnSect>
   );
 };
