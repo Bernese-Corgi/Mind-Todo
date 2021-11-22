@@ -5,13 +5,22 @@ import * as postsApi from 'utils/api/posts';
 
 /* --------------------------------- action --------------------------------- */
 const [WRITE_POST, WRITE_POST_SUCCESS, WRITE_POST_ERROR] =
-  createRequestActionTypes('posts/WRITE_POST');
+  createRequestActionTypes('post/WRITE_POST');
+
+const [READ_POST, READ_POST_SUCCESS, READ_POST_ERROR] =
+  createRequestActionTypes('post/READ_POST');
+
+const UNLOAD_POST = 'post/UNLOAD_POST';
 
 /* -------------------------- thunk action creator -------------------------- */
-export const writePostAsync = (nodeId: string) =>
-  createRequestThunk(WRITE_POST, postsApi.writePost, nodeId);
+export const writePostAsync = (nodeId: string, newPost: postsApi.Post) =>
+  createRequestThunk(WRITE_POST, postsApi.writePost, nodeId, newPost);
+
+export const readPostAsync = (postId: string) =>
+  createRequestThunk(READ_POST, postsApi.readPost, postId);
 
 /* ----------------------------- action creator ----------------------------- */
+export const unloadPost = () => ({ type: UNLOAD_POST });
 
 /* ---------------------------------- types --------------------------------- */
 
@@ -23,10 +32,11 @@ const initialState = {
 };
 
 /* --------------------------------- reducer -------------------------------- */
-function postsReducer(state = initialState, { type, payload }) {
+function postReducer(state = initialState, { type, payload }) {
   switch (type) {
     // loading
     case WRITE_POST:
+    case READ_POST:
       return {
         ...state,
         loading: true,
@@ -36,6 +46,7 @@ function postsReducer(state = initialState, { type, payload }) {
 
     // success
     case WRITE_POST_SUCCESS:
+    case READ_POST_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -45,15 +56,18 @@ function postsReducer(state = initialState, { type, payload }) {
 
     // error
     case WRITE_POST_ERROR:
+    case READ_POST_ERROR:
       return {
         ...state,
         loading: false,
         error: payload,
         data: null,
       };
+    case UNLOAD_POST:
+      return initialState;
     default:
       return initialState;
   }
 }
 
-export default postsReducer;
+export default postReducer;
