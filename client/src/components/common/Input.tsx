@@ -6,7 +6,7 @@ export type InputProps = {
   type?: 'email' | 'password' | 'text';
   name?: string;
   value?: string;
-  errorMsg?: any;
+  errorMsg?: string | boolean;
   placeholder?: string;
   autoComplete?: string;
   readOnly?: boolean;
