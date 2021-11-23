@@ -1,5 +1,5 @@
-import React, { ChangeEvent, KeyboardEvent } from 'react';
-import { StyledMdEditorTextArea } from './MdEditor.styled';
+import React, { ChangeEvent } from 'react';
+import { ErrorMsg } from '..';
 
 export type MdEditorTextAreaProps = {
   id: string;
@@ -28,34 +28,22 @@ const MdEditor = ({
   readOnly,
   onChange,
   hideLabel = false,
-}: MdEditorProps) => {
-  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    //
-    if (e.key === 'Tab') {
-      console.log(e);
-      // e.preventDefault();
-      return '\t';
-    }
-  };
-
-  return (
-    <div>
-      <label className={hideLabel ? 'a11yHidden' : ''} htmlFor={id}>
-        {label && label}
-      </label>
-      <StyledMdEditorTextArea
-        id={id}
-        name={name}
-        value={value}
-        errorMsg={errorMsg}
-        placeholder={placeholder}
-        autoComplete={autoComplete}
-        readOnly={readOnly}
-        onChange={onChange}
-        onKeyDown={handleKeyDown}
-      />
-    </div>
-  );
-};
+}: MdEditorProps) => (
+  <div className="mdEditorWrapper">
+    <label className={hideLabel ? 'a11yHidden' : ''} htmlFor={id}>
+      {label && label}
+    </label>
+    <textarea
+      id={id}
+      name={name}
+      value={value}
+      placeholder={placeholder}
+      autoComplete={autoComplete}
+      readOnly={readOnly}
+      onChange={onChange}
+    />
+    {errorMsg && <ErrorMsg children={errorMsg} />}
+  </div>
+);
 
 export default MdEditor;
