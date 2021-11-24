@@ -28,6 +28,7 @@ const PostEditor = ({ onSubmit, values, errors, onChanges, onClicks }) => (
         id="cancelWritePost"
         title="글 작성 취소"
         onClick={onClicks.cancelBtn}
+        round="round"
         children="취소"
       />
       <Button
@@ -35,6 +36,7 @@ const PostEditor = ({ onSubmit, values, errors, onChanges, onClicks }) => (
         id="submitPost"
         title="작성글 등록하기"
         primary
+        round="round"
         children="등록"
       />
     </div>
