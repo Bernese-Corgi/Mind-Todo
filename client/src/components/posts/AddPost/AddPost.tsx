@@ -3,7 +3,7 @@ import React from 'react';
 import { PostEditor, PostViewer } from '..';
 import { StyledAddPostArticle } from './AddPost.styled';
 
-const AddPost = ({ values, errors, onSubmit, onChanges, onClicks, match }) => {
+const AddPost = ({ values, errors, onSubmit, onChanges, onClicks }) => {
   return (
     <Responsive>
       <StyledAddPostArticle>
@@ -19,7 +19,7 @@ const AddPost = ({ values, errors, onSubmit, onChanges, onClicks, match }) => {
         </section>
         <section className="section postViewer">
           <h3>미리보기</h3>
-          <PostViewer post={values} params={match.params} />
+          <PostViewer post={values} />
         </section>
       </StyledAddPostArticle>
     </Responsive>
