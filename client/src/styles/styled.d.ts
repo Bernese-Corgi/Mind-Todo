@@ -64,6 +64,7 @@ declare module 'styled-components' {
     boxShadow: {
       default: string;
       wide: string;
+      narrow: string;
     };
     borders: {
       radius: {

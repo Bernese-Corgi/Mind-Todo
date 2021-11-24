@@ -71,6 +71,7 @@ const paddings = {
 const boxShadow = {
   default: '0 0.4em 1.5em rgba(0, 0, 0, 0.2)',
   wide: '0 0.4em 5em rgba(0, 0, 0, 0.1)',
+  narrow: '0 0.3em 0.6em rgba(0, 0, 0, 0.2)',
 };
 
 const borders = {
