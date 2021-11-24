@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Button, MdEditor } from 'components/common';
+import { Input, Button, MdEditor, ErrorMsg } from 'components/common';
 import { StyledPostEditorForm } from './PostEditor.styled';
 
 const PostEditor = ({ onSubmit, values, errors, onChanges, onClicks }) => (
@@ -24,6 +24,7 @@ const PostEditor = ({ onSubmit, values, errors, onChanges, onClicks }) => (
       placeholder="내용을 입력해주세요."
       onChange={onChanges.body}
     />
+    <ErrorMsg className="formErrorMsg" children={errors.post} />
     <div className="btnWrapper">
       <Button
         id="cancelWritePost"
