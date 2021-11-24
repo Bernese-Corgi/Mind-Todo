@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FormEvent } from 'react';
-import { Button, Dialog, ErrorMsg, Input } from 'components/common';
+import { Button, Dialog, InputField } from 'components/common';
 import { MindmapType } from 'utils/api/mindmaps';
 import {
   addMindmapDialogStyle,
@@ -33,7 +33,7 @@ const AddMindmapDialog = ({
       <AddMindmapDialogWrapper>
         <h2>마인드맵 생성</h2>
         <StyledMindmapForm id="writeMindmap" onSubmit={onSubmit}>
-          <Input
+          <InputField
             id="mindmapTitle"
             label="마인드맵 제목"
             name="mindmapTitle"

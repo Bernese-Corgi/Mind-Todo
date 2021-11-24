@@ -16,7 +16,7 @@ export type InputProps = {
   hideLabel?: boolean;
 };
 
-const Input = forwardRef<HTMLInputElement, InputProps>(
+const InputField = forwardRef<HTMLInputElement, InputProps>(
   (
     {
       id,
@@ -57,4 +57,4 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
   }
 );
 
-export default Input;
+export default InputField;

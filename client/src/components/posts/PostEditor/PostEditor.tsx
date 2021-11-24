@@ -1,10 +1,10 @@
 import React from 'react';
-import { Input, Button, MdEditor, ErrorMsg } from 'components/common';
+import { InputField, Button, MdEditor, ErrorMsg } from 'components/common';
 import { StyledPostEditorForm } from './PostEditor.styled';
 
 const PostEditor = ({ onSubmit, values, errors, onChanges, onClicks }) => (
   <StyledPostEditorForm onSubmit={onSubmit}>
-    <Input
+    <InputField
       id="postTitleInput"
       label="제목"
       type="text"

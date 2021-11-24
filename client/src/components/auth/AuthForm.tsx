@@ -1,4 +1,4 @@
-import { Button, ErrorMsg, Input, StyledForm } from 'components/common';
+import { Button, ErrorMsg, InputField, StyledForm } from 'components/common';
 import { FormWrapper } from 'components/common/Form.styled';
 import React, { ChangeEvent, FormEvent } from 'react';
 import { SignIn, SignUp } from 'utils/api/auth';
@@ -23,7 +23,7 @@ const AuthForm = ({
     <FormWrapper>
       <StyledForm onSubmit={onSubmit && (e => onSubmit(e))}>
         {/* username input ----------------------------- */}
-        <Input
+        <InputField
           id="username"
           label="username"
           name="username"
@@ -38,7 +38,7 @@ const AuthForm = ({
         {/* email input --------------------------------- */}
         {authType === 'sign-up' && (
           <>
-            <Input
+            <InputField
               id="email"
               label="email"
               name="email"
@@ -52,7 +52,7 @@ const AuthForm = ({
         )}
 
         {/* password input ----------------------------- */}
-        <Input
+        <InputField
           type="password"
           id="password"
           label="password"
@@ -70,7 +70,7 @@ const AuthForm = ({
         {/* password confirm input --------------------- */}
         {authType === 'sign-up' && (
           <>
-            <Input
+            <InputField
               type="password"
               id="passwordConfirm"
               label="passwordConfirm"
