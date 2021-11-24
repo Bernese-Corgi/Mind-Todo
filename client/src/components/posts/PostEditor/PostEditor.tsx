@@ -1,5 +1,5 @@
-import { Input, Button, MdEditor } from 'components/common';
 import React from 'react';
+import { Input, Button, MdEditor } from 'components/common';
 import { StyledPostEditorForm } from './PostEditor.styled';
 
 const PostEditor = ({ onSubmit, values, errors, onChanges, onClicks }) => (
@@ -10,7 +10,7 @@ const PostEditor = ({ onSubmit, values, errors, onChanges, onClicks }) => (
       type="text"
       name="title"
       value={values.title}
-      errorMsg={errors.body}
+      errorMsg={errors.title}
       placeholder="제목을 입력해주세요."
       autoComplete="off"
       onChange={onChanges.title}
@@ -20,6 +20,7 @@ const PostEditor = ({ onSubmit, values, errors, onChanges, onClicks }) => (
       label="내용"
       name="body"
       value={values.body}
+      errorMsg={errors.body}
       placeholder="내용을 입력해주세요."
       onChange={onChanges.body}
     />

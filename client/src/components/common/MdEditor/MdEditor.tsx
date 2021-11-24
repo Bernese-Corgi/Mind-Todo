@@ -41,8 +41,9 @@ const MdEditor = ({
       autoComplete={autoComplete}
       readOnly={readOnly}
       onChange={onChange}
+      className={`${errorMsg && 'errorInput'}`}
     />
-    {errorMsg && <ErrorMsg children={errorMsg} />}
+    <ErrorMsg children={errorMsg} />
   </div>
 );
 

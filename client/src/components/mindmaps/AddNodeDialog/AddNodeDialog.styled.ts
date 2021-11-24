@@ -36,9 +36,5 @@ export const StyledAddNodeForm = styled.form`
     margin-bottom: 0.5em;
   }
 
-  .errorTextArea {
-    ${theme.defElem.errInput}
-  }
-
   ${handleSvgHoverColor(theme.colors.secondary.base)}
 `;

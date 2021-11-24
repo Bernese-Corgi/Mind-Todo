@@ -28,12 +28,12 @@ const AuthForm = ({
           label="username"
           name="username"
           value={form?.username}
+          errorMsg={errors.username}
           // TODO placeholder 변경
           placeholder="username을 입력해주세요"
           autoComplete="off"
           onChange={onChange}
         />
-        <ErrorMsg>{errors.username}</ErrorMsg>
 
         {/* email input --------------------------------- */}
         {authType === 'sign-up' && (
@@ -43,11 +43,11 @@ const AuthForm = ({
               label="email"
               name="email"
               value={authType === 'sign-up' && form?.email}
+              errorMsg={errors.email}
               // TODO placeholder 변경
               placeholder="이메일을 입력해주세요"
               onChange={onChange}
             />
-            <ErrorMsg>{errors.email}</ErrorMsg>
           </>
         )}
 
@@ -58,6 +58,7 @@ const AuthForm = ({
           label="password"
           name="password"
           value={form?.password}
+          errorMsg={errors.password}
           // TODO placeholder 변경
           placeholder="비밀번호를 입력해주세요"
           autoComplete={
@@ -65,7 +66,6 @@ const AuthForm = ({
           }
           onChange={onChange}
         />
-        <ErrorMsg>{errors.password}</ErrorMsg>
 
         {/* password confirm input --------------------- */}
         {authType === 'sign-up' && (
@@ -76,22 +76,21 @@ const AuthForm = ({
               label="passwordConfirm"
               name="passwordConfirm"
               value={form?.passwordConfirm}
+              errorMsg={errors.passwordConfirm}
               // TODO placeholder 변경
               placeholder="비밀번호를 한 번 더 입력해주세요"
               onChange={onChange}
             />
-            <ErrorMsg>{errors.passwordConfirm}</ErrorMsg>
           </>
         )}
 
-        <ErrorMsg className="authErrorMsg">{errors.auth}</ErrorMsg>
+        <ErrorMsg className="formErrorMsg">{errors.auth}</ErrorMsg>
 
         {/* submit button ----------------------------- */}
         <Button
           id={`sumit${authType === 'sign-in' ? 'SignIn' : 'SignUp'}`}
           title={`${authType === 'sign-in' ? '로그인' : '회원가입'}하기`}
           type="submit"
-          // value="로그인"
           children={authType === 'sign-in' ? '로그인' : '회원가입'}
           fullWidth
           primary

@@ -28,16 +28,6 @@ const StyledForm = styled.form`
     margin-bottom: 0.4em;
   }
 
-  .authErrorMsg {
-    font-size: 0.9em;
-    display: block;
-    width: 100%;
-    border-radius: ${theme.borders.radius.square};
-    text-align: center;
-    padding: 0.3em 0 0.3em 0;
-    margin: 1em auto 0 auto;
-  }
-
   & button {
     margin-top: 1.2em;
   }

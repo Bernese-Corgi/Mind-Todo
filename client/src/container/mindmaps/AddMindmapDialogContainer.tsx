@@ -80,7 +80,7 @@ const AddMindmapDialogContainer = ({ history }) => {
     <>
       <AddMindmapDialog
         values={values}
-        errorMessage={error}
+        errorMsg={error}
         onSubmit={handleSubmit}
         onChange={handleChangeTitle}
         onClickCancel={handleClick.cancelButton}

@@ -9,7 +9,7 @@ import {
 
 export interface AddMindmapDialogProps {
   values?: Mindmap;
-  errorMessage?: string;
+  errorMsg?: string;
   onSubmit?: (e: FormEvent<HTMLFormElement>) => void;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onClickCancel?: () => void;
@@ -18,7 +18,7 @@ export interface AddMindmapDialogProps {
 
 const AddMindmapDialog = ({
   values,
-  errorMessage,
+  errorMsg,
   onSubmit,
   onChange,
   onClickCancel,
@@ -42,9 +42,8 @@ const AddMindmapDialog = ({
             autoComplete="off"
             onChange={onChange}
             hideLabel
-            errorMsg={!!errorMessage}
+            errorMsg={errorMsg}
           />
-          <ErrorMsg>{errorMessage}</ErrorMsg>
           <div className="addMindmapDialogBtnWrapper">
             <Button
               id="cancelBtn"

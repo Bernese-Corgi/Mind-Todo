@@ -35,10 +35,6 @@ export const StyledMindmapForm = styled.form<AddMindmapDialogProps>`
     margin-bottom: 0.2em;
   }
 
-  .errorInput {
-    ${theme.defElem.errInput}
-  }
-
   .addMindmapDialogBtnWrapper {
     margin-top: 0.8em;
     ${theme.flexes.row('flex-end')}
