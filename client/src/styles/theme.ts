@@ -220,6 +220,7 @@ const defElem = {
   errInput: `
     background-color: ${colors.red}10;
     border: 1px solid ${colors.red};
+    margin-bottom: 0.3em;
     `,
   errForm: `
     font-size: 0.9em;
