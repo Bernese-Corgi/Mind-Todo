@@ -13,7 +13,7 @@ const [READ_MINDMAP, READ_MINDMAP_SUCCESS, READ_MINDMAP_ERROR] =
 const INITIALIZE_FORM = 'mindmap/INITIALIZE_FORM';
 
 /* -------------------------- thunk action creator -------------------------- */
-export const writeMindmapAsync = (mindmaps: mindmapsApi.Mindmap) =>
+export const writeMindmapAsync = (mindmaps: mindmapsApi.MindmapType) =>
   createRequestThunk(WRITE_MINDMAP, mindmapsApi.writeMindmap, mindmaps);
 
 export const readMindmapAsync = (id: string) =>
@@ -27,7 +27,7 @@ export const initializeMindmapForm = () => ({ type: INITIALIZE_FORM });
 export type MindmapState = {
   loading: boolean;
   error: Error | null;
-  data: mindmapsApi.Mindmap | null;
+  data: mindmapsApi.MindmapType | null;
 };
 
 export type MindmapAction = {

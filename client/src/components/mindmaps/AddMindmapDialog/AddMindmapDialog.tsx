@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent } from 'react';
 import { Button, Dialog, ErrorMsg, Input } from 'components/common';
-import { Mindmap } from 'utils/api/mindmaps';
+import { MindmapType } from 'utils/api/mindmaps';
 import {
   addMindmapDialogStyle,
   AddMindmapDialogWrapper,
@@ -8,7 +8,7 @@ import {
 } from './AddMindmapDialog.styled';
 
 export interface AddMindmapDialogProps {
-  values?: Mindmap;
+  values?: MindmapType;
   errorMsg?: string;
   onSubmit?: (e: FormEvent<HTMLFormElement>) => void;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
