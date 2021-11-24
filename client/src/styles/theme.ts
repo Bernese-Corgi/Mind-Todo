@@ -220,6 +220,15 @@ const defElem = {
     background-color: ${colors.red}10;
     border: 1px solid ${colors.red};
     `,
+  errForm: `
+    font-size: 0.9em;
+    display: block;
+    width: 100%;
+    border-radius: ${borders.radius.square};
+    text-align: center;
+    padding: 0.3em 0 0.3em 0;
+    margin: 1em auto 0 auto;
+    `,
 };
 
 const theme: DefaultTheme = {

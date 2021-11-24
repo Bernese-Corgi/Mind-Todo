@@ -178,6 +178,15 @@ export const GlobalStyle = createGlobalStyle`
     margin: -1px;
     white-space: nowrap;
   }
+
+/* error message ----------------------------- */
+  .errorInput {
+    ${theme.defElem.errInput}
+  }
+
+  .formErrorMsg {
+    ${theme.defElem.errForm}
+  }
 `;
 
 export default GlobalStyle;

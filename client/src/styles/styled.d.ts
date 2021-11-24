@@ -100,6 +100,7 @@ declare module 'styled-components' {
     defElem: {
       input: (hasBorder?: boolean) => string;
       errInput: string;
+      errForm: string;
     };
   }
 }
