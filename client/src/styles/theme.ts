@@ -177,7 +177,7 @@ Object.keys(sizes).reduce((acc: Media, label: string) => {
     case 'mobile':
       acc.mobile = (...args: BackQuoteArgs) =>
         css`
-          @media only screen and (max-width: ${sizes.tablet}px) {
+          @media only screen and (max-width: ${sizes.tablet - 1}px) {
             ${args}
           }
         `;
