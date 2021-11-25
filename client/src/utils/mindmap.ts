@@ -38,7 +38,7 @@ export const wrapText = (
       .append('tspan')
       .text(t)
       .attr('x', _x)
-      .attr('y', _y * (i + 1));
+      .attr('y', _y * i);
   });
 };
 
@@ -61,4 +61,4 @@ export const getD3NodeSelectionById = (selector, id: string) => {
  * @param selection getBBox 반환 객체를 받을 d3 selection 객체
  * @returns 엘리먼트의 getBBox가 반환하는 SVGRect 객체
  */
-export const getNodeBBox = selection => selection.node().getBBox();
+export const getNodeBBox = selection => selection.node()?.getBBox();
