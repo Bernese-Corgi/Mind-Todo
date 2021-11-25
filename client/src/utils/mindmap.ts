@@ -1,3 +1,4 @@
+import * as d3 from 'd3';
 import { stratify } from 'd3-hierarchy';
 import { chunkString } from './stringUtils';
 
@@ -39,4 +40,18 @@ export const wrapText = (
       .attr('x', _x)
       .attr('y', _y * (i + 1));
   });
+};
+
+/**
+ * css 선택자로 노드를 찾고, 인수로 전달받은 id와 id 어트리뷰트가 일치하는 노드의 getBBox() 반환 객체를 반환한다.
+ * @param selector 엘리먼트를 찾을 css 선택자. 예를 들어, className으로 찾는 경우 '.className'을 전달한다.
+ * @param id 엘리먼트의 id 어트리뷰트와 매치되는 id 값
+ * @returns 엘리먼트의 getBBox가 반환하는 SVGRect 객체
+ */
+export const getNodeBBoxById = (selector, id: string) => {
+  // id를 가진 요소여야함
+  const selection = d3.selectAll(selector).filter(function (this) {
+    return this.getAttribute('id') === id ? this : null;
+  });
+  return selection.node().getBBox();
 };
