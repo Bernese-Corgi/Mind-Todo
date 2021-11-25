@@ -71,6 +71,7 @@ const paddings = {
 const boxShadow = {
   default: '0 0.4em 1.5em rgba(0, 0, 0, 0.2)',
   wide: '0 0.4em 5em rgba(0, 0, 0, 0.1)',
+  narrow: '0 0.3em 0.6em rgba(0, 0, 0, 0.2)',
 };
 
 const borders = {
@@ -176,7 +177,7 @@ Object.keys(sizes).reduce((acc: Media, label: string) => {
     case 'mobile':
       acc.mobile = (...args: BackQuoteArgs) =>
         css`
-          @media only screen and (max-width: ${sizes.tablet}px) {
+          @media only screen and (max-width: ${sizes.tablet - 1}px) {
             ${args}
           }
         `;
@@ -219,6 +220,16 @@ const defElem = {
   errInput: `
     background-color: ${colors.red}10;
     border: 1px solid ${colors.red};
+    margin-bottom: 0.3em;
+    `,
+  errForm: `
+    font-size: 0.9em;
+    display: block;
+    width: 100%;
+    border-radius: ${borders.radius.square};
+    text-align: center;
+    padding: 0.3em 0 0.3em 0;
+    margin: 1em auto 0 auto;
     `,
 };
 

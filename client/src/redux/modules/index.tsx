@@ -1,12 +1,13 @@
 import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import loadingReducer from './common/loading';
 import authReducer from './auth/auth';
 import userReducer from './auth/user';
-import loadingReducer from './loading';
 import mindmapReducer from './mindmaps/mindmap';
 import mindmapsReducer from './mindmaps/mindmaps';
-import nodesReducer from './mindmaps/nodes';
+import nodeReducer from './mindmaps/node';
+import postReducer from './posts/post';
 
 // 리덕스 상태 지속 설정
 const persistConfig = {
@@ -16,12 +17,13 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
+  loading: loadingReducer,
   auth: authReducer,
   user: userReducer,
-  loading: loadingReducer,
   mindmap: mindmapReducer,
   mindmaps: mindmapsReducer,
-  nodes: nodesReducer,
+  node: nodeReducer,
+  post: postReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

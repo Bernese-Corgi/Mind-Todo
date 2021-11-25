@@ -1,25 +1,26 @@
 import createRequestThunk, {
   createRequestActionTypes,
 } from 'utils/createRequestThunk';
-import * as mindmapsApi from 'utils/api/mindmaps';
+import * as postsApi from 'utils/api/posts';
 
 /* --------------------------------- action --------------------------------- */
-const [WRITE_NODE, WRITE_NODE_SUCCESS, WRITE_NODE_ERROR] =
-  createRequestActionTypes('nodes/WRITE_NODE');
+const [WRITE_POST, WRITE_POST_SUCCESS, WRITE_POST_ERROR] =
+  createRequestActionTypes('post/WRITE_POST');
 
-const [READ_NODE, READ_NODE_SUCCESS, READ_NODE_ERROR] =
-  createRequestActionTypes('nodes/READ_NODE');
+const [READ_POST, READ_POST_SUCCESS, READ_POST_ERROR] =
+  createRequestActionTypes('post/READ_POST');
+
+const UNLOAD_POST = 'post/UNLOAD_POST';
 
 /* -------------------------- thunk action creator -------------------------- */
-export const writeNodeAsync = (
-  mindmapId: string,
-  newNode: mindmapsApi.NodeType
-) => createRequestThunk(WRITE_NODE, mindmapsApi.writeNode, mindmapId, newNode);
+export const writePostAsync = (nodeId: string, newPost: postsApi.Post) =>
+  createRequestThunk(WRITE_POST, postsApi.writePost, nodeId, newPost);
 
-export const readNodeAsync = (mindmapId: string, nodeId: string) =>
-  createRequestThunk(READ_NODE, mindmapsApi.readNode, mindmapId, nodeId);
+export const readPostAsync = (postId: string) =>
+  createRequestThunk(READ_POST, postsApi.readPost, postId);
 
 /* ----------------------------- action creator ----------------------------- */
+export const unloadPost = () => ({ type: UNLOAD_POST });
 
 /* ---------------------------------- types --------------------------------- */
 
@@ -31,11 +32,11 @@ const initialState = {
 };
 
 /* --------------------------------- reducer -------------------------------- */
-function nodesReducer(state = initialState, { type, payload }) {
+function postReducer(state = initialState, { type, payload }) {
   switch (type) {
     // loading
-    case WRITE_NODE:
-    case READ_NODE:
+    case WRITE_POST:
+    case READ_POST:
       return {
         ...state,
         loading: true,
@@ -44,8 +45,8 @@ function nodesReducer(state = initialState, { type, payload }) {
       };
 
     // success
-    case WRITE_NODE_SUCCESS:
-    case READ_NODE_SUCCESS:
+    case WRITE_POST_SUCCESS:
+    case READ_POST_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -54,18 +55,19 @@ function nodesReducer(state = initialState, { type, payload }) {
       };
 
     // error
-    case WRITE_NODE_ERROR:
-    case READ_NODE_ERROR:
+    case WRITE_POST_ERROR:
+    case READ_POST_ERROR:
       return {
         ...state,
         loading: false,
         error: payload,
         data: null,
       };
-
+    case UNLOAD_POST:
+      return initialState;
     default:
       return initialState;
   }
 }
 
-export default nodesReducer;
+export default postReducer;

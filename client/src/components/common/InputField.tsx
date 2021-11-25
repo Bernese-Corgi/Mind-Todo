@@ -1,4 +1,5 @@
 import React, { ChangeEvent, forwardRef } from 'react';
+import { ErrorMsg } from '.';
 
 export type InputProps = {
   id: string;
@@ -6,7 +7,8 @@ export type InputProps = {
   type?: 'email' | 'password' | 'text';
   name?: string;
   value?: string;
-  errorMsg?: any;
+  errorMsg?: string;
+  errorClassName?: string;
   placeholder?: string;
   autoComplete?: string;
   readOnly?: boolean;
@@ -14,7 +16,7 @@ export type InputProps = {
   hideLabel?: boolean;
 };
 
-const Input = forwardRef<HTMLInputElement, InputProps>(
+const InputField = forwardRef<HTMLInputElement, InputProps>(
   (
     {
       id,
@@ -23,6 +25,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       name,
       value,
       errorMsg = '',
+      errorClassName,
       placeholder,
       autoComplete,
       readOnly = false,
@@ -48,9 +51,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           onChange={onChange}
           className={`${errorMsg && 'errorInput'}`}
         />
+        <ErrorMsg className={errorClassName} children={errorMsg} />
       </div>
     );
   }
 );
 
-export default Input;
+export default InputField;

@@ -42,7 +42,7 @@ export const write = async (ctx) => {
   });
 
   // node 도큐먼트에 post 정보 넣기
-  const updatedNode = await Node.updateNodeChild(ctx.params.nodeId, post);
+  const updatedNode = await Node.savePostInNode(ctx.params.nodeId, post);
 
   // id 값으로 node 데이터를 찾을 수 없으면 Not Found
   if (!updatedNode) {

@@ -64,6 +64,7 @@ declare module 'styled-components' {
     boxShadow: {
       default: string;
       wide: string;
+      narrow: string;
     };
     borders: {
       radius: {
@@ -100,6 +101,7 @@ declare module 'styled-components' {
     defElem: {
       input: (hasBorder?: boolean) => string;
       errInput: string;
+      errForm: string;
     };
   }
 }

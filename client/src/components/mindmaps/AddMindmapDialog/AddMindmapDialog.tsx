@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent } from 'react';
-import { Button, Dialog, ErrorMsg, Input } from 'components/common';
-import { Mindmap } from 'utils/api/mindmaps';
+import { Button, Dialog, InputField } from 'components/common';
+import { MindmapType } from 'utils/api/mindmaps';
 import {
   addMindmapDialogStyle,
   AddMindmapDialogWrapper,
@@ -8,8 +8,8 @@ import {
 } from './AddMindmapDialog.styled';
 
 export interface AddMindmapDialogProps {
-  values?: Mindmap;
-  errorMessage?: string;
+  values?: MindmapType;
+  errorMsg?: string;
   onSubmit?: (e: FormEvent<HTMLFormElement>) => void;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onClickCancel?: () => void;
@@ -18,7 +18,7 @@ export interface AddMindmapDialogProps {
 
 const AddMindmapDialog = ({
   values,
-  errorMessage,
+  errorMsg,
   onSubmit,
   onChange,
   onClickCancel,
@@ -33,7 +33,7 @@ const AddMindmapDialog = ({
       <AddMindmapDialogWrapper>
         <h2>마인드맵 생성</h2>
         <StyledMindmapForm id="writeMindmap" onSubmit={onSubmit}>
-          <Input
+          <InputField
             id="mindmapTitle"
             label="마인드맵 제목"
             name="mindmapTitle"
@@ -42,9 +42,8 @@ const AddMindmapDialog = ({
             autoComplete="off"
             onChange={onChange}
             hideLabel
-            errorMsg={!!errorMessage}
+            errorMsg={errorMsg}
           />
-          <ErrorMsg>{errorMessage}</ErrorMsg>
           <div className="addMindmapDialogBtnWrapper">
             <Button
               id="cancelBtn"

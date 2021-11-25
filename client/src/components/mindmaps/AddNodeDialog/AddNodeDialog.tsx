@@ -40,7 +40,7 @@ const AddNodeDialog = ({
             placeholder="추가할 노드의 이름을 입력하세요."
             autoComplete="off"
             onChange={onChangeInput}
-            className={`${!!errorMsg && 'errorTextArea'}`}
+            className={`${!!errorMsg && 'errorInput'}`}
           />
           <Button
             id="addNodeBtn"

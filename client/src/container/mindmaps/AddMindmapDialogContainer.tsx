@@ -9,7 +9,7 @@ import {
   writeMindmapAsync,
 } from 'redux/modules/mindmaps/mindmap';
 import { useReduxDispatch } from 'redux/store';
-import { writeNodeAsync } from 'redux/modules/mindmaps/nodes';
+import { writeNodeAsync } from 'redux/modules/mindmaps/node';
 
 const AddMindmapDialogContainer = ({ history }) => {
   const dispatch = useReduxDispatch();
@@ -80,7 +80,7 @@ const AddMindmapDialogContainer = ({ history }) => {
     <>
       <AddMindmapDialog
         values={values}
-        errorMessage={error}
+        errorMsg={error}
         onSubmit={handleSubmit}
         onChange={handleChangeTitle}
         onClickCancel={handleClick.cancelButton}

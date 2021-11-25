@@ -2,7 +2,7 @@ import client from './client';
 
 const URI = '/api/mindmaps';
 
-export type Mindmap = {
+export type MindmapType = {
   title: string;
 };
 
@@ -13,7 +13,7 @@ export type NodeType = {
 
 export const listMindmap = () => client.get(`${URI}`);
 
-export const writeMindmap = (mindmap: Mindmap) =>
+export const writeMindmap = (mindmap: MindmapType) =>
   client.post(`${URI}`, mindmap);
 
 export const readMindmap = (id: string) => client.get(`${URI}/${id}`);

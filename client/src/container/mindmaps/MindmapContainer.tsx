@@ -14,7 +14,7 @@ import {
   initializeMindmapForm,
   readMindmapAsync,
 } from 'redux/modules/mindmaps/mindmap';
-import { writeNodeAsync } from 'redux/modules/mindmaps/nodes';
+import { writeNodeAsync } from 'redux/modules/mindmaps/node';
 /* -------------------------------- component ------------------------------- */
 import { LoadingIcon } from 'components/common';
 import { AddNodeDialog, Mindmap } from 'components/mindmaps';
@@ -30,7 +30,7 @@ interface MindmapContainerProps {
 
 const MindmapContainer = ({ history, match }: MindmapContainerProps) => {
   const dispatch = useReduxDispatch();
-  const { mindmap, nodes } = useSelector((state: RootState) => state);
+  const { mindmap, node } = useSelector((state: RootState) => state);
 
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -114,28 +114,19 @@ const MindmapContainer = ({ history, match }: MindmapContainerProps) => {
 
   return (
     <>
-      <section
-        style={{
-          minWidth: '800px',
-          maxWidth: '1000px',
-          height: '90vh',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-        }}>
-        <ParentSize>
-          {({ width, height }) => (
-            <Mindmap
-              width={width}
-              height={height}
-              mindmap={mindmap.data}
-              onClickAddButton={handleClickAddButton}
-              onClickNode={handleClickNode}
-              treeData={treeData}
-              rootNode={nodes.data?.tree}
-            />
-          )}
-        </ParentSize>
-      </section>
+      <ParentSize>
+        {({ width, height }) => (
+          <Mindmap
+            width={width}
+            height={height - 5}
+            mindmap={mindmap.data}
+            onClickAddButton={handleClickAddButton}
+            onClickNode={handleClickNode}
+            treeData={treeData}
+            rootNode={node.data?.tree}
+          />
+        )}
+      </ParentSize>
 
       {isWrite && (
         <AddNodeDialog
@@ -146,9 +137,6 @@ const MindmapContainer = ({ history, match }: MindmapContainerProps) => {
           errorMsg={errorMsg}
         />
       )}
-      {/* <Button linkTo="/mindmaps" onClick={handleClick}>
-        뒤로가기
-      </Button> */}
     </>
   );
 };
