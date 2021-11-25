@@ -72,6 +72,9 @@ export const handleColorType = (color: string | undefined) => {
   }
 };
 
+export const setRainbowColor = (number: number) =>
+  theme.colors.rainbow[number] || theme.colors.gray.light;
+
 export const handleFontSize = (size: string | undefined) => {
   switch (size) {
     case 'sm':
