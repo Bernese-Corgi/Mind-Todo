@@ -9,15 +9,19 @@ export const stratifiedMindmap = treeData => {
   return stratifiedData;
 };
 
+/**
+ * 인수로 svg의 <text/> d3 selection 객체를 전달받아 줄바꿈 스타일을 적용합니다.
+ * @param selection 줄바꿈 스타일을 적용할 <text/> 요소의 d3 selection 객체를 지정합니다.
+ * @param text <text /> 요소의 텍스트를 지정합니다.
+ * @param splitLength 분리할 문자열의 길이를 지정합니다. 이 숫자대로 문자열이 줄바꿈됩니다.
+ * @param [coordinates] 문자를 배치할 좌표를 x, y로 지정해 객체로 전달합니다. 기본적으로 좌표는 숫자로 지정합니다. x좌표는 예외적으로 '0.5em'과 같이 문자열을 전달할 수 있지만, y좌표는 문자열이 허용되지 않습니다.
+ */
 export const wrapText = (
   selection,
   text: string,
   splitLength: number = 10,
   coordinates?: { x?: number | string; y?: number }
 ) => {
-  // 매개변수 1. 자를 텍스트 길이
-  // 매개변수 2. selection
-  // 매개변수 3. 자를 텍스트
   const _x = coordinates?.x ? coordinates?.x : 0;
   const _y = coordinates?.y ? coordinates?.y : 14;
 
