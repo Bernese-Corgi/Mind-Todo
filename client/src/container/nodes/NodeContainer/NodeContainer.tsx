@@ -6,19 +6,21 @@ import { RootState } from 'redux/modules';
 import { useReduxDispatch } from 'redux/store';
 import { readNodeAsync } from 'redux/modules/mindmaps/node';
 /* -------------------------------- component ------------------------------- */
-import { LoadingIcon, Portal, WriteActionBtn } from 'components/common';
+import { WriteActionBtn } from 'components/common';
 import { PostViewer } from 'components/posts';
 import { MindmapContainer } from 'container/mindmaps';
 import { StyledNodeContainerArticle } from './NodeContainer.styled';
+import { Link } from 'react-router-dom';
 
 const NodeContainer = ({ history, match }) => {
   const dispatch = useReduxDispatch();
-  const { mindmap, post, nodeLoading } = useSelector(
-    ({ mindmap, node }: RootState) => ({
+  const { mindmap, post, nodeLoading, loading } = useSelector(
+    ({ mindmap, node, loading }: RootState) => ({
       mindmap: mindmap.data,
       node: node.data?.node,
       nodeError: node.error,
       nodeLoading: node.loading,
+      loading: loading,
       post: node.data?.post,
       todos: node.data?.todos,
     })
@@ -38,7 +40,9 @@ const NodeContainer = ({ history, match }) => {
     <StyledNodeContainerArticle>
       {/* --------------------------------- mindmap -------------------------------- */}
       <section className="mindmapSection">
-        <h3>{mindmap?.title}</h3>
+        <h3>
+          <Link to={`/mindmap/${mindmapId}`} children={mindmap?.title} />
+        </h3>
         <MindmapContainer history={history} match={match} />
       </section>
       {/* ----------------------------- todos and post ----------------------------- */}
@@ -51,7 +55,7 @@ const NodeContainer = ({ history, match }) => {
         <section className="postSection">
           <h3>post</h3>
           <div className="postContent">
-            {post ? (
+            {nodeLoading ? null : post ? (
               <PostViewer post={post} />
             ) : (
               <WriteActionBtn

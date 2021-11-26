@@ -14,14 +14,7 @@ export const StyledNodeContainerArticle = styled.article`
   h3 {
     font-size: 1.2em;
     margin-bottom: 0.5em;
-  }
-
-  h3::after {
-    content: '';
-    width: 15px;
-    height: 100px;
-    background-color: black;
-    color: black;
+    color: ${theme.colors.primary.dark}90;
   }
 
   .mindmapSection {
@@ -30,6 +23,7 @@ export const StyledNodeContainerArticle = styled.article`
     width: 50%;
     height: 100%;
     padding: 1em;
+    overflow: auto;
   }
 
   .todoAndPostWrapper {

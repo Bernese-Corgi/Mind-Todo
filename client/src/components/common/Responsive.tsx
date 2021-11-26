@@ -12,7 +12,7 @@ const ResponsiveBlock = styled.div`
   margin: 0 auto;
 
   ${({ theme }) => theme.media.desktop`
-      width: 768px;
+      width: 90vw;
     `}
 
   ${({ theme }) => theme.media.tablet`

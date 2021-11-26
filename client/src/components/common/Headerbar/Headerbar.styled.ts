@@ -42,3 +42,8 @@ export const AuthButtonWrapper = styled.div`
     }
   `}
 `;
+
+HeaderbarWrapper.displayName = 'HeaderbarWrapper';
+MenuButtonWrapper.displayName = 'MenuButtonWrapper';
+LogoWrapper.displayName = 'LogoWrapper';
+AuthButtonWrapper.displayName = 'AuthButtonWrapper';
