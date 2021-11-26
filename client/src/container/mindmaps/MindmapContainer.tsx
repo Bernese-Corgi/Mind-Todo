@@ -21,7 +21,6 @@ import { AddNodeDialog, Mindmap } from 'components/mindmaps';
 /* ---------------------------------- utils --------------------------------- */
 import { isEmptyArray } from 'utils/checkUtils';
 import { stratifiedMindmap } from 'utils/mindmap';
-import ParentSize from '@visx/responsive/lib/components/ParentSizeModern';
 
 interface MindmapContainerProps {
   history;
@@ -30,7 +29,21 @@ interface MindmapContainerProps {
 
 const MindmapContainer = ({ history, match }: MindmapContainerProps) => {
   const dispatch = useReduxDispatch();
-  const { mindmap, node } = useSelector((state: RootState) => state);
+  const {
+    mindmap,
+    mindmapLoading,
+    mindmapError,
+    node,
+    nodeLoading,
+    nodeError,
+  } = useSelector(({ mindmap, node }: RootState) => ({
+    mindmap: mindmap.data,
+    mindmapLoading: mindmap.loading,
+    mindmapError: mindmap.error,
+    node: node.data,
+    nodeLoading: node.loading,
+    nodeError: node.error,
+  }));
 
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -52,23 +65,29 @@ const MindmapContainer = ({ history, match }: MindmapContainerProps) => {
     };
   }, [dispatch, mindmapId]);
 
-  const handleClickAddButton = (
-    e: MouseEventHandler<SVGGElement>,
-    parentId: string
-  ) => {
-    const rootNode = mindmap.data.body[0].node;
-    const _parentId = parentId ? parentId : rootNode.nodeId;
+  const handleClicksMindmap = {
+    addBtn: (e: MouseEventHandler<SVGGElement>, parentId: string) => {
+      const rootNode = mindmap.body[0].node;
+      const _parentId = parentId ? parentId : rootNode.nodeId;
 
-    setParent(_parentId);
-    setIsWrite(true);
+      setParent(_parentId);
+      setIsWrite(true);
+    },
+    node: (e: MouseEventHandler<SVGGElement>, nodeId: string) => {
+      history.push(`/mindmap/${mindmapId}/${nodeId}`);
+    },
   };
 
   const handleChangeWriteInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = e.target;
     setWriteInput(value);
+
     if (value) {
       setErrorMsg('');
-      return;
+    }
+
+    if (value.length > 50) {
+      setErrorMsg('50자 이하로 작성해주세요');
     }
   };
 
@@ -77,6 +96,10 @@ const MindmapContainer = ({ history, match }: MindmapContainerProps) => {
 
     if (!writeInput) {
       setErrorMsg('노드의 이름을 입력하세요');
+      return;
+    }
+    if (writeInput.length > 50) {
+      setErrorMsg('50자 이하로 작성해주세요');
       return;
     }
 
@@ -90,43 +113,39 @@ const MindmapContainer = ({ history, match }: MindmapContainerProps) => {
     dispatch(readMindmapAsync(mindmapId));
 
     setIsWrite(false);
-  };
-
-  const handleClickNode = (e, nodeId) => {
-    history.push(`/mindmap/${mindmapId}/${nodeId}`);
+    setErrorMsg('');
   };
 
   const handleCloseDialog = () => {
     setIsWrite(false);
+    setErrorMsg('');
   };
 
   useEffect(() => {
-    if (!isEmptyArray(mindmap.data?.body) && mindmap.data) {
-      setTreeData(stratifiedMindmap(mindmap.data?.body));
+    if (!isEmptyArray(mindmap?.body) && mindmap) {
+      setTreeData(stratifiedMindmap(mindmap?.body));
     }
-  }, [mindmap.data]);
+  }, [mindmap]);
 
-  if (mindmap.loading) return <LoadingIcon />;
+  if (mindmapLoading) return <LoadingIcon />;
 
-  if (!mindmap.data) return <LoadingIcon />;
+  if (!mindmap) return <LoadingIcon />;
 
   if (!treeData) return <LoadingIcon />;
 
   return (
     <>
-      <ParentSize>
-        {({ width, height }) => (
-          <Mindmap
-            width={width}
-            height={height - 5}
-            mindmap={mindmap.data}
-            onClickAddButton={handleClickAddButton}
-            onClickNode={handleClickNode}
-            treeData={treeData}
-            rootNode={node.data?.tree}
-          />
-        )}
-      </ParentSize>
+      <h2 className="a11yHidden">{mindmap?.title}</h2>
+      <section
+        style={{ width: '85vw', height: '75vh', margin: '0 auto 0 auto' }}>
+        <Mindmap
+          mindmap={mindmap}
+          treeData={treeData}
+          loading={nodeLoading}
+          error={nodeError}
+          onClicks={handleClicksMindmap}
+        />
+      </section>
 
       {isWrite && (
         <AddNodeDialog
