@@ -48,7 +48,7 @@ export const wrapText = (
  * @param id 엘리먼트의 id 어트리뷰트와 매치되는 id 값
  * @returns 엘리먼트의 d3 selection 객체
  */
-export const getD3NodeSelectionById = (selector, id: string) => {
+export const getD3NodeSelectionById = (selector, id: string | undefined) => {
   const selection = d3.selectAll(selector).filter(function (this) {
     return this.getAttribute('id') === id ? this : null;
   });
