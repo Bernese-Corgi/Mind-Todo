@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import theme from 'styles/theme';
 import { handleColorType, handleHoverColorType } from 'utils/style';
+import { StyledIconButton } from '../Button/Button.styled';
 import Sprite from './assets/sprites.svg';
 
 export type IconProps = {
@@ -23,6 +24,11 @@ const Svg = styled.svg<IconProps>`
     &:hover {
       color: ${handleHoverColorType(shape, color)};
       cursor: ${onClick ? 'pointer' : 'initial'};
+    }
+
+    ${StyledIconButton}:hover & {
+      color: ${handleHoverColorType(shape, color)};
+      cursor: pointer;
     }
   `}
 `;
