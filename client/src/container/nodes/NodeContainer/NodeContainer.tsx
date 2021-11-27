@@ -40,7 +40,7 @@ const NodeContainer = ({ history, match }) => {
     <StyledNodeContainerArticle>
       {/* --------------------------------- mindmap -------------------------------- */}
       <section className="mindmapSection">
-        <h3>
+        <h3 className="sectionH3">
           <Link to={`/mindmap/${mindmapId}`} children={mindmap?.title} />
         </h3>
         <MindmapContainer history={history} match={match} />
@@ -49,11 +49,11 @@ const NodeContainer = ({ history, match }) => {
       <div className="todoAndPostWrapper">
         {/* todos */}
         <section className="todosSection">
-          <h3>todos</h3>
+          <h3 className="sectionH3">todos</h3>
         </section>
         {/* post */}
         <section className="postSection">
-          <h3>post</h3>
+          <h3 className="sectionH3">post</h3>
           <div className="postContent">
             {nodeLoading ? null : post ? (
               <PostViewer post={post} />

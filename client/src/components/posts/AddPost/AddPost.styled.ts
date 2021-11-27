@@ -5,7 +5,7 @@ const defaultStyle = css`
   .section {
     padding: 1em;
 
-    h3 {
+    .postEditorHeader {
       font-size: 1em;
       color: ${theme.colors.primary.dark}90;
       margin-bottom: 1em;

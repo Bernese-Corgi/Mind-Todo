@@ -31,7 +31,7 @@ const AddNodeDialog = ({
       portalId="portal-root"
       wrapperStyle={addNodeDialogStyle}>
       <AddNodeDialogWrapper>
-        <h3>노드 추가하기</h3>
+        <h3 className="dialogHead">노드 추가하기</h3>
         <StyledAddNodeForm onSubmit={onSubmit}>
           <textarea
             name="writeNode"

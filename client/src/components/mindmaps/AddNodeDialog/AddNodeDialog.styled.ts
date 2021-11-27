@@ -19,7 +19,7 @@ export const AddNodeDialogWrapper = styled.div`
   padding: 1.8em;
   color: ${theme.colors.gray.dark};
 
-  h3 {
+  .dialogHead {
     font-size: 0.85em;
     margin-left: 0.5em;
     margin-bottom: 0.5em;
