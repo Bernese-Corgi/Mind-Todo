@@ -11,6 +11,7 @@ export { default as ErrorMsg } from './ErrorMsg';
 export { default as WriteActionBtn } from './WriteActionBtn/WriteActionBtn';
 export { default as MdEditor } from './MdEditor/MdEditor';
 export { default as MdViewer } from './MdViewer/MdViewer';
+export { default as Tags } from './Tags/Tags';
 export { default as TagForm } from './TagForm';
 
 /* styled component ---------------------------- */
