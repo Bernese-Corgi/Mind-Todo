@@ -1,8 +1,21 @@
 import React from 'react';
-import { InputField, Button, MdEditor, ErrorMsg } from 'components/common';
+import {
+  InputField,
+  Button,
+  MdEditor,
+  ErrorMsg,
+  TagForm,
+} from 'components/common';
 import { StyledPostEditorForm } from './PostEditor.styled';
 
-const PostEditor = ({ onSubmit, values, errors, onChanges, onClicks }) => (
+const PostEditor = ({
+  onSubmit,
+  values,
+  errors,
+  localTags,
+  onChanges,
+  onClicks,
+}) => (
   <StyledPostEditorForm onSubmit={onSubmit}>
     <InputField
       id="postTitleInput"
@@ -23,6 +36,17 @@ const PostEditor = ({ onSubmit, values, errors, onChanges, onClicks }) => (
       errorMsg={errors.body}
       placeholder="내용을 입력해주세요."
       onChange={onChanges.body}
+    />
+    <TagForm
+      id="postTagInput"
+      label="태그"
+      name="tag"
+      value={values.tag}
+      errorMsg={errors.tag}
+      localTags={localTags}
+      placeholder="태그를 입력해주세요."
+      onChange={onChanges.tag}
+      onClicks={onClicks}
     />
     <ErrorMsg className="formErrorMsg" children={errors.post} />
     <div className="btnWrapper">
