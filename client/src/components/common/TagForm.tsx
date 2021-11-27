@@ -1,27 +1,35 @@
 import React, { ChangeEvent } from 'react';
-import { InputField } from '.';
+import theme from 'styles/theme';
+import { Button, InputField, Tags } from '.';
 
-interface TagInputProps {
+interface TagFormProps {
   id: string;
   label: string;
   name: string;
   value: string;
   placeholder: string;
   errorMsg?: string;
+  localTags: string[];
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onClicks: {
+    addTagBtn: () => void;
+    removeTagBtn: (e, key) => void;
+  };
   className?: string;
 }
 
-const TagInputField = ({
+const TagForm = ({
   id,
   label = '태그',
   name,
   value,
   placeholder,
   errorMsg,
+  localTags,
   className,
   onChange,
-}: TagInputProps) => {
+  onClicks,
+}: TagFormProps) => {
   return (
     <div className="tagInputWrapper">
       <InputField
@@ -36,8 +44,17 @@ const TagInputField = ({
         onChange={onChange}
         className={`${className} ${errorMsg && 'errorInput'}`}
       />
+      <Button
+        id={`${id}Btn`}
+        title="태그 등록하기"
+        shape="plus"
+        fontSize="1.2em"
+        color={theme.colors.secondary.base}
+        onClick={onClicks.addTagBtn}
+      />
+      <Tags tags={localTags} isWrite onClickRemoveBtn={onClicks.removeTagBtn} />
     </div>
   );
 };
 
-export default TagInputField;
+export default TagForm;
