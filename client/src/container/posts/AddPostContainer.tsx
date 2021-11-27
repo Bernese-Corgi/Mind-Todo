@@ -1,4 +1,4 @@
-import { AddPost, PostEditor, PostViewer } from 'components/posts';
+import { AddPost } from 'components/posts';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'redux/modules';
@@ -17,18 +17,34 @@ const AddPostContainer = ({ history, match }) => {
   const { mindmapId, nodeId } = match.params;
 
   const initialState = {
-    values: { title: '', body: '' }, // TODO tag 값 추가
-    errors: { title: '', body: '', post: '' },
+    values: { title: '', body: '', tag: '' },
+    errors: { title: '', body: '', tag: '', post: '' },
   };
 
   const [values, setValues] = useState(initialState.values);
   const [errors, setErrors] = useState(initialState.errors);
+  const [localTags, setLocalTags] = useState<Array<string>>([]);
 
   /* ------------------------------ click button ------------------------------ */
   const handleClicks = {
     cancelBtn: () => {
       setValues(initialState.values);
       history.goBack();
+    },
+    addTagBtn: () => {
+      if (!values.tag) {
+        setErrors({ ...errors, tag: '태그를 입력하세요.' });
+        return;
+      }
+
+      if (values.tag.length > 20) return;
+
+      setLocalTags([...localTags, values.tag]);
+
+      setValues({ ...values, tag: '' });
+    },
+    removeTagBtn: (e, key) => {
+      localTags.splice(key, 1);
     },
   };
 
@@ -58,7 +74,15 @@ const AddPostContainer = ({ history, match }) => {
         setErrors({ ...errors, body: '' });
       }
     },
-    // TODO tag 이벤트 추가
+    tag: (e: ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+
+      setValues({ ...values, [name]: value });
+
+      values.tag.length > 20
+        ? setErrors({ ...errors, tag: '태그는 20자 이하로 입력해주세요.' })
+        : setErrors({ ...errors, tag: '' });
+    },
   };
 
   const handleSubmitPost = async (e: FormEvent<HTMLFormElement>) => {
@@ -68,7 +92,7 @@ const AddPostContainer = ({ history, match }) => {
       writePostAsync(nodeId, {
         title: values.title,
         body: values.body,
-        // TODO tag 값 추가
+        tags: localTags,
       })
     );
 
@@ -76,6 +100,10 @@ const AddPostContainer = ({ history, match }) => {
       history.push(`/mindmap/${mindmapId}/${nodeId}`);
     }
   };
+
+  useEffect(() => {
+    console.log(localTags);
+  }, [handleClicks.removeTagBtn]);
 
   useEffect(() => {
     // error
@@ -115,6 +143,7 @@ const AddPostContainer = ({ history, match }) => {
       <AddPost
         values={values}
         errors={errors}
+        localTags={localTags}
         onSubmit={handleSubmitPost}
         onChanges={handleChanges}
         onClicks={handleClicks}
