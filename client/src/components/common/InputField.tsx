@@ -14,6 +14,7 @@ export type InputProps = {
   readOnly?: boolean;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   hideLabel?: boolean;
+  className?: string;
 };
 
 const InputField = forwardRef<HTMLInputElement, InputProps>(
@@ -31,6 +32,7 @@ const InputField = forwardRef<HTMLInputElement, InputProps>(
       readOnly = false,
       onChange,
       hideLabel = false,
+      className,
     },
     ref = null
   ) => {
@@ -49,7 +51,7 @@ const InputField = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           readOnly={readOnly}
           onChange={onChange}
-          className={`${errorMsg && 'errorInput'}`}
+          className={`${className} ${errorMsg && 'errorInput'}`}
         />
         <ErrorMsg className={errorClassName} children={errorMsg} />
       </div>

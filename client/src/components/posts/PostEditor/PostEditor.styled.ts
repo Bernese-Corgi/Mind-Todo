@@ -6,23 +6,36 @@ export const StyledPostEditorForm = styled.form`
   height: 100%;
   font-size: 1em;
 
+  label {
+    font-size: 0.9em;
+    margin-left: 0.3em;
+    margin-bottom: 0.5em;
+  }
+
   .inputLabelWrapper {
     margin-bottom: 1.5em;
   }
 
   .inputLabelWrapper,
   .mdEditorWrapper {
-    label {
-      font-size: 0.9em;
-      margin-left: 0.3em;
-      margin-bottom: 0.5em;
-    }
-
     ${theme.flexes.mixin('column', 'start', 'start')}
   }
 
+  .tagInputWrapper {
+    height: 18%;
+
+    ul {
+      margin-left: 1em;
+      font-size: 85%;
+      width: 60%;
+    }
+
+    ${theme.flexes.mixin('row', 'center', 'start')}
+  }
+
   #postTitleInput,
-  #postBodyInput {
+  #postBodyInput,
+  #postTagInput {
     ${theme.defElem.input()}
   }
 

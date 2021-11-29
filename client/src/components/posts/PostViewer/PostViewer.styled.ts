@@ -33,4 +33,9 @@ export const PostViewerWrapper = styled.div<PostViewerProps>`
         }
       `}
   }
+
+  ul {
+    font-size: 80%;
+    padding: 0.5em 1em;
+  }
 `;

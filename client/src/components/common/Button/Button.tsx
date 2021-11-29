@@ -25,6 +25,7 @@ export type ButtonProps = {
 export type IconButtonProps = {
   type?: 'button' | 'submit' | 'reset' | undefined;
   shape?: string;
+  color?: string;
   fontSize?: string;
   onClick?: () => void;
 };
@@ -46,6 +47,7 @@ const Button = ({
   primary,
   onClick,
   shape,
+  color,
   fontSize = '1.4rem',
   linkTo,
   ...restProps
@@ -76,7 +78,7 @@ const Button = ({
         fontSize={fontSize}
         onClick={onClick}
         {...restProps}>
-        <Icon shape={shape} id={id} title={title} />
+        <Icon shape={shape} id={id} title={title} color={color} />
       </StyledIconButton>
     );
 

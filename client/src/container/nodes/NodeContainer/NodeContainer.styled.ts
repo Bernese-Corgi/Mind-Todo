@@ -11,7 +11,7 @@ export const StyledNodeContainerArticle = styled.article`
   ${theme.flexes.row('start')}
   font-size: ${theme.fonts.size.sm};
 
-  h3 {
+  .sectionH3 {
     font-size: 1.2em;
     margin-bottom: 0.5em;
     color: ${theme.colors.primary.dark}90;
