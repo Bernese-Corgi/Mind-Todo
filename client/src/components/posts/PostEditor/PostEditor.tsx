@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent, FormEvent } from 'react';
 import {
   InputField,
   Button,
@@ -8,6 +8,32 @@ import {
 } from 'components/common';
 import { StyledPostEditorForm } from './PostEditor.styled';
 
+interface PostEditorProps {
+  values: {
+    title: string;
+    body: string;
+    tag: string;
+  };
+  errors: {
+    title: string;
+    body: string;
+    tag: string;
+    post: string;
+  };
+  localTags: string[];
+  onChanges: {
+    title: (e: ChangeEvent<HTMLInputElement>) => void;
+    body: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+    tag: (e: ChangeEvent<HTMLInputElement>) => void;
+  };
+  onClicks: {
+    addTagBtn: () => void;
+    removeTagBtn: (e, key) => void;
+    cancelBtn: () => void;
+  };
+  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+}
+
 const PostEditor = ({
   onSubmit,
   values,
@@ -15,7 +41,7 @@ const PostEditor = ({
   localTags,
   onChanges,
   onClicks,
-}) => (
+}: PostEditorProps) => (
   <StyledPostEditorForm onSubmit={onSubmit}>
     <InputField
       id="postTitleInput"
