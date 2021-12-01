@@ -12,3 +12,6 @@ export const writePost = (nodeId: string, newPost: Post) =>
   client.post(`${URI}/${nodeId}`, newPost);
 
 export const readPost = (postId: string) => client.get(`${URI}/${postId}`);
+
+export const updatePost = (postId: string, updatePost) =>
+  client.patch(`${URI}/${postId}`);
