@@ -6,6 +6,7 @@ import {
   HomePage,
   MindmapListPage,
   NodePage,
+  UpdatePostPage,
 } from 'pages';
 import { Route, Switch } from 'react-router';
 import './App.css';
@@ -35,6 +36,7 @@ function App() {
           path="/mindmap/:mindmapId/:nodeId/write-post"
           exact
         />
+        <Route component={UpdatePostPage} path="/post/:postId/edit" />
       </Switch>
     </div>
   );
