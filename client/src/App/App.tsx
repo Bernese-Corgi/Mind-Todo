@@ -32,7 +32,10 @@ function App() {
 
         <Route
           component={AddPostPage}
-          path="/mindmap/:mindmapId/:nodeId/write-post"
+          path={[
+            '/mindmap/:mindmapId/:nodeId/write-post',
+            '/post/:postId/edit',
+          ]}
           exact
         />
       </Switch>

@@ -4,3 +4,4 @@ export { default as MindmapPage } from './MindmapPage';
 export { default as AuthPage } from './AuthPage';
 export { default as NodePage } from './NodePage';
 export { default as AddPostPage } from './AddPostPage';
+export { default as UpdatePostPage } from './UpdatePostPage';
