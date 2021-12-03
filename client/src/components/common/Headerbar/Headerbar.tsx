@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Responsive } from '..';
+import { Button, Dim, Navigation, Responsive } from '..';
 import {
   AuthButtonWrapper,
   HeaderbarWrapper,
@@ -10,16 +10,34 @@ import {
 
 interface HeaderbarProps {
   user: any;
+  navRef?: any;
+  navDimRef?: any;
+  onOpenNav?: () => void;
+  onCloseNav?: () => void;
   onSignOut?: () => void;
 }
 
-const Headerbar = ({ user, onSignOut }: HeaderbarProps) => {
+const Headerbar = ({
+  user,
+  navRef,
+  navDimRef,
+  onOpenNav,
+  onCloseNav,
+  onSignOut,
+}: HeaderbarProps) => {
   return (
     <Responsive>
       <HeaderbarWrapper>
         {/* navigation button --------------------------- */}
         <MenuButtonWrapper>
-          <Button id="navOpen" title="네비게이션 열기" shape="bars" />
+          <Button
+            id="navOpen"
+            title="네비게이션 열기"
+            shape="bars"
+            onClick={onOpenNav}
+          />
+          <Navigation ref={navRef} onCloseNav={onCloseNav} />
+          <Dim ref={navDimRef} onDimClose={onCloseNav} />
         </MenuButtonWrapper>
 
         {/* logo button ------------------------------ */}
