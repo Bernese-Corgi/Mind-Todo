@@ -1,5 +1,5 @@
+import React, { useRef } from 'react';
 import { Headerbar } from 'components/common';
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'redux/modules';
 import { signOutAsync } from 'redux/modules/auth/user';
@@ -8,14 +8,34 @@ const HeaderbarContainer = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
 
+  const navDimRef = useRef<HTMLDivElement>();
+  const navRef = useRef<HTMLElement>();
+
+  const handleNavMenu = () => {
+    navDimRef.current?.classList.add('activeDim');
+    navRef.current?.classList.add('activeNav');
+    navDimRef.current?.setAttribute('aria-hidden', 'false');
+  };
+
+  const handleCloseNav = () => {
+    navDimRef.current?.classList.remove('activeDim');
+    navDimRef.current?.setAttribute('aria-hidden', 'true');
+    navRef.current?.classList.remove('activeNav');
+  };
+
   const handleSignOut = () => {
     dispatch(signOutAsync());
   };
 
   return (
-    <>
-      <Headerbar user={user} onSignOut={handleSignOut} />
-    </>
+    <Headerbar
+      user={user}
+      navRef={navRef}
+      navDimRef={navDimRef}
+      onOpenNav={handleNavMenu}
+      onCloseNav={handleCloseNav}
+      onSignOut={handleSignOut}
+    />
   );
 };
 
