@@ -120,7 +120,7 @@ const SignUpForm = ({ history }) => {
 
       // 로그인 상태 유지
       try {
-        localStorage.setItem('user', JSON.stringify(auth.data));
+        localStorage.setItem('user', JSON.stringify(user.user));
       } catch (e) {
         console.error(e);
       }
