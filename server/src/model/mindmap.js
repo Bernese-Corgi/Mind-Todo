@@ -46,7 +46,7 @@ const TreeSchema = new Schema({
 });
 
 const MindmapSchema = new Schema({
-  publisherId: {
+  publisher: {
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
@@ -90,8 +90,6 @@ NodeSchema.statics.updateNodeChild = async function (
   propName = data.constructor.modelName.toLowerCase(),
 ) {
   const node = await Node.findById(id);
-
-  // console.log(propName);
 
   const matchKey = Object.keys(node.toObject()).find((key) => {
     return key === (Array.isArray(node[key]) ? `${propName}s` : propName);

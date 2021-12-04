@@ -9,7 +9,9 @@ export const listMindmap = async (ctx) => {
   // TODO 페이지네이션
   try {
     // mind map 컬렉션에서 list 받아오기
-    const mindmaps = await Mindmap.find().sort({ _id: -1 });
+    const mindmaps = await Mindmap.find()
+      .sort({ _id: -1 })
+      .populate('publisher');
 
     // mindmap list를 응답
     ctx.body = mindmaps;
@@ -36,7 +38,7 @@ export const writeMindmap = async (ctx) => {
   // mindmap document 생성
   const mindmap = new Mindmap({
     title,
-    publisherId: ctx.state.user,
+    publisher: ctx.state.user,
   });
 
   try {

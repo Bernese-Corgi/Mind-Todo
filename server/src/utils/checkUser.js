@@ -16,7 +16,7 @@ export const checkOwn = (model) => (ctx, next) => {
   const instance = ctx.state[`${model.modelName.toLowerCase()}`];
 
   // 사용자가 작성한 포스트가 아니면 Forbidden
-  if (instance.publisherId.toString() !== user._id) {
+  if (instance.publisher.toString() !== user._id) {
     ctx.status = 403;
     return;
   }
