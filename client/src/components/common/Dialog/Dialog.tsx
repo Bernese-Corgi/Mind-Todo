@@ -38,21 +38,6 @@ const Dialog = ({
   const dialogRef = useRef<HTMLDivElement>(null);
   const [modalMode] = useState(hasModal);
 
-  useEffect(() => {
-    // // visible이 true면 현재 dialogRef에 focus
-    // visible && dialogRef.current?.focus();
-    // // visible이 true이고 onOpen 함수가 전달되었으면 함수 실행
-    // visible && onOpen && onOpen(dialogRef.current);
-    // // visible이 false이고 onClose 함수가 전달되었으면 함수 실행
-    // !visible && onClose && onClose();
-  }, [onClose, onOpen, visible]);
-
-  const handleClose = (e /* ANCHOR 타입 지정 */) => {
-    if (e.target === e.currentTarget) {
-      onDimClickClose && onDimClickClose();
-    }
-  };
-
   return (
     <Portal id={portalId}>
       <>
@@ -83,7 +68,10 @@ const Dialog = ({
 
             {/* ----------------------------------- dim ---------------------------------- */}
             {modalMode && visible && (
-              <StyledDim role="presentation" onClick={handleClose} />
+              <StyledDim
+                role="presentation"
+                onClick={onDimClickClose ? onDimClickClose : onClose}
+              />
             )}
           </>
         )}
