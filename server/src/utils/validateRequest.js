@@ -24,15 +24,15 @@ const validationSchema = {
   },
   // post 작성 검증 스키마
   write_post: {
-    title: Joi.string().required(),
+    title: Joi.string().max(30).required(),
     body: Joi.string().required(),
-    tags: Joi.array().items(Joi.string()),
+    tags: Joi.array().items(Joi.string().max(20)),
   },
   // post 수정 검증 스키마
   update_post: {
-    title: Joi.string(),
+    title: Joi.string().max(30),
     body: Joi.string(),
-    tags: Joi.array().items(Joi.string()),
+    tags: Joi.array().items(Joi.string().max(20)),
   },
   // todo 작성 검증 스키마
   write_todo: {
@@ -45,21 +45,21 @@ const validationSchema = {
   },
   // mindmap 작성 검증 스키마
   write_mindmap: {
-    title: Joi.string().required(),
+    title: Joi.string().max(30).required(),
   },
   // mindmap 수정 검증 스키마
   update_mindmap: {
-    title: Joi.string(),
+    title: Joi.string().max(30),
   },
   // node 작성 검증 스키마
   write_node: {
-    name: Joi.string().required(),
+    name: Joi.string().max(50).required(),
     // TODO 모델이랑 맞추기
     parentId: Joi.string(),
   },
   // node 수정 검증 스키마
   udpate_node: {
-    name: Joi.string(),
+    name: Joi.string().max(50),
     // TODO parent 위치 변경 가능하게 한다면 이부분에 parent 추가
   },
 };
