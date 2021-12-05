@@ -1,9 +1,13 @@
 import { model, Schema } from 'mongoose';
 
 const PostSchema = new Schema({
-  publisherId: {
+  publisher: {
     type: Schema.Types.ObjectId,
     ref: 'User',
+  },
+  mindmapId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Mindmap',
   },
   nodeId: {
     type: Schema.Types.ObjectId,

@@ -9,7 +9,9 @@ export const listMindmap = async (ctx) => {
   // TODO 페이지네이션
   try {
     // mind map 컬렉션에서 list 받아오기
-    const mindmaps = await Mindmap.find().sort({ _id: -1 });
+    const mindmaps = await Mindmap.find()
+      .sort({ _id: -1 })
+      .populate('publisher');
 
     // mindmap list를 응답
     ctx.body = mindmaps;
@@ -36,7 +38,7 @@ export const writeMindmap = async (ctx) => {
   // mindmap document 생성
   const mindmap = new Mindmap({
     title,
-    publisherId: ctx.state.user,
+    publisher: ctx.state.user,
   });
 
   try {
@@ -52,7 +54,17 @@ export const writeMindmap = async (ctx) => {
 /* ------------------------- 개별 마인드맵 조회 (= 전체 노드 조회) ------------------------ */
 // GET /api/mindmaps/:mindmapId
 export const readMindmap = async (ctx) => {
-  ctx.body = ctx.state.mindmap;
+  const { mindmap } = ctx.state;
+
+  const populatedMindmap = await mindmap.populate({
+    path: 'body',
+    populate: [
+      { path: 'node', select: 'name _id' },
+      { path: 'parent', select: 'name _id' },
+    ],
+  });
+
+  ctx.body = populatedMindmap;
 };
 
 /* --------------------------- 개별 마인드맵 수정 (타이틀 수정) -------------------------- */
@@ -134,8 +146,8 @@ export const writeNode = async (ctx) => {
 
   // node 인스턴스를 바탕으로 tree 인스턴스 생성
   const tree = new Tree({
-    node: { name: node.name, nodeId: node._id },
-    parent: { name: parentNode.name, parentId: parentNode._id },
+    node,
+    parent: parentId,
   });
 
   try {
@@ -209,6 +221,7 @@ export const updateNode = async (ctx) => {
       { new: true }, // 업데이트된 데이터를 반환
     ).exec();
 
+    console.log(node);
     // id로 node를 찾을 수 없으면 not found
     if (!node) {
       ctx.status = 404;

@@ -1,7 +1,7 @@
 import { model, Schema } from 'mongoose';
 
 const TodoSchema = new Schema({
-  publisherId: {
+  publisher: {
     type: Schema.Types.ObjectId,
     ref: 'User',
   },

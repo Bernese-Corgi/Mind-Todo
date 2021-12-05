@@ -10,7 +10,7 @@ export const list = async (ctx) => {
 
   try {
     // todos 컬렉션에서 todo list 받아오기
-    const todos = await Todo.find().sort({ _id: -1 });
+    const todos = await Todo.find().sort({ _id: -1 }).populate('publisher');
     // todos 응답
     ctx.body = todos;
   } catch (e) {
@@ -36,7 +36,7 @@ export const write = async (ctx) => {
   // todo 인스턴스 생성
   const todo = new Todo({
     content,
-    publisherId: ctx.state.user,
+    publisher: ctx.state.user,
     nodeId: ctx.params.nodeId,
   });
 

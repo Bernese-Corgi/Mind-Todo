@@ -23,30 +23,18 @@ const NodeSchema = new Schema({
 
 const TreeSchema = new Schema({
   node: {
-    name: {
-      type: String,
-      required: true,
-    },
-    nodeId: {
-      type: Schema.Types.ObjectId,
-      ref: 'Node',
-    },
+    type: Schema.Types.ObjectId,
+    ref: 'Node',
   },
   parent: {
-    name: {
-      type: String,
-      default: '',
-    },
-    parentId: {
-      type: Schema.Types.ObjectId,
-      ref: 'Node',
-      default: null,
-    },
+    type: Schema.Types.ObjectId,
+    ref: 'Node',
+    default: null,
   },
 });
 
 const MindmapSchema = new Schema({
-  publisherId: {
+  publisher: {
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
@@ -90,8 +78,6 @@ NodeSchema.statics.updateNodeChild = async function (
   propName = data.constructor.modelName.toLowerCase(),
 ) {
   const node = await Node.findById(id);
-
-  // console.log(propName);
 
   const matchKey = Object.keys(node.toObject()).find((key) => {
     return key === (Array.isArray(node[key]) ? `${propName}s` : propName);
