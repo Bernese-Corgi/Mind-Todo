@@ -23,25 +23,13 @@ const NodeSchema = new Schema({
 
 const TreeSchema = new Schema({
   node: {
-    name: {
-      type: String,
-      required: true,
-    },
-    nodeId: {
-      type: Schema.Types.ObjectId,
-      ref: 'Node',
-    },
+    type: Schema.Types.ObjectId,
+    ref: 'Node',
   },
   parent: {
-    name: {
-      type: String,
-      default: '',
-    },
-    parentId: {
-      type: Schema.Types.ObjectId,
-      ref: 'Node',
-      default: null,
-    },
+    type: Schema.Types.ObjectId,
+    ref: 'Node',
+    default: null,
   },
 });
 

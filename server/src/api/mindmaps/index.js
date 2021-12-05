@@ -30,9 +30,9 @@ const node = new Router();
 // 개별 노드 조회
 node.get('/', mindmapsCtrl.readNode);
 // 개별 노드 수정
-node.patch('/', checkOwn(Node), mindmapsCtrl.updateNode);
+node.patch('/', checkOwn(Mindmap), mindmapsCtrl.updateNode);
 // 개별 노드 삭제
-node.delete('/', checkOwn(Node), mindmapsCtrl.removeNode);
+node.delete('/', checkOwn(Mindmap), mindmapsCtrl.removeNode);
 // /api/mindmaps/:mindmapId/:nodeId
 mindmaps.use(
   '/:mindmapId/:nodeId',
