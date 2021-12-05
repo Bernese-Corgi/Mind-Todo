@@ -11,7 +11,9 @@ import {
 import { getD3NodeSelectionById, getNodeBBox, wrapText } from 'utils/mindmap';
 
 const MindmapNode = ({ node, onClickAddButton, onClickNode }) => {
-  const { nodeId } = node.data.node;
+  const nodeId = node.data.node._id;
+  const nodeName = node.data.node.name;
+  const treeId = node.data._id;
 
   const textLen = 12;
 
@@ -21,19 +23,13 @@ const MindmapNode = ({ node, onClickAddButton, onClickNode }) => {
   });
 
   useEffect(() => {
-    const nodeTextSelection = getD3NodeSelectionById(
-      '.nodeText',
-      node.data._id
-    );
+    const nodeTextSelection = getD3NodeSelectionById('.nodeText', treeId);
 
-    wrapText(nodeTextSelection, node.data.node.name, textLen, { x: '0.5em' });
-  }, [node.data._id, node.data.node.name]);
+    wrapText(nodeTextSelection, nodeName, textLen, { x: '0.5em' });
+  }, [treeId, nodeName]);
 
   useEffect(() => {
-    const nodeTextSelection = getD3NodeSelectionById(
-      '.nodeText',
-      node.data._id
-    );
+    const nodeTextSelection = getD3NodeSelectionById('.nodeText', treeId);
 
     const nodeTextBBox = getNodeBBox(nodeTextSelection);
 
@@ -41,13 +37,13 @@ const MindmapNode = ({ node, onClickAddButton, onClickNode }) => {
       width: nodeTextBBox.width,
       height: nodeTextBBox.height,
     });
-  }, [node.data._id]);
+  }, [treeId]);
 
   return (
-    <StyledNodeGroup node={node} textsize={textsize} key={node.data._id}>
+    <StyledNodeGroup node={node} textsize={textsize} key={treeId}>
       <StyledTextGroup onClick={e => onClickNode(e, nodeId)}>
         <StyledNodeTextBox node={node} textsize={textsize} />
-        <StyledNodeText children={node.data.node.name} id={node.data._id} />
+        <StyledNodeText children={nodeName} id={treeId} />
       </StyledTextGroup>
 
       <StyledAddGroup
