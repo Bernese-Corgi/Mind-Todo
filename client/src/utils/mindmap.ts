@@ -5,7 +5,7 @@ import { chunkString } from './stringUtils';
 export const stratifiedMindmap = treeData => {
   const stratifiedData = stratify()
     .id((d: any) => d.node.name)
-    .parentId((d: any) => d.parent.name)(treeData);
+    .parentId((d: any) => d.parent?.name)(treeData);
 
   return stratifiedData;
 };
