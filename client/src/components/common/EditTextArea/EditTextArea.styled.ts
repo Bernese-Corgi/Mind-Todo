@@ -9,21 +9,14 @@ export const StyledEditTextArea = styled.textarea<EditTextAreaProps>`
 
   height: 2.2em;
 
-  ${({ resizeHeight }) =>
-    resizeHeight
-      ? css`
-          overflow: hidden;
-        `
-      : css`
-          overflow-y: auto;
-        `}
+  overflow: hidden;
 
   &:hover {
     background-color: transparent;
   }
 
-  ${({ readOnly, done }) => {
-    if (readOnly && !done)
+  ${({ readOnly, completed }) => {
+    if (readOnly && !completed)
       return css`
         outline: transparent;
         border: 1px solid transparent;
@@ -40,12 +33,12 @@ export const StyledEditTextArea = styled.textarea<EditTextAreaProps>`
         }
       `;
 
-    if (!readOnly && done)
+    if (!readOnly && completed)
       return css`
         border-bottom: 0.1rem solid ${colors.gray.base};
       `;
 
-    if (readOnly && done)
+    if (readOnly && completed)
       return css`
         color: ${colors.gray.base};
         text-decoration: line-through;
