@@ -26,7 +26,7 @@ export type CheckBoxInputProps = {
   name: string;
   value?: string;
   title: string;
-  checked: boolean;
+  checked?: boolean;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 

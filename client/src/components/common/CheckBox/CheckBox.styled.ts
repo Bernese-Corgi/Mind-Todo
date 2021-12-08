@@ -16,7 +16,11 @@ export const CheckBoxWrapper = styled.div<CheckBoxWrapperProps>`
 `;
 
 export const StyledCheckBoxLabel = styled.label`
-  ${theme.positions.absolute.center}
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   cursor: pointer;
 `;
 
