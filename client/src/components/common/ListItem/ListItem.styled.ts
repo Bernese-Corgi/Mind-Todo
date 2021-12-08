@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import theme from 'styles/theme';
 
 export const StyledListItem = styled.li`
-  font-size: ${theme.fonts.size.base};
+  font-size: 100%;
   width: 100%;
   border-radius: ${theme.borders.radius.square};
   padding: 1em 1em 0 1em;
@@ -12,7 +12,7 @@ export const StyledListItem = styled.li`
     padding: 0.3em;
     ${theme.transition()}
 
-    a:hover {
+    &:hover {
       color: ${theme.colors.secondary.base};
       text-decoration: underline;
     }
@@ -33,7 +33,7 @@ export const StyledListItem = styled.li`
     margin-top: 1em;
   }
 
-  a:hover {
+  &:hover {
     ${theme.transition('300ms', 'ease-in')}
     background-color: ${theme.colors.primary.light}50;
   }
@@ -58,12 +58,9 @@ export const StyledSubInfo = styled.div`
 
   .date {
     margin-left: 1em;
-    font-size: 90%;
+    font-size: 80%;
+    color: ${theme.colors.gray.dark}99;
   }
 
   ${theme.flexes.row('start')}
-`;
-
-export const StyledList = styled.ul`
-  padding: 1em;
 `;
