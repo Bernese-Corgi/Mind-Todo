@@ -190,9 +190,10 @@ export const readNode = async (ctx) => {
   const node = ctx.state.node;
   try {
     // post, todos 정보 가져오기
-    const { post, todos } = await node.findPostAndTodosByNode();
-    // node, post, todos 정보를 응답
-    ctx.body = { node, post, todos };
+    const populatedNode = await node.findPostAndTodosByNode();
+
+    //  post, todos가 채워진 node 객체 응답
+    ctx.body = populatedNode;
   } catch (e) {
     ctx.throw(500, e);
   }
@@ -221,7 +222,6 @@ export const updateNode = async (ctx) => {
       { new: true }, // 업데이트된 데이터를 반환
     ).exec();
 
-    console.log(node);
     // id로 node를 찾을 수 없으면 not found
     if (!node) {
       ctx.status = 404;
@@ -239,7 +239,20 @@ export const updateNode = async (ctx) => {
 /* -------------------------------- 개별 노드 삭제 -------------------------------- */
 // DELETE /api/mindmaps/:mindmapId/:nodeId
 export const removeNode = async (ctx) => {
+  const { mindmapId, nodeId } = ctx.params;
   try {
+    const mindmap = await Mindmap.findById(mindmapId);
+
+    const filteredBody = mindmap.body.filter(
+      (tree) => tree.node.toString() !== nodeId,
+    );
+
+    await Mindmap.findByIdAndUpdate(
+      mindmapId,
+      { body: filteredBody },
+      { new: true },
+    ).exec();
+
     // params에서 받아온 nodeId와 일치하는 node 삭제
     await Node.findByIdAndRemove(ctx.params.nodeId).exec();
 

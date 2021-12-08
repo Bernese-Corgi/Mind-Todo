@@ -17,6 +17,7 @@ export { default as Navigation } from './Navigation/Navigation';
 export { default as Dim } from './Dim';
 export { default as CheckBox } from './CheckBox/CheckBox';
 export { default as EditInput } from './EditInput/EditInput';
+export { default as ListItem } from './ListItem/ListItem';
 
 /* styled component ---------------------------- */
 export { default as StyledForm } from './Form.styled';

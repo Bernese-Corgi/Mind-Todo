@@ -9,12 +9,15 @@ export type EditTextAreaProps = {
   name: string;
   value: string;
   errorMsg?: string;
+  placeholder?: string;
   readOnly?: boolean;
-  done?: boolean;
-  onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  completed?: boolean;
+  onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  onClick?: () => void;
   onKeyPress?: (e: KeyboardEvent<HTMLTextAreaElement>) => void;
-  onKeyDown?: (e) => void;
+  onFocus?: () => void;
   className?: string;
+  errorClassName?: string;
   preventEnter?: 'hard' | 'soft' | 'both';
   resizeHeight?: boolean;
 };
@@ -27,11 +30,15 @@ const EditTextArea = forwardRef<HTMLTextAreaElement, EditTextAreaProps>(
       name,
       value,
       errorMsg,
+      placeholder,
       readOnly = false,
-      done = false,
+      completed = false,
       onChange,
+      onClick,
       onKeyPress,
+      onFocus,
       className,
+      errorClassName,
       preventEnter,
       resizeHeight = true,
     }: EditTextAreaProps,
@@ -54,14 +61,19 @@ const EditTextArea = forwardRef<HTMLTextAreaElement, EditTextAreaProps>(
           id={id}
           name={name}
           value={value}
+          placeholder={placeholder}
           readOnly={readOnly}
-          done={done}
+          completed={completed}
           ref={ref}
           onChange={onChange}
+          onClick={onClick}
           onKeyPress={handleKeyPress}
+          onFocus={onFocus}
           className={`${className} ${errorMsg && 'errorInput'}`}
         />
-        {errorMsg && <ErrorMsg children={errorMsg} />}
+        {errorMsg && (
+          <ErrorMsg children={errorMsg} className={errorClassName} />
+        )}
       </div>
     );
   }
