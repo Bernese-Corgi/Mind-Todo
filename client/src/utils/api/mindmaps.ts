@@ -23,3 +23,12 @@ export const writeNode = (mindmapId: string, newNode: NodeType) =>
 
 export const readNode = (mindmapId: string, nodeId: string) =>
   client.get(`${URI}/${mindmapId}/${nodeId}`);
+
+export const updateNode = (
+  mindmapId: string,
+  nodeId: string,
+  updateNode: string
+) => client.patch(`${URI}/${mindmapId}/${nodeId}`, updateNode);
+
+export const removeNode = (mindmapId: string, nodeId: string) =>
+  client.delete(`${URI}/${mindmapId}/${nodeId}`);
