@@ -18,6 +18,9 @@ export { default as Dim } from './Dim';
 export { default as CheckBox } from './CheckBox/CheckBox';
 export { default as EditInput } from './EditInput/EditInput';
 export { default as ListItem } from './ListItem/ListItem';
+export { default as EditTextArea } from './EditTextArea/EditTextArea';
+export { default as DeleteDialog } from './DeleteDialog/DeleteDialog';
+export { default as EditDeleteButtonUnit } from './EditDeleteButtonUnit/EditDeleteButtonUnit';
 
 /* styled component ---------------------------- */
 export { default as StyledForm } from './Form.styled';
