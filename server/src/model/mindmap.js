@@ -93,7 +93,12 @@ NodeSchema.statics.updateNodeChild = async function (
 };
 
 NodeSchema.statics.savePostInNode = async function (id, data) {
-  return await Node.findByIdAndUpdate(id, { post: data }, { new: true }).exec();
+  const updateNode = await Node.findByIdAndUpdate(
+    id,
+    { post: data },
+    { new: true },
+  ).exec();
+  return updateNode;
 };
 
 /**
@@ -124,9 +129,7 @@ NodeSchema.statics.findPostByNodeId = async function (nodeId) {
  * @returns post, todos를 객체로 묶어서 반환한다.
  */
 NodeSchema.methods.findPostAndTodosByNode = async function () {
-  const { post } = await Node.findOne({ post: this.post }).populate('post');
-  const { todos } = await Node.findOne({ todos: this.todos }).populate('todos');
-  return { post, todos };
+  return await this.populate([{ path: 'todos' }, { path: 'post' }]);
 };
 
 export const Node = model('Node', NodeSchema);
