@@ -8,7 +8,6 @@ const { fonts, colors, borders, margins, paddings, transition, flexes } = theme;
 const defButtonStyle = css`
   margin: ${margins.base};
   font-weight: ${fonts.weight.bold};
-  padding: ${paddings.sm} ${paddings.lg};
 `;
 
 const handleDefButtonStyle = (props: ButtonProps) => {
@@ -53,6 +52,7 @@ const handleDefButtonStyle = (props: ButtonProps) => {
 
 export const StyledButton = styled.button<ButtonProps>`
   ${defButtonStyle}
+  padding: ${paddings.xs} ${paddings.base};
   ${({ id, title, round, primary, textOnly, fullWidth }) =>
     handleDefButtonStyle({ id, title, round, primary, textOnly, fullWidth })}
 `;
@@ -62,6 +62,11 @@ export const StyledLinkButton = styled.button<LinkButtonProps & ButtonProps>`
   ${defButtonStyle}
   ${({ id, title, round, primary, textOnly, fullWidth }) =>
     handleDefButtonStyle({ id, title, round, primary, textOnly, fullWidth })}
+
+    a {
+    display: block;
+    padding: ${paddings.xs} ${paddings.base};
+  }
 `;
 
 export const StyledIconButton = styled.button<IconButtonProps>`

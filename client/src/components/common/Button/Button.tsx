@@ -20,6 +20,7 @@ export type ButtonProps = {
   textOnly?: boolean;
   primary?: boolean;
   onClick?: () => void;
+  className?: string;
 };
 
 export type IconButtonProps = {
@@ -50,6 +51,7 @@ const Button = ({
   color,
   fontSize = '1.4rem',
   linkTo,
+  className,
   ...restProps
 }: ButtonProps & IconButtonProps & LinkButtonProps) => {
   /* ------------------------------- Link Button ------------------------------ */
@@ -64,6 +66,7 @@ const Button = ({
         fullWidth={fullWidth}
         textOnly={textOnly}
         primary={primary}
+        className={className}
         {...restProps}>
         <Link to={linkTo}>{children}</Link>
       </StyledLinkButton>
@@ -77,6 +80,7 @@ const Button = ({
         shape={shape}
         fontSize={fontSize}
         onClick={onClick}
+        className={className}
         {...restProps}>
         <Icon shape={shape} id={id} title={title} color={color} />
       </StyledIconButton>
@@ -95,6 +99,7 @@ const Button = ({
       textOnly={textOnly}
       primary={primary}
       onClick={onClick}
+      className={className}
       {...restProps}>
       {children}
     </StyledButton>
