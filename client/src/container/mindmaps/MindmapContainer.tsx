@@ -67,8 +67,8 @@ const MindmapContainer = ({ history, match }: MindmapContainerProps) => {
 
   const handleClicksMindmap = {
     addBtn: (e: MouseEventHandler<SVGGElement>, parentId: string) => {
-      const rootNode = mindmap.body[0].node;
-      const _parentId = parentId ? parentId : rootNode.nodeId;
+      const rootNodeId = mindmap.body[0].node._id;
+      const _parentId = parentId ? parentId : rootNodeId;
 
       setParent(_parentId);
       setIsWrite(true);
@@ -94,10 +94,20 @@ const MindmapContainer = ({ history, match }: MindmapContainerProps) => {
   const handleSubmitWriteNode = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const overlapNodeName = mindmap?.body.find(
+      tree => tree.node.name === writeInput
+    );
+
+    if (overlapNodeName) {
+      setErrorMsg('존재하는 이름입니다. 중복이 되지 않도록 입력해주세요.');
+      return;
+    }
+
     if (!writeInput) {
       setErrorMsg('노드의 이름을 입력하세요');
       return;
     }
+
     if (writeInput.length > 50) {
       setErrorMsg('50자 이하로 작성해주세요');
       return;
