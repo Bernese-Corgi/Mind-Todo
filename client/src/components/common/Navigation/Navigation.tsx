@@ -40,7 +40,7 @@ const Navigation = forwardRef<HTMLElement, NavigationProps>(
             </li>
             <li role="none">
               <StyledNavLink
-                to={`/posts/@${user?.username}`}
+                to={`/posts?@${user?.username}`}
                 onClick={onCloseNav}>
                 내가 쓴 글 목록
               </StyledNavLink>
