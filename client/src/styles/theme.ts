@@ -62,6 +62,7 @@ const margins = {
 };
 
 const paddings = {
+  xs: '0.6rem',
   sm: '0.8rem',
   base: '1rem',
   lg: '1.5rem',
@@ -92,7 +93,7 @@ const flexes = {
     flex-direction:${direction};
     align-items:${align};
     justify-content:${justify};
-    flex-wrap: ${wrap}
+    flex-wrap: ${wrap};
   `,
   center: `
     display: flex;
@@ -231,6 +232,13 @@ const defElem = {
     padding: 0.3em 0 0.3em 0;
     margin: 1em auto 0 auto;
     `,
+  divider: (width?: string) => `
+    display: block;
+    content: '';
+    background-color: ${colors.gray.dark}40;
+    width: ${width ? width : '100%'};
+    height: 1px;
+  `,
 };
 
 const theme: DefaultTheme = {

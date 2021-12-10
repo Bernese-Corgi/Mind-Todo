@@ -24,12 +24,8 @@ export const PostViewerWrapper = styled.div<PostViewerProps>`
       post.title &&
       css`
         &:after {
-          display: block;
-          content: '';
-          background-color: ${theme.colors.gray.dark}40;
+          ${theme.defElem.divider('95%')}
           margin-top: 0.5em;
-          width: 95%;
-          height: 1px;
         }
       `}
   }
