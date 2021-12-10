@@ -25,7 +25,7 @@ const TagItem = React.memo(
           {isWrite ? (
             `# ${tag}`
           ) : (
-            <Link to={`/?tag=${tag}`} children={`# ${tag}`} />
+            <Link to={`/posts?tag=${tag}`} children={`# ${tag}`} />
           )}
         </div>
         {isWrite && (
@@ -37,7 +37,7 @@ const TagItem = React.memo(
               title="태그 지우기"
               shape="cancel"
               color={theme.colors.gray.dark}
-              // onClick={key => handle÷ClickCancel(key)}
+              // onClick={key => handleClickCancel(key)}
             />
           </StyledCancelButton>
         )}
@@ -47,7 +47,6 @@ const TagItem = React.memo(
 );
 
 const Tags = React.memo(({ tags, isWrite, onClickRemoveBtn }: TagsProps) => {
-  console.log(tags);
   return (
     <StyledTagsUl>
       {tags?.map((tag, i) => (
