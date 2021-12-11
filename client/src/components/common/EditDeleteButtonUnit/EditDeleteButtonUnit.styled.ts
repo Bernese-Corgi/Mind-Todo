@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import theme from 'styles/theme';
+import { EditDeleteIconButtonsUnitProps } from './EditDeleteButtonUnit';
 
-export const EditDeleteButtonUnitWrapper = styled.div`
+export const EditDeleteButtonUnitWrapper = styled.div<EditDeleteIconButtonsUnitProps>`
   width: 100%;
   ${theme.transition()}
 
@@ -16,7 +17,7 @@ export const EditDeleteButtonUnitWrapper = styled.div`
   }
 
   .iconBtnWrapper {
-    opacity: 0;
+    opacity: ${({ hoverEffect }) => (hoverEffect ? 0 : 100)};
     width: fit-content;
 
     /* TODO 옮기기 */

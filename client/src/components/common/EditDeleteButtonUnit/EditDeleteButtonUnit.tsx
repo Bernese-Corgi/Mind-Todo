@@ -3,6 +3,10 @@ import { changeFirstStrToUpper } from 'utils/stringUtils';
 import { Button, DeleteDialog, EditTextArea } from '..';
 import { EditDeleteButtonUnitWrapper } from './EditDeleteButtonUnit.styled';
 
+export interface EditDeleteIconButtonsUnitProps {
+  hoverEffect?: boolean;
+}
+
 interface EditDeleteButtonUnitProps {
   mode: string;
   editName?: string;
@@ -29,11 +33,12 @@ const EditDeleteButtonUnit = ({
   updateLink,
   iconMode = false,
   hasDelButton = true,
+  hoverEffect = true,
   onChangeEdit,
   onEdit,
   onRemove,
   calssName,
-}: EditDeleteButtonUnitProps) => {
+}: EditDeleteButtonUnitProps & EditDeleteIconButtonsUnitProps) => {
   const modeToUpper = changeFirstStrToUpper(mode);
 
   const [isEdit, setIsEdit] = useState(false);
@@ -57,7 +62,7 @@ const EditDeleteButtonUnit = ({
   };
 
   return (
-    <EditDeleteButtonUnitWrapper>
+    <EditDeleteButtonUnitWrapper hoverEffect={hoverEffect}>
       {iconMode ? (
         // icon mode
         <>
