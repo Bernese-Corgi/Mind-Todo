@@ -19,7 +19,7 @@ export const listMindmapAsync = () =>
 const initialState = {
   loading: false,
   error: null,
-  data: null,
+  mindmaps: null,
 };
 
 /* --------------------------------- reducer -------------------------------- */
@@ -31,7 +31,7 @@ function mindmapsReducer(state = initialState, { type, payload }) {
         ...state,
         loading: true,
         error: null,
-        data: null,
+        mindmaps: null,
       };
 
     // success
@@ -40,7 +40,7 @@ function mindmapsReducer(state = initialState, { type, payload }) {
         ...state,
         loading: false,
         error: null,
-        data: payload,
+        mindmaps: payload,
       };
 
     // error
@@ -49,7 +49,7 @@ function mindmapsReducer(state = initialState, { type, payload }) {
         ...state,
         loading: false,
         error: payload,
-        data: null,
+        mindmaps: null,
       };
 
     default:
