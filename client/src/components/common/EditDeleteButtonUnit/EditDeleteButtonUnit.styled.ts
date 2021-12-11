@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import theme from 'styles/theme';
+import { handleSvgHoverColor } from 'utils/style';
 import { EditDeleteIconButtonsUnitProps } from './EditDeleteButtonUnit';
 
 export const EditDeleteButtonUnitWrapper = styled.div<EditDeleteIconButtonsUnitProps>`
@@ -27,21 +28,15 @@ export const EditDeleteButtonUnitWrapper = styled.div<EditDeleteIconButtonsUnitP
     }
 
     .confirmUpdateBtn {
-      &:hover svg {
-        color: ${theme.colors.blue};
-      }
+      ${handleSvgHoverColor(theme.colors.blue)}
     }
 
-    .setUpdateBtn {
-      &:hover svg {
-        color: ${theme.colors.green};
-      }
+    .setEditBtn {
+      ${handleSvgHoverColor(theme.colors.green)}
     }
 
     .removeBtn {
-      &:hover svg {
-        color: ${theme.colors.red};
-      }
+      ${handleSvgHoverColor(theme.colors.red)}
     }
 
     ${theme.transition()}

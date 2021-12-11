@@ -36,5 +36,7 @@ export const StyledAddNodeForm = styled.form`
     margin-bottom: 0.5em;
   }
 
-  ${handleSvgHoverColor(theme.colors.secondary.base)}
+  button {
+    ${handleSvgHoverColor(theme.colors.secondary.base)}
+  }
 `;
