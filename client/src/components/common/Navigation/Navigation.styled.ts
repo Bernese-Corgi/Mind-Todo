@@ -51,11 +51,7 @@ export const StyledNavLink = styled(NavLink).attrs(() => ({
   }
 
   &::after {
-    content: '';
-    display: block;
-    background-color: ${theme.colors.gray.dark}40;
+    ${theme.defElem.divider()}
     margin-top: 1.5em;
-    width: 100%;
-    height: 1px;
   }
 `;

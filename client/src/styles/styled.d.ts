@@ -56,6 +56,7 @@ declare module 'styled-components' {
       xl: string;
     };
     paddings: {
+      xs: string;
       sm: string;
       base: string;
       lg: string;
@@ -102,6 +103,7 @@ declare module 'styled-components' {
       input: (hasBorder?: boolean) => string;
       errInput: string;
       errForm: string;
+      divider: (width?: string) => string;
     };
   }
 }

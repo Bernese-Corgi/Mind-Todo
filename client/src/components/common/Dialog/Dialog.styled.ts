@@ -63,7 +63,10 @@ export const StyledDialogCloseButton = styled.div`
   top: 0.3em;
   right: 0.3em;
   z-index: 10;
-  ${handleSvgHoverColor()}
+
+  button {
+    ${handleSvgHoverColor()}
+  }
 `;
 
 StyledDialog.displayName = 'StyledDialog';

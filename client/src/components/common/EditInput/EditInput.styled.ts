@@ -11,7 +11,6 @@ export const StyledEditInput = styled.input<EditInputProps>`
   }
 
   ${({ readOnly, done }) => {
-    console.log(readOnly, done);
     if (readOnly && !done)
       return css`
         outline: transparent;
@@ -66,7 +65,6 @@ export const StyledEditTextArea = styled.textarea<EditInputProps>`
   }
 
   ${({ readOnly, done }) => {
-    console.log(readOnly, done);
     if (readOnly && !done)
       return css`
         outline: transparent;
