@@ -2,15 +2,20 @@ import { AddPost } from 'components/posts';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'redux/modules';
-import { writePostAsync } from 'redux/modules/posts/post';
+import {
+  readPostAsync,
+  updatePostAsync,
+  writePostAsync,
+} from 'redux/modules/posts/post';
 import { useReduxDispatch } from 'redux/store';
 
 const AddPostContainer = ({ history, match }) => {
   const dispatch = useReduxDispatch();
-  const { node, post, postError } = useSelector(
+  const { node, nodePost, post, postError } = useSelector(
     ({ node, post }: RootState) => ({
-      node: node.data?.node,
-      post: node.data?.post,
+      node: node.node?.node,
+      nodePost: node.node?.post,
+      post: post.data,
       postError: post.error,
     })
   );
@@ -85,25 +90,39 @@ const AddPostContainer = ({ history, match }) => {
     },
   };
 
+  console.log(post);
   const handleSubmitPost = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const newPost = await dispatch(
-      writePostAsync(nodeId, {
-        title: values.title,
-        body: values.body,
-        tags: localTags,
-      })
-    );
+    if (errors.title || errors.body || errors.post) return;
+    if (post) {
+      const updatedPost = await dispatch(
+        updatePostAsync(post?._id, {
+          title: values.title,
+          body: values.body,
+          tags: localTags,
+        })
+      );
 
-    if (newPost) {
-      history.push(`/mindmap/${mindmapId}/${nodeId}`);
+      if (updatedPost) {
+        history.push(`/mindmap/${post?.mindmapId}/${post?.nodeId}`);
+      }
+    }
+
+    if (!post) {
+      const newPost = await dispatch(
+        writePostAsync(nodeId, {
+          title: values.title,
+          body: values.body,
+          tags: localTags,
+        })
+      );
+
+      if (newPost) {
+        history.push(`/mindmap/${mindmapId}/${nodeId}`);
+      }
     }
   };
-
-  useEffect(() => {
-    console.log(localTags);
-  }, [handleClicks.removeTagBtn]);
 
   useEffect(() => {
     // error
@@ -138,17 +157,32 @@ const AddPostContainer = ({ history, match }) => {
     }
   }, [postError, values.body, values.title]);
 
+  useEffect(() => {
+    if (node?.post) {
+      dispatch(readPostAsync(node.post));
+    }
+  }, [dispatch, node?.post]);
+
+  useEffect(() => {
+    if (post) {
+      setValues({
+        title: post?.title,
+        body: post?.body,
+        tag: '',
+      });
+      setLocalTags(post?.tags);
+    }
+  }, [post]);
+
   return (
-    <>
-      <AddPost
-        values={values}
-        errors={errors}
-        localTags={localTags}
-        onSubmit={handleSubmitPost}
-        onChanges={handleChanges}
-        onClicks={handleClicks}
-      />
-    </>
+    <AddPost
+      values={values}
+      errors={errors}
+      localTags={localTags}
+      onSubmit={handleSubmitPost}
+      onChanges={handleChanges}
+      onClicks={handleClicks}
+    />
   );
 };
 

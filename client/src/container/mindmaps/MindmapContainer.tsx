@@ -21,13 +21,14 @@ import { AddNodeDialog, Mindmap } from 'components/mindmaps';
 /* ---------------------------------- utils --------------------------------- */
 import { isEmptyArray } from 'utils/checkUtils';
 import { stratifiedMindmap } from 'utils/mindmap';
+import { withRouter } from 'react-router';
 
-interface MindmapContainerProps {
-  history;
-  match;
-}
+// interface MindmapContainerProps {
+//   history;
+//   match;
+// }
 
-const MindmapContainer = ({ history, match }: MindmapContainerProps) => {
+const MindmapContainer = ({ history, match }) => {
   const dispatch = useReduxDispatch();
   const {
     mindmap,
@@ -40,7 +41,7 @@ const MindmapContainer = ({ history, match }: MindmapContainerProps) => {
     mindmap: mindmap.data,
     mindmapLoading: mindmap.loading,
     mindmapError: mindmap.error,
-    node: node.data,
+    node: node.node,
     nodeLoading: node.loading,
     nodeError: node.error,
   }));
@@ -170,4 +171,4 @@ const MindmapContainer = ({ history, match }: MindmapContainerProps) => {
   );
 };
 
-export default MindmapContainer;
+export default withRouter(MindmapContainer);
