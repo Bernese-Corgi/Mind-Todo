@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import theme from 'styles/theme';
+import { handleSvgHoverColor } from 'utils/style';
 
 export const HeaderbarWrapper = styled.div`
   ${theme.flexes.row('space-between')}
@@ -17,6 +18,11 @@ export const HeaderbarWrapper = styled.div`
 
 export const MenuButtonWrapper = styled.div`
   width: 33%;
+
+  button {
+    ${handleSvgHoverColor()}
+  }
+
   ${theme.flexes.row('start')}
 `;
 

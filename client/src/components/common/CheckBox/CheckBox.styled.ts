@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import theme from 'styles/theme';
-import { handleHoverColorType } from 'utils/style';
+import { handleHoverColorType, handleSvgHoverColor } from 'utils/style';
 import { CheckBoxWrapperProps } from './CheckBox';
 
 export const CheckBoxWrapper = styled.div<CheckBoxWrapperProps>`
@@ -10,9 +10,9 @@ export const CheckBoxWrapper = styled.div<CheckBoxWrapperProps>`
   margin: 0.5em;
   cursor: pointer;
 
-  &:hover svg {
-    color: ${({ shape }) => handleHoverColorType(shape)};
-  }
+  ${({ shape }) => css`
+    ${handleSvgHoverColor(handleHoverColorType(shape))}
+  `}
 `;
 
 export const StyledCheckBoxLabel = styled.label`
