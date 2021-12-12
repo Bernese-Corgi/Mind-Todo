@@ -5,7 +5,7 @@ interface NodeNameProps {
   nodeName?: string;
   isRoot: boolean;
   errorMsg?: string;
-  onEdit?: () => void;
+  onEdit?: (updateNodeName: string) => void;
   onRemove?: () => void;
 }
 
@@ -27,11 +27,13 @@ const NodeName = ({
 
   const handleChangeEdit = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setNameVal(e.target.value);
-    onEdit && onEdit();
   };
+
+  const handleEditAction = () => onEdit && onEdit(nameVal);
 
   return (
     <StyledNodeNameEditUnit
+      id="editNodeName"
       mode="node"
       editName="name"
       editVal={nameVal}
@@ -42,7 +44,7 @@ const NodeName = ({
       hasDelButton={!isRoot}
       hoverEffect={false}
       onChangeEdit={handleChangeEdit}
-      onEdit={onEdit}
+      onEdit={handleEditAction}
       onRemove={onRemove}
       className="nodeNameWrapper"
     />

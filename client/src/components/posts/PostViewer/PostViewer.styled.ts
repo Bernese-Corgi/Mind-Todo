@@ -7,9 +7,18 @@ export const PostViewerWrapper = styled.div<PostViewerProps>`
   overflow-y: auto;
   overflow-wrap: break-word;
   text-align: left;
+  position: relative;
 
   .postTitleText {
     padding: 0.8em;
+  }
+
+  .editDeleteBtns {
+    position: absolute;
+    top: 0.5em;
+    right: 1em;
+    width: fit-content;
+    font-size: 0.8em;
   }
 
   .mdViewer {
@@ -24,7 +33,7 @@ export const PostViewerWrapper = styled.div<PostViewerProps>`
       post.title &&
       css`
         &:after {
-          ${theme.defElem.divider('95%')}
+          ${theme.defElem.divider()}
           margin-top: 0.5em;
         }
       `}

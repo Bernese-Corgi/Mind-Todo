@@ -8,6 +8,9 @@ import mindmapReducer from './mindmaps/mindmap';
 import mindmapsReducer from './mindmaps/mindmaps';
 import nodeReducer from './mindmaps/node';
 import postReducer from './posts/post';
+import postsReducer from './posts/posts';
+import todoReducer from './todos/todo';
+import todosReducer from './todos/todos';
 
 // 리덕스 상태 지속 설정
 const persistConfig = {
@@ -24,6 +27,9 @@ const rootReducer = combineReducers({
   mindmaps: mindmapsReducer,
   node: nodeReducer,
   post: postReducer,
+  posts: postsReducer,
+  todo: todoReducer,
+  todos: todosReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

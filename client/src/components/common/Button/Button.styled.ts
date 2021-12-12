@@ -29,7 +29,7 @@ const handleDefButtonStyle = (props: ButtonProps) => {
       ? colors.white
       : colors.gray.base};
 
-    ${transition('200ms', 'ease-in-out')}
+    ${theme.transition()}
 
     &:hover {
       background-color: ${textOnly
