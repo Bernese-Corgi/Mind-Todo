@@ -27,7 +27,7 @@ export const initializeMindmapForm = () => ({ type: INITIALIZE_FORM });
 export type MindmapState = {
   loading: boolean;
   error: Error | null;
-  data: mindmapsApi.MindmapType | null;
+  mindmap: mindmapsApi.MindmapType | null;
 };
 
 export type MindmapAction = {
@@ -42,7 +42,7 @@ export type MindmapAction = {
 const initialState = {
   loading: false,
   error: null,
-  data: null,
+  mindmap: null,
 };
 
 /* --------------------------------- reducer -------------------------------- */
@@ -58,7 +58,7 @@ function mindmapReducer(
         ...state,
         loading: true,
         error: null,
-        data: null,
+        mindmap: null,
       };
 
     // success
@@ -68,7 +68,7 @@ function mindmapReducer(
         ...state,
         loading: false,
         error: null,
-        data: payload,
+        mindmap: payload,
       };
 
     // error
@@ -78,7 +78,7 @@ function mindmapReducer(
         ...state,
         loading: false,
         error: payload,
-        data: null,
+        mindmap: null,
       };
 
     // initialize
