@@ -8,6 +8,7 @@ export interface EditDeleteIconButtonsUnitProps {
 }
 
 interface EditDeleteButtonUnitProps {
+  id: string;
   mode: string;
   editName?: string;
   editVal?: string;
@@ -25,6 +26,7 @@ interface EditDeleteButtonUnitProps {
 }
 
 const EditDeleteButtonUnit = ({
+  id,
   mode,
   editName,
   editVal,
@@ -72,7 +74,7 @@ const EditDeleteButtonUnit = ({
         <>
           {editName && editVal && (
             <EditTextArea
-              id={`edit${modeToUpper}TextArea`}
+              id={id}
               name={editName}
               errorMsg={errorMsg}
               placeholder="내용을 입력하세요."
