@@ -4,12 +4,14 @@ import { deleteDialogStyle } from './DeleteDialog.styled';
 
 interface DeleteDialogProps {
   visible: boolean;
+  delDialogText?: string;
   onClose: () => void;
   onConfirmDelete?: () => void;
 }
 
 const DeleteDialog = ({
   visible,
+  delDialogText = '정말 삭제하시겠습니까?',
   onClose,
   onConfirmDelete,
 }: DeleteDialogProps) => {
@@ -34,7 +36,7 @@ const DeleteDialog = ({
       // onDimClickClose={() => {}}
     >
       <div className="delDialogBody">
-        <p>정말 삭제하시겠습니까?</p>
+        <pre>{delDialogText}</pre>
         <div className="delDialogBtns">
           <Button
             id="confirmRemove"

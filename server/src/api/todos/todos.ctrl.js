@@ -19,7 +19,7 @@ export const list = async (ctx) => {
 };
 
 /* --------------------------------- todo 작성 -------------------------------- */
-// POST /api/todos
+// POST /api/todos/:nodeId
 export const write = async (ctx) => {
   // request body 검증
   const { error } = validateRequest('write_todo', ctx.request.body);
@@ -61,8 +61,21 @@ export const write = async (ctx) => {
   }
 };
 
+/* ----------------------------- node list todo ----------------------------- */
+// GET /api/todos/:nodeId
+export const nodeList = async (ctx) => {
+  const { nodeId } = ctx.params;
+  try {
+    const todos = await Node.findTodosByNodeId(nodeId);
+
+    ctx.body = todos;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
+
 /* ------------------------------- update todo ------------------------------ */
-// PATCH /api/todos/:id
+// PATCH /api/todos/:todoId
 export const update = async (ctx) => {
   // request body 스키마 검증
   const { error } = validateRequest('update_todo', ctx.request.body);
@@ -74,14 +87,14 @@ export const update = async (ctx) => {
   }
 
   // 파라미터에서 id 추출
-  const { id } = ctx.params;
+  const { todoId } = ctx.params;
 
   // 현재 request body 데이터 (수정된 내용) 복사
   const nextData = { ...ctx.request.body };
 
   try {
     // params에서 추출한 id로 todo를 찾고, 수정된 데이터를 넣는다.
-    const todo = await Todo.findByIdAndUpdate(id, nextData, {
+    const todo = await Todo.findByIdAndUpdate(todoId, nextData, {
       new: true,
     }).exec();
 
@@ -98,14 +111,14 @@ export const update = async (ctx) => {
 };
 
 /* ------------------------------- remove todo ------------------------------ */
-// DELETE /api/todos/:id
+// DELETE /api/todos/:todoId
 export const remove = async (ctx) => {
   // params에서 id를 받아온다.
-  const { id } = ctx.params;
+  const { todoId } = ctx.params;
 
   try {
     // params에서 받아온 id와 일치하는 todo 삭제
-    await Todo.findByIdAndRemove(id).exec();
+    await Todo.findByIdAndRemove(todoId).exec();
     // No content
     ctx.status = 204;
   } catch (e) {
