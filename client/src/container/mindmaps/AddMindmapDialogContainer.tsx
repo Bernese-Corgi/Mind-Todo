@@ -13,7 +13,13 @@ import { writeNodeAsync } from 'redux/modules/mindmaps/node';
 
 const AddMindmapDialogContainer = ({ history }) => {
   const dispatch = useReduxDispatch();
-  const { mindmap } = useSelector((state: RootState) => state);
+  const { mindmap, mindmapLoading, mindmapError } = useSelector(
+    ({ mindmap }: RootState) => ({
+      mindmap: mindmap.mindmap,
+      mindmapLoading: mindmap.loading,
+      mindmapError: mindmap.error,
+    })
+  );
 
   const [values, setValues] = useState({
     title: '',
@@ -68,13 +74,13 @@ const AddMindmapDialogContainer = ({ history }) => {
   };
 
   useEffect(() => {
-    if (mindmap.error) {
+    if (mindmapError) {
       setError('마인드맵 생성에 실패했습니다. 다시 시도해주세요');
       return;
     }
-  }, [dispatch, history, mindmap.data, mindmap.error]);
+  }, [dispatch, history, mindmapError]);
 
-  if (mindmap.loading) return <LoadingIcon />;
+  if (mindmapLoading) return <LoadingIcon />;
 
   return (
     <>

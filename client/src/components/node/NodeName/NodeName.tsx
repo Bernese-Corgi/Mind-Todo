@@ -44,6 +44,7 @@ const NodeName = ({
       onChangeEdit={handleChangeEdit}
       onEdit={onEdit}
       onRemove={onRemove}
+      className="nodeNameWrapper"
     />
   );
 };

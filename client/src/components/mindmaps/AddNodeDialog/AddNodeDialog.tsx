@@ -47,6 +47,7 @@ const AddNodeDialog = ({
             title="노드 생성하기"
             shape="confirm"
             type="submit"
+            className="addNodeBtn"
           />
         </StyledAddNodeForm>
         <ErrorMsg>{errorMsg}</ErrorMsg>

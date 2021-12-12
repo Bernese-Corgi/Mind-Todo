@@ -1,11 +1,19 @@
+import { Responsive } from 'components/common';
 import { MindmapContainer } from 'container/mindmaps';
 import { withRouter } from 'react-router';
+import styled from 'styled-components';
+
+const MindmapWrapper = styled.section`
+  height: 90vh;
+`;
 
 const MindmapPage = ({ history, match }) => {
   return (
-    <>
-      <MindmapContainer history={history} match={match} />
-    </>
+    <Responsive>
+      <MindmapWrapper>
+        <MindmapContainer />
+      </MindmapWrapper>
+    </Responsive>
   );
 };
 

@@ -69,7 +69,9 @@ const EditTextArea = forwardRef<HTMLTextAreaElement, EditTextAreaProps>(
           onClick={onClick}
           onKeyPress={handleKeyPress}
           onFocus={onFocus}
-          className={`${className} ${errorMsg && 'errorInput'}`}
+          className={`${className ? className : ''} ${
+            errorMsg ? 'errorInput' : ''
+          }`.trim()}
         />
         {errorMsg && (
           <ErrorMsg children={errorMsg} className={errorClassName} />
