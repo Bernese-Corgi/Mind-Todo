@@ -49,7 +49,10 @@ export const removeNodeAsync = (mindmapId: string, nodeId: string) =>
 const initialState = {
   loading: false,
   error: null,
+  mindmap: null,
   node: null,
+  post: null,
+  todos: null,
 };
 
 /* --------------------------------- reducer -------------------------------- */
@@ -77,6 +80,8 @@ function nodeReducer(state = initialState, { type, payload }) {
         loading: false,
         error: null,
         node: payload,
+        post: payload.post,
+        todos: payload.todos,
       };
 
     // error
