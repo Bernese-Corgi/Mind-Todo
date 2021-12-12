@@ -13,24 +13,16 @@ import { Group } from '@visx/group';
 import { ParentSize } from '@visx/responsive';
 
 interface MindmapProps {
-  onClicks: {
-    addBtn: (e: MouseEventHandler<SVGGElement>, parentId: string) => void;
-    node: (e: MouseEventHandler<SVGGElement>, nodeId: string) => void;
-  };
-  mindmap;
   treeData;
   rootNode?: any;
-  loading?: boolean;
-  error?: any;
+  onClickAddButton: (
+    e: MouseEventHandler<SVGGElement>,
+    parentId: string
+  ) => void;
+  onClickNode: (e: MouseEventHandler<SVGGElement>, nodeId: string) => void;
 }
 
-const Mindmap = ({
-  mindmap,
-  treeData,
-  loading,
-  error,
-  onClicks,
-}: MindmapProps) => {
+const Mindmap = ({ treeData, onClickAddButton, onClickNode }: MindmapProps) => {
   return (
     <MindmapWrapper treeData={treeData} className="mindmap-wrapper">
       <ParentSize className="parent-size">
@@ -43,7 +35,7 @@ const Mindmap = ({
             <StyledTree root={treeData} parentSize={{ width, height }}>
               {tree => (
                 <StyledMindmapTreeGroup>
-                  {/* link line */}
+                  {/* link line ---------------------------------- */}
                   <Group id="mindmapLineGroup">
                     {tree.links().map((link, i) => (
                       <StyledMindmapLine
@@ -53,14 +45,14 @@ const Mindmap = ({
                       />
                     ))}
                   </Group>
-                  {/* node */}
+                  {/* node ---------------------------------- */}
                   <Group id="mindmapNodeGroup">
-                    {tree.descendants().map((node, i, nodeArr) => (
+                    {tree.descendants().map((node, i) => (
                       <MindmapNode
                         key={`node-${i}`}
                         node={node}
-                        onClickAddButton={onClicks.addBtn}
-                        onClickNode={onClicks.node}
+                        onClickAddButton={onClickAddButton}
+                        onClickNode={onClickNode}
                       />
                     ))}
                   </Group>
