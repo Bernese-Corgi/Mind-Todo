@@ -15,7 +15,7 @@ const AddPostContainer = ({ history, match }) => {
     ({ node, post }: RootState) => ({
       node: node.node?.node,
       nodePost: node.node?.post,
-      post: post.data,
+      post: post.post,
       postError: post.error,
     })
   );
