@@ -42,6 +42,13 @@ export const write = async (ctx) => {
   const { title, body, tags } = ctx.request.body;
 
   const { nodeId } = ctx.params;
+
+  if (!nodeId) {
+    ctx.status = 400;
+    ctx.body = 'nodeId가 없습니다.';
+    return;
+  }
+
   const { mindmapId } = await Node.findById(nodeId);
 
   // post 인스턴스 생성
@@ -76,13 +83,13 @@ export const write = async (ctx) => {
 };
 
 /* --------------------------- read specific post --------------------------- */
-// GET /api/posts/:id
+// GET /api/posts/:postId
 export const read = async (ctx) => {
   ctx.body = ctx.state.post;
 };
 
 /* -------------------------- update specific post -------------------------- */
-// PATCH /api/posts/:id
+// PATCH /api/posts/:postId
 export const update = async (ctx) => {
   // request body 스키마 검증
   const { error } = validateRequest('update_post', ctx.request.body);
@@ -118,13 +125,13 @@ export const update = async (ctx) => {
 };
 
 /* ------------------------------- remove post ------------------------------ */
-// DELETE /api/posts/:id
+// DELETE /api/posts/:postId
 export const remove = async (ctx) => {
   // params에서 id를 받아온다.
-  const { id } = ctx.params;
+  const { postId } = ctx.params;
   try {
     // params에서 받아온 id와 일치하는 post를 삭제
-    await Post.findByIdAndRemove(id).exec();
+    await Post.findByIdAndRemove(postId).exec();
     // No Content
     ctx.status = 204;
   } catch (e) {
