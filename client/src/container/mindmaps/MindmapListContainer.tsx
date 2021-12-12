@@ -8,7 +8,7 @@ const MindmapListContainer = () => {
   const dispatch = useDispatch();
   const { mindmaps, loading, error } = useSelector(
     ({ mindmaps }: RootState) => ({
-      mindmaps: mindmaps.data,
+      mindmaps: mindmaps.mindmaps,
       loading: mindmaps.loading,
       error: mindmaps.error,
     })
