@@ -1,28 +1,76 @@
 import React from 'react';
 import styled from 'styled-components';
+import theme from 'styles/theme';
+import { TodoType } from 'utils/api/todos';
+import { isEmptyArray } from 'utils/checkUtils';
 import { TodoItem } from '..';
 
 const StyledTodoListUl = styled.ul`
-  padding: 1em;
+  width: 100%;
 
-  li {
-    padding: 0.2em;
-    margin-bottom: 1em;
+  .emptyTodo {
+    color: ${theme.colors.gray.dark}99;
+    margin: 1em;
+  }
+
+  .uncompleted,
+  .completed {
+    text-align: left;
+    color: ${theme.colors.gray.dark}99;
+    margin: 0.5em;
   }
 `;
 
 interface TodoListProps {
-  todos;
+  todos: [TodoType];
+  onToggle: (todoId: string, completed: boolean) => void;
+  onEdit: (todoId: string, content: string) => void;
+  onDelete: (todoId: string) => void;
 }
 
-const TodoList = ({ todos }: TodoListProps) => {
+const TodoList = ({ todos, onToggle, onEdit, onDelete }: TodoListProps) => {
+  if (isEmptyArray(todos))
+    return (
+      <StyledTodoListUl>
+        <p className="emptyTodo">작성된 todo가 없습니다.</p>
+      </StyledTodoListUl>
+    );
+
   return (
-    <StyledTodoListUl>
-      {todos.map((todo, index, todos) => (
-        <li key={todo._id}>
-          <TodoItem todo={todo} />
-        </li>
-      ))}
+    <StyledTodoListUl className="todoListUl">
+      <div className="uncompletedList">
+        <p className="uncompleted">완료되지 않은 항목</p>
+        {todos?.map(todo => {
+          if (!todo.completed)
+            return (
+              <li key={todo._id}>
+                <TodoItem
+                  todo={todo}
+                  onToggle={onToggle}
+                  onEdit={onEdit}
+                  onDelete={onDelete}
+                />
+              </li>
+            );
+        })}
+      </div>
+
+      <div className="completedList">
+        <p className="completed">완료된 항목</p>
+        {todos?.map(todo => {
+          if (todo.completed)
+            return (
+              <li key={todo._id}>
+                <TodoItem
+                  todo={todo}
+                  onToggle={onToggle}
+                  onEdit={onEdit}
+                  onDelete={onDelete}
+                />
+              </li>
+            );
+        })}
+      </div>
     </StyledTodoListUl>
   );
 };
