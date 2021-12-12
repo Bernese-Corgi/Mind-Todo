@@ -17,11 +17,9 @@ const StyledLoadingIcon = styled(Loading)`
 
 const LoadingIcon = () => {
   return (
-    <Responsive>
-      <StyledLoadingWrapper>
-        <StyledLoadingIcon />
-      </StyledLoadingWrapper>
-    </Responsive>
+    <StyledLoadingWrapper>
+      <StyledLoadingIcon />
+    </StyledLoadingWrapper>
   );
 };
 
