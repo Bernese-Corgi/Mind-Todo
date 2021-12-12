@@ -14,13 +14,14 @@ interface EditDeleteButtonUnitProps {
   completed?: boolean;
   editRef?: RefObject<HTMLTextAreaElement>;
   errorMsg?: string;
+  delDialogText?: string;
   updateLink?: string;
   iconMode?: boolean;
   hasDelButton?: boolean;
   onChangeEdit?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   onEdit?: () => void;
   onRemove?: () => void;
-  calssName?: string;
+  className?: string;
 }
 
 const EditDeleteButtonUnit = ({
@@ -30,6 +31,7 @@ const EditDeleteButtonUnit = ({
   completed,
   editRef,
   errorMsg,
+  delDialogText,
   updateLink,
   iconMode = false,
   hasDelButton = true,
@@ -37,7 +39,7 @@ const EditDeleteButtonUnit = ({
   onChangeEdit,
   onEdit,
   onRemove,
-  calssName,
+  className,
 }: EditDeleteButtonUnitProps & EditDeleteIconButtonsUnitProps) => {
   const modeToUpper = changeFirstStrToUpper(mode);
 
@@ -62,7 +64,9 @@ const EditDeleteButtonUnit = ({
   };
 
   return (
-    <EditDeleteButtonUnitWrapper hoverEffect={hoverEffect}>
+    <EditDeleteButtonUnitWrapper
+      className={className}
+      hoverEffect={hoverEffect}>
       {iconMode ? (
         // icon mode
         <>
@@ -134,6 +138,7 @@ const EditDeleteButtonUnit = ({
       {hasDialog && (
         <DeleteDialog
           visible={hasDialog}
+          delDialogText={delDialogText}
           onClose={handleClicks.closeDialog}
           onConfirmDelete={onRemove}
         />
