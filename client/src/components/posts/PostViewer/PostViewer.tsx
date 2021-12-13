@@ -1,10 +1,19 @@
 import {
   EditDeleteButtonUnit,
+  LoadingIcon,
   MdViewer,
   Tags,
   WriteActionBtn,
 } from 'components/common';
+import { RouteComponentProps, withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
 import { PostViewerWrapper } from './PostViewer.styled';
+
+interface PostViewerParams {
+  postId?: string;
+  nodeId?: string;
+  mindmapId?: string;
+}
 
 export interface PostViewerProps {
   post;
@@ -12,6 +21,8 @@ export interface PostViewerProps {
   hasEdit?: boolean;
   onRemove?: () => void;
   writePath?: string;
+  loading?: boolean;
+  error?: any;
 }
 
 const PostViewer = ({
@@ -20,7 +31,14 @@ const PostViewer = ({
   hasEdit,
   onRemove,
   writePath,
-}: PostViewerProps) => {
+  loading,
+  error,
+  match,
+}: PostViewerProps & RouteComponentProps<PostViewerParams>) => {
+  const { postId } = match.params;
+
+  if (loading) return <LoadingIcon />;
+
   if (!post)
     return writePath ? (
       <WriteActionBtn
@@ -36,9 +54,20 @@ const PostViewer = ({
 
   return (
     <PostViewerWrapper className="postViewerWrapper" post={post}>
-      <p aria-label="글 제목" className="postTitleText" children={post.title} />
+      <div className="postTitleText">
+        {postId ? (
+          <p aria-label="글 제목" children={post.title} />
+        ) : (
+          <Link
+            to={`/posts/${post._id}`}
+            aria-label="글 제목"
+            children={post.title}
+          />
+        )}
+      </div>
       {hasEdit && (
         <EditDeleteButtonUnit
+          id="editDelPost"
           mode="post"
           updateLink={`/posts/${post._id}/edit`}
           onRemove={onRemove}
@@ -51,4 +80,4 @@ const PostViewer = ({
   );
 };
 
-export default PostViewer;
+export default withRouter(PostViewer);
