@@ -10,33 +10,38 @@ import {
   unloadPost,
 } from 'redux/modules/posts/post';
 
+interface PostViewerParams {
+  mindmapId?: string;
+  nodeId?: string;
+  postId?: string;
+}
+
 interface PostViewerContainerProps {
   nodePost?: any;
-  nodeId?: string;
-  mindmapId?: string;
-  postId?: string;
 }
 
 const PostViewerContainer = ({
   nodePost,
-  nodeId,
-  mindmapId,
-  postId,
+  // nodeId,
+  // mindmapId,
+  // postId,
   history,
-}: PostViewerContainerProps & RouteComponentProps) => {
+  match,
+}: PostViewerContainerProps & RouteComponentProps<PostViewerParams>) => {
   const dispatch = useDispatch();
-  const { post } = useSelector(({ post }: RootState) => ({
+  const { post, loading, error } = useSelector(({ post }: RootState) => ({
     post: post.post,
+    loading: post.loading,
+    error: post.error,
   }));
+
+  const { mindmapId, nodeId, postId } = match.params;
 
   const writePath = `/mindmap/${mindmapId}/${nodeId}/write-post`;
 
   useEffect(() => {
-    if (!nodePost) {
-      const dispatchReadPost = async (postId: string) => {
-        await dispatch(readPostAsync(postId));
-      };
-      const post = postId && dispatchReadPost(postId);
+    if (!nodePost && postId) {
+      dispatch(readPostAsync(postId));
     }
 
     return () => {
@@ -55,6 +60,8 @@ const PostViewerContainer = ({
       hasEdit
       onRemove={handleRemove}
       writePath={writePath}
+      loading={loading}
+      error={error}
     />
   );
 };
