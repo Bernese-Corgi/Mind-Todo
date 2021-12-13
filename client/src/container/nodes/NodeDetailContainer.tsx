@@ -3,7 +3,12 @@ import { NodeDetail } from 'components/node';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 import { RootState } from 'redux/modules';
-import { readNodeAsync } from 'redux/modules/mindmaps/node';
+import {
+  readNodeAsync,
+  removeNodeAsync,
+  updateNodeAsync,
+} from 'redux/modules/mindmaps/node';
+import { readMindmapAsync } from 'redux/modules/mindmaps/mindmap';
 
 const NodeDetailContainer = ({ history, match }) => {
   const { mindmapId, nodeId } = match.params;
@@ -24,6 +29,22 @@ const NodeDetailContainer = ({ history, match }) => {
     mindmap: `/mindmap/${mindmapId}`,
   };
 
+  const handleEdit = {
+    nodeName: (updateNodeName: string) => {
+      dispatch(
+        updateNodeAsync(mindmapId, nodeId, { ...node, name: updateNodeName })
+      );
+    },
+  };
+
+  const handleRemove = {
+    nodeName: () => {
+      dispatch(removeNodeAsync(mindmapId, nodeId));
+      dispatch(readMindmapAsync(mindmapId));
+      history.push(`/mindmap/${mindmapId}`);
+    },
+  };
+
   useEffect(() => {
     // const dispatchReadNode = async () => {
     //   await dispatch(readNodeAsync(mindmapId, nodeId));
@@ -42,6 +63,8 @@ const NodeDetailContainer = ({ history, match }) => {
       todos={todos}
       loading={nodeLoading}
       error={nodeError}
+      onEdit={handleEdit}
+      onRemove={handleRemove}
     />
   );
 };

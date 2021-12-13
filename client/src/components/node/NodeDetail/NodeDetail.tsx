@@ -21,6 +21,12 @@ interface NodeDetailProps {
   todos: any;
   loading;
   error;
+  onEdit: {
+    nodeName: (updateNodeName: string) => void;
+  };
+  onRemove: {
+    nodeName: () => void;
+  };
 }
 
 const NodeDetail = ({
@@ -32,6 +38,8 @@ const NodeDetail = ({
   todos,
   loading,
   error,
+  onEdit,
+  onRemove,
 }: NodeDetailProps) => {
   const isRoot = false;
   const mindmapId = mindmap?._id;
@@ -50,7 +58,12 @@ const NodeDetail = ({
       <StyledNodeDetailSection>
         {/* node name */}
         <StyledNodeName>
-          <NodeName nodeName={node?.name} isRoot={isRoot} />
+          <NodeName
+            nodeName={node?.name}
+            isRoot={isRoot}
+            onEdit={onEdit.nodeName}
+            onRemove={onRemove.nodeName}
+          />
         </StyledNodeName>
 
         {/* todos */}

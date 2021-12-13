@@ -8,7 +8,7 @@ import {
   initializeMindmapForm,
   readMindmapAsync,
 } from 'redux/modules/mindmaps/mindmap';
-import { writeNodeAsync } from 'redux/modules/mindmaps/node';
+import { readNodeAsync, writeNodeAsync } from 'redux/modules/mindmaps/node';
 /* -------------------------------- component ------------------------------- */
 import { LoadingIcon } from 'components/common';
 /* ---------------------------------- utils --------------------------------- */
@@ -28,7 +28,7 @@ const MindmapContainer = ({ history, match }) => {
     })
   );
 
-  const { mindmapId } = match.params;
+  const { mindmapId, nodeId } = match.params;
 
   useEffect(() => {
     async function dispatchReadMindmap(mindmapId) {
@@ -42,8 +42,15 @@ const MindmapContainer = ({ history, match }) => {
   }, [dispatch, mindmapId]);
 
   const handleWrite = async newNode => {
-    await dispatch(writeNodeAsync(mindmapId, newNode));
-    dispatch(readMindmapAsync(mindmapId));
+    const newNodeData = await dispatch(writeNodeAsync(mindmapId, newNode));
+
+    if (nodeId) {
+      dispatch(readMindmapAsync(mindmapId));
+      dispatch(readNodeAsync(mindmapId, nodeId));
+      history.push(`/mindmap/${mindmapId}/${newNodeData.node._id}`);
+    } else {
+      dispatch(readMindmapAsync(mindmapId));
+    }
   };
 
   if (mindmapLoading) return <LoadingIcon />;
