@@ -34,6 +34,7 @@ const NodeDetailContainer = ({ history, match }) => {
       dispatch(
         updateNodeAsync(mindmapId, nodeId, { ...node, name: updateNodeName })
       );
+      dispatch(readNodeAsync(mindmapId, nodeId));
     },
   };
 
