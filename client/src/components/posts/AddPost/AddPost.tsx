@@ -141,16 +141,6 @@ const AddPost = ({
     }
   }, [postErrMsg]);
 
-  // useEffect(() => {
-  //   // error
-  //   if (postErrMsg) {
-
-  //     if (values.title && values.body) {
-  //       setErrors({ ...errors, post: '등록에 실패했습니다.' });
-  //     }
-  //   }
-  // }, [postErrMsg, values.body, values.title]);
-
   return (
     <Responsive>
       <StyledAddPostArticle>
