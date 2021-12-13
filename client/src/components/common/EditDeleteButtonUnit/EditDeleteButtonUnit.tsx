@@ -1,4 +1,4 @@
-import { ChangeEvent, RefObject, useState } from 'react';
+import { ChangeEvent, RefObject, useEffect, useState } from 'react';
 import { changeFirstStrToUpper } from 'utils/stringUtils';
 import { Button, DeleteDialog, EditTextArea } from '..';
 import { EditDeleteButtonUnitWrapper } from './EditDeleteButtonUnit.styled';
@@ -64,6 +64,14 @@ const EditDeleteButtonUnit = ({
       setHasDialog(false);
     },
   };
+
+  useEffect(() => {
+    if (editRef?.current) {
+      const { scrollHeight } = editRef.current as HTMLTextAreaElement;
+      (editRef.current as HTMLTextAreaElement).style.height =
+        scrollHeight + 'px';
+    }
+  }, [editRef]);
 
   return (
     <EditDeleteButtonUnitWrapper

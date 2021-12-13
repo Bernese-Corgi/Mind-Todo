@@ -53,11 +53,6 @@ const TodoItem = ({ todo, onToggle, onEdit, onDelete }: TodoItemProps) => {
     // if (e.key === 'Enter') onToggle(todo.id);
   };
 
-  useEffect(() => {
-    const { scrollHeight } = editRef.current as HTMLTextAreaElement;
-    (editRef.current as HTMLTextAreaElement).style.height = scrollHeight + 'px';
-  }, []);
-
   return (
     <TodoItemWrapper>
       <CheckBox
@@ -71,6 +66,7 @@ const TodoItem = ({ todo, onToggle, onEdit, onDelete }: TodoItemProps) => {
         onKeyPress={handleKeyPressCheckBox}
       />
       <EditDeleteButtonUnit
+        id={`editTodo${todoId}`}
         mode="todo"
         editName="content"
         editVal={contentVal}
