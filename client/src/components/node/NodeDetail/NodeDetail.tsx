@@ -47,7 +47,7 @@ const NodeDetail = ({
   // const nodePost = node?.post;
   // const nodeTodos = node?.todos;
 
-  console.log(node);
+  // console.log(node);
   // if (!node) return <p>aa</p>;
   if (loading) return <LoadingIcon />;
   if (error) return <p>error 발생!</p>;
@@ -75,11 +75,7 @@ const NodeDetail = ({
         {/* post */}
         <StyledNodePostSection>
           <h3>post</h3>
-          <PostViewerContainer
-            nodePost={post}
-            nodeId={nodeId}
-            mindmapId={mindmapId}
-          />
+          <PostViewerContainer nodePost={post} />
         </StyledNodePostSection>
       </StyledNodeDetailSection>
     </>
