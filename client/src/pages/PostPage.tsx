@@ -4,10 +4,9 @@ import React from 'react';
 import { withRouter } from 'react-router';
 
 const PostPage = ({ match, history }) => {
-  const { postId } = match.params;
   return (
     <Responsive>
-      <PostViewerContainer postId={postId} />
+      <PostViewerContainer />
     </Responsive>
   );
 };
