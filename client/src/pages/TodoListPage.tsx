@@ -1,11 +1,11 @@
 import React from 'react';
-import { TodoUnit } from 'components/todos';
 import { Responsive } from 'components/common';
+import { AllTodosContainer } from 'container/todos';
 
 const TodoListPage = () => {
   return (
     <Responsive>
-      <TodoUnit />
+      <AllTodosContainer />
     </Responsive>
   );
 };

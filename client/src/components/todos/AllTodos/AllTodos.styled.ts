@@ -12,7 +12,6 @@ export const AllTodosWrapper = styled.div`
   ul {
     .uncompletedList,
     .completedList {
-      background-color: gold;
       width: 100%;
       margin: 1em;
     }

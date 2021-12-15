@@ -1,34 +1,46 @@
 import { LoadingIcon } from 'components/common';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'redux/modules';
-import { listTodosAsync } from 'redux/modules/todos/todos';
+import { useState } from 'react';
 import { TodoList } from '..';
 import { AllTodosWrapper } from './AllTodos.styled';
 
-interface AllTodosProps {}
+interface AllTodosProps {
+  todoList;
+  onToggle?: (todoId: string, completed: boolean) => void;
+  onEdit?: (todoId: string, content: string) => void;
+  onDelete?: (todoId: string) => void;
+  loading;
+  error;
+}
 
-const AllTodos = ({}: AllTodosProps) => {
-  const dispatch = useDispatch();
-
-  const { todoList, loading, error } = useSelector(({ todos }: RootState) => ({
-    todoList: todos.todos,
-    loading: todos.loading,
-    error: todos.error,
-  }));
-
-  useEffect(() => {
-    dispatch(listTodosAsync());
-  }, [dispatch]);
-
-  if (loading) return <LoadingIcon />;
-  if (todoList) return <p>no data</p>;
+const AllTodos = ({
+  todoList,
+  onToggle,
+  onEdit,
+  onDelete,
+  loading,
+  error,
+}: AllTodosProps) => {
+  // if (loading) return <LoadingIcon />;
+  // if (todoList) return <p>no data</p>;
   if (error) return <p>error</p>;
 
   return (
     <AllTodosWrapper>
       <h2 className="allTodosTitle">Todo List</h2>
-      <TodoList todos={todoList} />
+      <TodoList
+        todos={todoList}
+        onToggle={onToggle}
+        onEdit={onEdit}
+        onDelete={onDelete}
+      />
+      {/* {todoList?.map(todo => {
+        return (
+          <ul>
+            <time>{chunkDateString(todo.createdAt)}</time>
+            <TodoItem todo={todo} />
+          </ul>
+        );
+      })} */}
     </AllTodosWrapper>
   );
 };
