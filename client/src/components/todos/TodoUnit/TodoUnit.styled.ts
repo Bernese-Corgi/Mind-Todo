@@ -6,8 +6,9 @@ interface TodoUnitWrapperProps {
 }
 
 export const TodoUnitWrapper = styled.section<TodoUnitWrapperProps>`
+  width: 100%;
   form {
-    min-width: 320px;
+    max-width: 320px;
 
     .openBtn {
       margin-left: auto;

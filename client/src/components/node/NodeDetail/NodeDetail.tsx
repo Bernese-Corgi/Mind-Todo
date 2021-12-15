@@ -51,7 +51,7 @@ const NodeDetail = ({
   return (
     <>
       {/* node detail ------------------------------ */}
-      <StyledNodeDetailSection>
+      <StyledNodeDetailSection className="nodeDetailSection">
         {/* node name */}
         <StyledNodeName>
           <NodeName

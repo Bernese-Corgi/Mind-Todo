@@ -1,10 +1,9 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import theme from 'styles/theme';
 
 export const StyledNodeDetailSection = styled.section`
-  width: 50%;
+  width: 100%;
   height: 100%;
-  border-left: 1px solid ${theme.colors.gray.light};
   padding-left: 1em;
 
   h3 {
@@ -13,6 +12,19 @@ export const StyledNodeDetailSection = styled.section`
     text-align: left;
     color: ${theme.colors.primary.dark}99;
   }
+
+  ${({ theme }) => theme.media.desktop`
+    border-left: 1px solid #DCDCDC;
+  `}
+
+  ${({ theme }) => theme.media.tablet`
+    border-left: 1px solid #DCDCDC;
+  `}
+
+  ${({ theme }) => theme.media.mobile`
+    border-top: 1px solid #DCDCDC;
+    padding-top: 1em;
+  `}
 `;
 
 export const StyledNodeName = styled.div`
@@ -38,7 +50,7 @@ export const StyledNodeTodoSection = styled.section`
   padding-left: 1em;
   padding-bottom: 1em;
   overflow: auto;
-  max-height: 40%;
+
   border-bottom: 1px solid ${theme.colors.gray.light};
   position: relative;
 
@@ -46,6 +58,18 @@ export const StyledNodeTodoSection = styled.section`
     right: 1em;
     position: absolute;
   }
+
+  ${({ theme }) => theme.media.desktop`
+     max-height: 40%;
+  `}
+
+  ${({ theme }) => theme.media.tablet`
+     max-height: 40%;
+  `}
+
+  s${({ theme }) => theme.media.mobile`
+    max-height: 200px;
+  `}
 
   ${theme.flexes.mixin('column', 'start', 'start')}
 `;
@@ -59,3 +83,8 @@ export const StyledNodePostSection = styled.section`
 
   ${theme.flexes.mixin('column', 'start', 'start')}
 `;
+
+StyledNodeDetailSection.displayName = 'StyledNodeDetailSection';
+StyledNodeName.displayName = 'StyledNodeName';
+StyledNodeTodoSection.displayName = 'StyledNodeTodoSection';
+StyledNodePostSection.displayName = 'StyledNodePostSection';
