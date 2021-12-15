@@ -2,9 +2,12 @@ import styled from 'styled-components';
 import theme from 'styles/theme';
 
 export const AllTodosWrapper = styled.div`
+  font-size: ${theme.fonts.size.sm};
+  padding: 2em;
+
   .allTodosTitle {
     font-size: 1.3em;
-    margin-bottom: 0.5em;
+    margin: 0.5em;
     text-align: left;
     color: ${theme.colors.primary.dark}99;
   }
