@@ -1,4 +1,4 @@
-import usePrevious from './usePrevios';
+import usePrevious from './usePrevious';
 
 const useCompare = (value: any) => {
   const prevValue = usePrevious(value);
