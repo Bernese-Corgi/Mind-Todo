@@ -26,6 +26,7 @@ const Navigation = forwardRef<HTMLElement, NavigationProps>(
             shape="fold"
             onClick={onCloseNav}
             color={theme.colors.gray.base}
+            className="navCloseBtn"
           />
           <StyledNavUl role="menubar">
             <li role="none">
