@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { Responsive } from 'components/common';
+import { DeleteDialog, Responsive } from 'components/common';
 import { PostEditor, PostViewer } from '..';
 import { StyledAddPostArticle } from './AddPost.styled';
 import { RouteComponentProps, withRouter } from 'react-router';
@@ -29,9 +29,29 @@ const AddPost = ({
     errors: { title: '', body: '', tag: '', post: '' },
   };
 
+  const dialogText = `변경 사항이 없습니다.\n수정을 종료하시겠습니까?`;
+  const [hasDialog, setHasDialog] = useState(false);
+
   const [values, setValues] = useState(initialState.values);
   const [errors, setErrors] = useState(initialState.errors);
   const [localTags, setLocalTags] = useState<Array<string>>([]);
+
+  const [hasTitleChanged, setHasTitleChanged] = useState(false);
+  const [hasBodyChanged, setHasBodyChanged] = useState(false);
+  const [hasTagsChanged, setHasTagsChanged] = useState(false);
+
+  useEffect(() => {
+    setHasTitleChanged(post?.title !== values.title);
+    setHasBodyChanged(post?.body !== values.body);
+    setHasTagsChanged(post?.tags !== localTags);
+  }, [
+    localTags,
+    post?.body,
+    post?.tags,
+    post?.title,
+    values.body,
+    values.title,
+  ]);
 
   const handleChanges = {
     title: (e: ChangeEvent<HTMLInputElement>) => {
@@ -90,6 +110,9 @@ const AddPost = ({
     removeTagBtn: (e, key) => {
       setLocalTags(prev => prev.filter((_, i) => i !== key));
     },
+    closeDialog: () => {
+      setHasDialog(false);
+    },
   };
 
   const handleSubmitPost = async (e: FormEvent<HTMLFormElement>) => {
@@ -122,7 +145,11 @@ const AddPost = ({
     if (errors.title || errors.body || errors.post) return;
 
     if (post) {
-      onEdit({ title: values.title, body: values.body, tags: localTags });
+      if (hasTitleChanged || hasBodyChanged || hasTagsChanged) {
+        onEdit({ title: values.title, body: values.body, tags: localTags });
+      } else {
+        setHasDialog(true);
+      }
     } else {
       onWrite({ title: values.title, body: values.body, tags: localTags });
     }
@@ -159,6 +186,14 @@ const AddPost = ({
           <h3 className="postEditorHeader">미리보기</h3>
           <PostViewer post={values} localTags={localTags} />
         </section>
+        {hasDialog && (
+          <DeleteDialog
+            visible={hasDialog}
+            delDialogText={dialogText}
+            onClose={handleClicks.closeDialog}
+            onConfirmDelete={handleClicks.cancelBtn}
+          />
+        )}
       </StyledAddPostArticle>
     </Responsive>
   );
