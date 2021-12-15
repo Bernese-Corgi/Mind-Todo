@@ -11,13 +11,22 @@ export type NodeType = {
   parentId?: string;
 };
 
+/* --------------------------------- mindmap -------------------------------- */
 export const listMindmap = () => client.get(`${URI}`);
 
 export const writeMindmap = (mindmap: MindmapType) =>
   client.post(`${URI}`, mindmap);
 
-export const readMindmap = (id: string) => client.get(`${URI}/${id}`);
+export const readMindmap = (mindmapId: string) =>
+  client.get(`${URI}/${mindmapId}`);
 
+export const updateMindmap = (mindmapId: string, { title }: MindmapType) =>
+  client.patch(`${URI}/${mindmapId}`, { title });
+
+export const removeMindmap = (mindmapId: string) =>
+  client.delete(`${URI}/${mindmapId}`);
+
+/* ---------------------------------- node ---------------------------------- */
 export const writeNode = (mindmapId: string, newNode: NodeType) =>
   client.post(`${URI}/${mindmapId}`, newNode);
 
