@@ -5,7 +5,6 @@ import { EditDeleteIconButtonsUnitProps } from './EditDeleteButtonUnit';
 
 export const EditDeleteButtonUnitWrapper = styled.div<EditDeleteIconButtonsUnitProps>`
   width: 100%;
-  ${theme.transition()}
 
   &:hover {
     .iconBtnWrapper {
@@ -15,6 +14,10 @@ export const EditDeleteButtonUnitWrapper = styled.div<EditDeleteIconButtonsUnitP
 
   .editTextAreaWrapper {
     width: 100%;
+
+    .editTextArea {
+      ${theme.transition('0ms')}
+    }
   }
 
   .iconBtnWrapper {

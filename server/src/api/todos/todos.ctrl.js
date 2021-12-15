@@ -8,9 +8,14 @@ export const list = async (ctx) => {
   // TODO 쿼리 파라미터로 투두 필터링 (+ nodeId)
   // TODO 페이지네이션
 
+  const { user } = ctx.state;
+
   try {
     // todos 컬렉션에서 todo list 받아오기
-    const todos = await Todo.find().sort({ _id: -1 }).populate('publisher');
+    const todos = await Todo.find({ publisher: user._id })
+      .sort({ _id: -1 })
+      .populate('publisher');
+
     // todos 응답
     ctx.body = todos;
   } catch (e) {

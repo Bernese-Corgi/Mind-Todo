@@ -8,10 +8,12 @@ export const StyledMindmapDetailSection = styled.section`
   padding: 1em;
   overflow: auto;
 
-  h2 {
+  .mindmapTitle {
     font-size: 1.1em;
+    margin-left: 0.5em;
     margin-bottom: 0.5em;
     text-align: left;
+    color: ${theme.colors.primary.dark}99;
   }
 
   ${theme.flexes.mixin('column', 'start', 'start')}

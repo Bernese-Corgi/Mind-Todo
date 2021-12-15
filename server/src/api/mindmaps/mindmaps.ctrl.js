@@ -7,9 +7,11 @@ import { validateRequest } from '../../utils';
 export const listMindmap = async (ctx) => {
   // TODO 필터링
   // TODO 페이지네이션
+  const { user } = ctx.state;
+
   try {
     // mind map 컬렉션에서 list 받아오기
-    const mindmaps = await Mindmap.find()
+    const mindmaps = await Mindmap.find({ publisher: user._id })
       .sort({ _id: -1 })
       .populate('publisher');
 

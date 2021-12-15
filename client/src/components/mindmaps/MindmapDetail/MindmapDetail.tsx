@@ -111,7 +111,7 @@ const MindmapDetail = ({
   return (
     <>
       <StyledMindmapDetailSection>
-        <h2>
+        <h2 className="mindmapTitle">
           <Link to={`/mindmap/${mindmapId}`} children={mindmap?.title} />
         </h2>
         <Mindmap

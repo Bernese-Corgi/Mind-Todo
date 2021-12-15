@@ -10,7 +10,20 @@ export const PostViewerWrapper = styled.div<PostViewerProps>`
   position: relative;
 
   .postTitleText {
-    padding: 0.8em;
+    padding: 0.8em 0 0.8em 0;
+
+    p {
+      padding-left: 0.8em;
+    }
+
+    a {
+      padding: 0.8em;
+
+      &:hover {
+        color: ${theme.colors.secondary.base};
+        text-decoration: underline;
+      }
+    }
   }
 
   .editDeleteBtns {

@@ -1,187 +1,74 @@
+import React, { useEffect, useState } from 'react';
 import { AddPost } from 'components/posts';
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'redux/modules';
 import {
-  readPostAsync,
+  setPost,
   updatePostAsync,
   writePostAsync,
 } from 'redux/modules/posts/post';
 import { useReduxDispatch } from 'redux/store';
+import { LoadingIcon } from 'components/common';
 
 const AddPostContainer = ({ history, match }) => {
   const dispatch = useReduxDispatch();
-  const { node, nodePost, post, postError } = useSelector(
+  const { node, nodePost, post, postLoading, postError } = useSelector(
     ({ node, post }: RootState) => ({
       node: node.node?.node,
       nodePost: node.node?.post,
       post: post.post,
+      postLoading: post.loading,
       postError: post.error,
     })
   );
-  const { mindmapId, nodeId } = match.params;
+  const { nodeId } = match.params;
 
-  const initialState = {
-    values: { title: '', body: '', tag: '' },
-    errors: { title: '', body: '', tag: '', post: '' },
-  };
+  const [postErrMsg, setPostErrMsg] = useState('');
 
-  const [values, setValues] = useState(initialState.values);
-  const [errors, setErrors] = useState(initialState.errors);
-  const [localTags, setLocalTags] = useState<Array<string>>([]);
+  const handleWrite = async newPost => {
+    const newPostData = await dispatch(writePostAsync(nodeId, newPost));
 
-  /* ------------------------------ click button ------------------------------ */
-  const handleClicks = {
-    cancelBtn: () => {
-      setValues(initialState.values);
-      history.goBack();
-    },
-    addTagBtn: () => {
-      if (!values.tag) {
-        setErrors({ ...errors, tag: '태그를 입력하세요.' });
-        return;
-      }
-
-      if (values.tag.length > 20) return;
-
-      setLocalTags([...localTags, values.tag]);
-
-      setValues({ ...values, tag: '' });
-    },
-    removeTagBtn: (e, key) => {
-      localTags.splice(key, 1);
-    },
-  };
-
-  const handleChanges = {
-    title: (e: ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
-
-      setValues({ ...values, [name]: value });
-
-      if (values.title.length > 30) {
-        setErrors({
-          ...errors,
-          title: '제목의 글자 수는 30자를 넘기지 않아야 합니다.',
-        });
-      }
-
-      if (values.title && values.title.length <= 30) {
-        setErrors({ ...errors, title: '' });
-      }
-    },
-    body: (e: ChangeEvent<HTMLTextAreaElement>) => {
-      const { name, value } = e.target;
-
-      setValues({ ...values, [name]: value });
-
-      if (values.body) {
-        setErrors({ ...errors, body: '' });
-      }
-    },
-    tag: (e: ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
-
-      setValues({ ...values, [name]: value });
-
-      values.tag.length > 20
-        ? setErrors({ ...errors, tag: '태그는 20자 이하로 입력해주세요.' })
-        : setErrors({ ...errors, tag: '' });
-    },
-  };
-
-  console.log(post);
-  const handleSubmitPost = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (errors.title || errors.body || errors.post) return;
-    if (post) {
-      const updatedPost = await dispatch(
-        updatePostAsync(post?._id, {
-          title: values.title,
-          body: values.body,
-          tags: localTags,
-        })
-      );
-
-      if (updatedPost) {
-        history.push(`/mindmap/${post?.mindmapId}/${post?.nodeId}`);
-      }
+    if (newPostData) {
+      history.push(`/mindmap/${newPostData.mindmapId}/${newPostData.nodeId}`);
     }
+  };
 
-    if (!post) {
-      const newPost = await dispatch(
-        writePostAsync(nodeId, {
-          title: values.title,
-          body: values.body,
-          tags: localTags,
-        })
+  const handleEdit = async updatePost => {
+    const updatedPostData = await dispatch(
+      updatePostAsync(post?._id, updatePost)
+    );
+
+    if (updatedPostData) {
+      history.push(
+        `/mindmap/${updatedPostData.mindmapId}/${updatedPostData.nodeId}`
       );
-
-      if (newPost) {
-        history.push(`/mindmap/${mindmapId}/${nodeId}`);
-      }
     }
   };
 
   useEffect(() => {
-    // error
     if (postError) {
-      if (!values.title && !values.body) {
-        setErrors({
-          ...errors,
-          title: '제목을 입력해주세요.',
-          body: '내용을 입력해주세요.',
-        });
-      }
-
-      if (!values.title && values.body) {
-        setErrors({
-          ...errors,
-          title: '제목을 입력해주세요.',
-          body: '',
-        });
-      }
-
-      if (values.title && !values.body) {
-        setErrors({
-          ...errors,
-          title: '',
-          body: '내용을 입력해주세요.',
-        });
-      }
-
-      if (values.title && values.body) {
-        setErrors({ ...errors, post: '등록에 실패했습니다.' });
+      const resData = postError.response.data;
+      if (Array.isArray(resData.details)) {
+        const resErrMsg = resData.details.map(e => e.message);
+        setPostErrMsg(resErrMsg);
       }
     }
-  }, [postError, values.body, values.title]);
+  }, [postError]);
 
   useEffect(() => {
-    if (node?.post) {
-      dispatch(readPostAsync(node.post));
+    if (nodePost) {
+      dispatch(setPost(nodePost));
     }
-  }, [dispatch, node?.post]);
+  }, [dispatch, nodePost, post]);
 
-  useEffect(() => {
-    if (post) {
-      setValues({
-        title: post?.title,
-        body: post?.body,
-        tag: '',
-      });
-      setLocalTags(post?.tags);
-    }
-  }, [post]);
+  if (postLoading) return <LoadingIcon />;
 
   return (
     <AddPost
-      values={values}
-      errors={errors}
-      localTags={localTags}
-      onSubmit={handleSubmitPost}
-      onChanges={handleChanges}
-      onClicks={handleClicks}
+      post={post}
+      postErrMsg={postErrMsg}
+      onWrite={handleWrite}
+      onEdit={handleEdit}
     />
   );
 };

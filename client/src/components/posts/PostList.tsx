@@ -1,11 +1,25 @@
 import React from 'react';
 import { ListItem, LoadingIcon } from 'components/common';
+import styled from 'styled-components';
+import theme from 'styles/theme';
 
 interface PostListProps {
   posts: any;
   loading: boolean;
   error;
 }
+
+const PostListWrapper = styled.section`
+  font-size: ${theme.fonts.size.sm};
+  padding: 2em;
+
+  h2 {
+    font-size: 1.1em;
+    text-align: left;
+    color: ${theme.colors.primary.dark}99;
+    margin: 1em 2em 2em 1em;
+  }
+`;
 
 const PostList = ({ posts, loading, error }: PostListProps) => {
   if (loading) return <LoadingIcon />;
@@ -15,7 +29,7 @@ const PostList = ({ posts, loading, error }: PostListProps) => {
   if (error) return <p>오류 발생</p>;
 
   return (
-    <>
+    <PostListWrapper>
       <h2>Post List</h2>
       <ul>
         {posts.map(post => {
@@ -44,7 +58,7 @@ const PostList = ({ posts, loading, error }: PostListProps) => {
           );
         })}
       </ul>
-    </>
+    </PostListWrapper>
   );
 };
 

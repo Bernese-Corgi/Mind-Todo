@@ -10,14 +10,31 @@ const [WRITE_MINDMAP, WRITE_MINDMAP_SUCCESS, WRITE_MINDMAP_ERROR] =
 const [READ_MINDMAP, READ_MINDMAP_SUCCESS, READ_MINDMAP_ERROR] =
   createRequestActionTypes('mindmap/READ_MINDMAP');
 
+const [UPDATE_MINDMAP, UPDATE_MINDMAP_SUCCESS, UPDATE_MINDMAP_ERROR] =
+  createRequestActionTypes('mindmap/UPDATE_MINDMAP');
+
+const [REMOVE_MINDMAP, REMOVE_MINDMAP_SUCCESS, REMOVE_MINDMAP_ERROR] =
+  createRequestActionTypes('mindmap/REMOVE_MINDMAP');
+
 const INITIALIZE_FORM = 'mindmap/INITIALIZE_FORM';
 
 /* -------------------------- thunk action creator -------------------------- */
 export const writeMindmapAsync = (mindmaps: mindmapsApi.MindmapType) =>
   createRequestThunk(WRITE_MINDMAP, mindmapsApi.writeMindmap, mindmaps);
 
-export const readMindmapAsync = (id: string) =>
-  createRequestThunk(READ_MINDMAP, mindmapsApi.readMindmap, id);
+export const readMindmapAsync = (mindmapId: string) =>
+  createRequestThunk(READ_MINDMAP, mindmapsApi.readMindmap, mindmapId);
+
+export const updateMindmapAsync = (
+  mindmapId: string,
+  { title }: mindmapsApi.MindmapType
+) =>
+  createRequestThunk(UPDATE_MINDMAP, mindmapsApi.updateMindmap, mindmapId, {
+    title,
+  });
+
+export const removeMindmapAsync = (mindmapId: string) =>
+  createRequestThunk(REMOVE_MINDMAP, mindmapsApi.removeMindmap, mindmapId);
 
 /* ----------------------------- action creator ----------------------------- */
 export const initializeMindmapForm = () => ({ type: INITIALIZE_FORM });

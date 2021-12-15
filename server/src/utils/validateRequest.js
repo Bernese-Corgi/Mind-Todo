@@ -24,14 +24,24 @@ const validationSchema = {
   },
   // post 작성 검증 스키마
   write_post: {
-    title: Joi.string().max(30).required(),
-    body: Joi.string().required(),
+    title: Joi.string().max(30).required().messages({
+      'string.empty': '제목은 필수 항목입니다.',
+      'string.max': '제목은 30자 이내로 입력해주세요.',
+    }),
+    body: Joi.string().required().messages({
+      'string.empty': '내용은 필수 항목입니다.',
+    }),
     tags: Joi.array().items(Joi.string().max(20)),
   },
   // post 수정 검증 스키마
   update_post: {
-    title: Joi.string().max(30),
-    body: Joi.string(),
+    title: Joi.string().max(30).messages({
+      'string.empty': '제목은 필수 항목입니다.',
+      'string.max': '제목은 30자 이내로 입력해주세요.',
+    }),
+    body: Joi.string().messages({
+      'string.empty': '내용은 필수 항목입니다.',
+    }),
     tags: Joi.array().items(Joi.string().max(20)),
   },
   // todo 작성 검증 스키마

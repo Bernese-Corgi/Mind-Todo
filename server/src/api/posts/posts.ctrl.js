@@ -1,4 +1,4 @@
-import { Post } from '../../model';
+import { Post, User } from '../../model';
 import { Node } from '../../model/Mindmap';
 import { validateRequest } from '../../utils';
 
@@ -8,8 +8,10 @@ export const list = async (ctx) => {
   // TODO 쿼리 파라미터로 포스트 필터링
   const { tag, username } = ctx.query;
 
+  const user = await User.findByUsername(username);
+
   const query = {
-    ...(username ? { 'user.username': username } : {}),
+    ...(username ? { publisher: user._id } : {}),
     ...(tag ? { tags: tag } : {}),
   };
   // TODO 페이지네이션
@@ -17,8 +19,10 @@ export const list = async (ctx) => {
     // post 컬렉션에서 post list 받아오기
     const posts = await Post.find(query)
       .sort({ _id: -1 })
-      .populate('publisher');
-    // .lean().exec();
+      .populate('publisher')
+      .lean()
+      .exec();
+
     // posts를 응답
     ctx.body = posts;
   } catch (e) {

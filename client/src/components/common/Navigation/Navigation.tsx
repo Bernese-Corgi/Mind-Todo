@@ -26,6 +26,7 @@ const Navigation = forwardRef<HTMLElement, NavigationProps>(
             shape="fold"
             onClick={onCloseNav}
             color={theme.colors.gray.base}
+            className="navCloseBtn"
           />
           <StyledNavUl role="menubar">
             <li role="none">
@@ -40,7 +41,7 @@ const Navigation = forwardRef<HTMLElement, NavigationProps>(
             </li>
             <li role="none">
               <StyledNavLink
-                to={`/posts?@${user?.username}`}
+                to={`/posts?username=${user?.username}`}
                 onClick={onCloseNav}>
                 내가 쓴 글 목록
               </StyledNavLink>

@@ -4,7 +4,7 @@ import { chunkString } from './stringUtils';
 
 export const stratifiedMindmap = treeData => {
   const stratifiedData = stratify()
-    .id((d: any) => d.node.name)
+    .id((d: any) => d.node?.name)
     .parentId((d: any) => d.parent?.name)(treeData);
 
   return stratifiedData;
@@ -62,3 +62,8 @@ export const getD3NodeSelectionById = (selector, id: string | undefined) => {
  * @returns 엘리먼트의 getBBox가 반환하는 SVGRect 객체
  */
 export const getNodeBBox = selection => selection.node()?.getBBox();
+
+export const checkIsRoot = (mindmap, nodeId) => {
+  const rootNode = mindmap?.body.find(tree => tree.parent === null);
+  return rootNode?.node._id === nodeId;
+};

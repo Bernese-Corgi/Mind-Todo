@@ -3,8 +3,9 @@ import { Headerbar } from 'components/common';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'redux/modules';
 import { signOutAsync } from 'redux/modules/auth/user';
+import { withRouter } from 'react-router';
 
-const HeaderbarContainer = () => {
+const HeaderbarContainer = ({ history }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
 
@@ -25,6 +26,7 @@ const HeaderbarContainer = () => {
 
   const handleSignOut = () => {
     dispatch(signOutAsync());
+    history.push('/');
   };
 
   return (
@@ -39,4 +41,4 @@ const HeaderbarContainer = () => {
   );
 };
 
-export default HeaderbarContainer;
+export default withRouter(HeaderbarContainer);
