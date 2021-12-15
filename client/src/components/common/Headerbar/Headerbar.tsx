@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Dim, Navigation, Responsive } from '..';
+import { Button, DeleteDialog, Dim, Navigation, Responsive } from '..';
 import {
   AuthButtonWrapper,
   HeaderbarWrapper,
@@ -25,6 +25,14 @@ const Headerbar = ({
   onCloseNav,
   onSignOut,
 }: HeaderbarProps) => {
+  const dialogText = '로그아웃하시겠습니까?';
+  const [hasDialog, setHasDialog] = useState(false);
+
+  const handleClicks = {
+    openDialog: () => setHasDialog(true),
+    closeDialog: () => setHasDialog(false),
+  };
+
   return (
     <Responsive>
       <HeaderbarWrapper>
@@ -63,8 +71,14 @@ const Headerbar = ({
               <Button
                 id="signOutBtn"
                 title="로그아웃"
-                onClick={onSignOut}
+                onClick={handleClicks.openDialog}
                 children="로그아웃"
+              />
+              <DeleteDialog
+                visible={hasDialog}
+                delDialogText={dialogText}
+                onClose={handleClicks.closeDialog}
+                onConfirmDelete={onSignOut}
               />
             </>
           ) : (
