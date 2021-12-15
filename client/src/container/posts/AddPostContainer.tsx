@@ -8,14 +8,16 @@ import {
   writePostAsync,
 } from 'redux/modules/posts/post';
 import { useReduxDispatch } from 'redux/store';
+import { LoadingIcon } from 'components/common';
 
 const AddPostContainer = ({ history, match }) => {
   const dispatch = useReduxDispatch();
-  const { node, nodePost, post, postError } = useSelector(
+  const { node, nodePost, post, postLoading, postError } = useSelector(
     ({ node, post }: RootState) => ({
       node: node.node?.node,
       nodePost: node.node?.post,
       post: post.post,
+      postLoading: post.loading,
       postError: post.error,
     })
   );
@@ -58,6 +60,8 @@ const AddPostContainer = ({ history, match }) => {
       dispatch(setPost(nodePost));
     }
   }, [dispatch, nodePost, post]);
+
+  if (postLoading) return <LoadingIcon />;
 
   return (
     <AddPost
