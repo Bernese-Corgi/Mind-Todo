@@ -8,7 +8,12 @@ import {
   removeNodeAsync,
   updateNodeAsync,
 } from 'redux/modules/mindmaps/node';
-import { readMindmapAsync } from 'redux/modules/mindmaps/mindmap';
+import {
+  readMindmapAsync,
+  removeMindmapAsync,
+  updateMindmapAsync,
+} from 'redux/modules/mindmaps/mindmap';
+import { listMindmapAsync } from 'redux/modules/mindmaps/mindmaps';
 
 const NodeDetailContainer = ({ history, match }) => {
   const { mindmapId, nodeId } = match.params;
@@ -36,6 +41,19 @@ const NodeDetailContainer = ({ history, match }) => {
       );
       dispatch(readNodeAsync(mindmapId, nodeId));
     },
+    mindmapTitle: async (updateMindmapTitle: string) => {
+      await dispatch(
+        updateMindmapAsync(mindmapId, { title: updateMindmapTitle })
+      );
+      await dispatch(
+        updateNodeAsync(mindmapId, nodeId, {
+          ...node,
+          name: updateMindmapTitle,
+        })
+      );
+      await dispatch(readMindmapAsync(mindmapId));
+      dispatch(readNodeAsync(mindmapId, nodeId));
+    },
   };
 
   const handleRemove = {
@@ -43,6 +61,11 @@ const NodeDetailContainer = ({ history, match }) => {
       dispatch(removeNodeAsync(mindmapId, nodeId));
       dispatch(readMindmapAsync(mindmapId));
       history.push(`/mindmap/${mindmapId}`);
+    },
+    mindmapTitle: () => {
+      dispatch(removeMindmapAsync(mindmapId));
+      dispatch(listMindmapAsync());
+      history.push('/mindmaps');
     },
   };
 

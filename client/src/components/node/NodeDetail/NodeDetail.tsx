@@ -24,9 +24,11 @@ interface NodeDetailProps {
   error;
   onEdit: {
     nodeName: (updateNodeName: string) => void;
+    mindmapTitle: (updateMindmapTitle: string) => void;
   };
   onRemove: {
     nodeName: () => void;
+    mindmapTitle: () => void;
   };
 }
 
@@ -55,8 +57,8 @@ const NodeDetail = ({
           <NodeName
             nodeName={node?.name}
             isRoot={checkIsRoot(mindmap, nodeId)}
-            onEdit={onEdit.nodeName}
-            onRemove={onRemove.nodeName}
+            onEdit={onEdit}
+            onRemove={onRemove}
           />
         </StyledNodeName>
 
