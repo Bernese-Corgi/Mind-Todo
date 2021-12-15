@@ -35,8 +35,8 @@ const NodeDetailContainer = ({ history, match }) => {
   };
 
   const handleEdit = {
-    nodeName: (updateNodeName: string) => {
-      dispatch(
+    nodeName: async (updateNodeName: string) => {
+      await dispatch(
         updateNodeAsync(mindmapId, nodeId, { ...node, name: updateNodeName })
       );
       dispatch(readNodeAsync(mindmapId, nodeId));
