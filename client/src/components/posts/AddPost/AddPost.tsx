@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { DeleteDialog, Responsive } from 'components/common';
+import { DeleteDialog } from 'components/common';
 import { PostEditor, PostViewer } from '..';
 import { StyledAddPostArticle } from './AddPost.styled';
 import { RouteComponentProps, withRouter } from 'react-router';
@@ -169,33 +169,31 @@ const AddPost = ({
   }, [postErrMsg]);
 
   return (
-    <Responsive>
-      <StyledAddPostArticle>
-        <section className="section postEditor">
-          <h3 className="postEditorHeader">글 작성</h3>
-          <PostEditor
-            values={values}
-            errors={errors}
-            localTags={localTags}
-            onSubmit={handleSubmitPost}
-            onChanges={handleChanges}
-            onClicks={handleClicks}
-          />
-        </section>
-        <section className="section postViewer">
-          <h3 className="postEditorHeader">미리보기</h3>
-          <PostViewer post={values} localTags={localTags} />
-        </section>
-        {hasDialog && (
-          <DeleteDialog
-            visible={hasDialog}
-            delDialogText={dialogText}
-            onClose={handleClicks.closeDialog}
-            onConfirmDelete={handleClicks.cancelBtn}
-          />
-        )}
-      </StyledAddPostArticle>
-    </Responsive>
+    <StyledAddPostArticle>
+      <section className="section postEditor">
+        <h3 className="postEditorHeader">글 작성</h3>
+        <PostEditor
+          values={values}
+          errors={errors}
+          localTags={localTags}
+          onSubmit={handleSubmitPost}
+          onChanges={handleChanges}
+          onClicks={handleClicks}
+        />
+      </section>
+      <section className="section postViewer">
+        <h3 className="postEditorHeader">미리보기</h3>
+        <PostViewer post={values} localTags={localTags} />
+      </section>
+      {hasDialog && (
+        <DeleteDialog
+          visible={hasDialog}
+          delDialogText={dialogText}
+          onClose={handleClicks.closeDialog}
+          onConfirmDelete={handleClicks.cancelBtn}
+        />
+      )}
+    </StyledAddPostArticle>
   );
 };
 
