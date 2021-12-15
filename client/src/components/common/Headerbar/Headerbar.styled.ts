@@ -18,6 +18,7 @@ export const HeaderbarWrapper = styled.div`
 
 export const MenuButtonWrapper = styled.div`
   width: 33%;
+  height: 3em;
 
   button {
     ${handleSvgHoverColor()}

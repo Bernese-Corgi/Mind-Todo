@@ -30,14 +30,18 @@ const Headerbar = ({
       <HeaderbarWrapper>
         {/* navigation button --------------------------- */}
         <MenuButtonWrapper>
-          <Button
-            id="navOpen"
-            title="네비게이션 열기"
-            shape="bars"
-            onClick={onOpenNav}
-          />
-          <Navigation ref={navRef} onCloseNav={onCloseNav} />
-          <Dim ref={navDimRef} onDimClose={onCloseNav} />
+          {user && (
+            <>
+              <Button
+                id="navOpen"
+                title="네비게이션 열기"
+                shape="bars"
+                onClick={onOpenNav}
+              />
+              <Navigation ref={navRef} onCloseNav={onCloseNav} />
+              <Dim ref={navDimRef} onDimClose={onCloseNav} />
+            </>
+          )}
         </MenuButtonWrapper>
 
         {/* logo button ------------------------------ */}
