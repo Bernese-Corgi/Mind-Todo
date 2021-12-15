@@ -1,4 +1,5 @@
-import React, { ChangeEvent, useRef, useState } from 'react';
+import React, { ChangeEvent, useCallback, useRef, useState } from 'react';
+import { useCompare } from 'utils/hooks';
 import { StyledNodeNameEditUnit } from './NodeName.styled';
 
 interface NodeNameProps {
@@ -32,13 +33,17 @@ const NodeName = ({
 
   const editRef = useRef<HTMLTextAreaElement>(null);
 
+  const hasValChanged = useCompare(nameVal);
+
   const handleChangeEdit = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setNameVal(e.target.value);
   };
 
-  const handleEditAction = () => {
-    isRoot ? onEdit.mindmapTitle(nameVal) : onEdit.nodeName(nameVal);
-  };
+  const handleEditAction = useCallback(() => {
+    if (hasValChanged) {
+      isRoot ? onEdit.mindmapTitle(nameVal) : onEdit.nodeName(nameVal);
+    }
+  }, [hasValChanged, isRoot, nameVal, onEdit]);
 
   const handleRemoveAction = () => {
     isRoot ? onRemove.mindmapTitle() : onRemove.nodeName();

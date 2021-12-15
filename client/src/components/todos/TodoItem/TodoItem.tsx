@@ -3,6 +3,7 @@ import { TodoType } from 'utils/api/todos';
 import { CheckBox, EditDeleteButtonUnit } from 'components/common';
 import { TodoItemWrapper } from './TodoItem.styled';
 import theme from 'styles/theme';
+import { useCompare } from 'utils/hooks';
 
 interface TodoItemProps {
   todo: TodoType;
@@ -21,6 +22,8 @@ const TodoItem = ({ todo, onToggle, onEdit, onDelete }: TodoItemProps) => {
 
   const [contentVal, setContentVal] = useState(initialContent);
   const [contentError, setContentError] = useState('');
+
+  const hasValChanged = useCompare(contentVal);
 
   /* ------------------------------ change event ------------------------------ */
   const handleToggleCheckBox = (e: ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +44,9 @@ const TodoItem = ({ todo, onToggle, onEdit, onDelete }: TodoItemProps) => {
         return;
       }
 
-      todoId && onEdit(todoId, contentVal);
+      if (hasValChanged) {
+        todoId && onEdit(todoId, contentVal);
+      }
     },
     confirmDelBtn: () => {
       todoId && onDelete(todoId);
