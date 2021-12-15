@@ -5,9 +5,9 @@ import { AllTodosWrapper } from './AllTodos.styled';
 
 interface AllTodosProps {
   todoList;
-  onToggle?: (todoId: string, completed: boolean) => void;
-  onEdit?: (todoId: string, content: string) => void;
-  onDelete?: (todoId: string) => void;
+  onToggle: (todoId: string, completed: boolean) => void;
+  onEdit: (todoId: string, content: string) => void;
+  onDelete: (todoId: string) => void;
   loading;
   error;
 }
