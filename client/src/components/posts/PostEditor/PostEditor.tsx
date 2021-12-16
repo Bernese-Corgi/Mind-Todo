@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent } from 'react';
+import React, { ChangeEvent, FormEvent, RefObject } from 'react';
 import {
   InputField,
   Button,
@@ -32,6 +32,7 @@ interface PostEditorProps {
     cancelBtn: () => void;
   };
   onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  editorRef?: RefObject<HTMLTextAreaElement>;
 }
 
 const PostEditor = ({
@@ -41,6 +42,7 @@ const PostEditor = ({
   localTags,
   onChanges,
   onClicks,
+  editorRef,
 }: PostEditorProps) => (
   <StyledPostEditorForm onSubmit={onSubmit}>
     <InputField
@@ -62,6 +64,7 @@ const PostEditor = ({
       errorMsg={errors.body}
       placeholder="내용을 입력해주세요."
       onChange={onChanges.body}
+      editorRef={editorRef}
     />
     <TagForm
       id="postTagInput"
