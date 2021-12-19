@@ -1,4 +1,5 @@
 import React, { RefObject } from 'react';
+import { addMark } from 'utils/toolbarEvent';
 import { MdTool } from '..';
 import { MdToolbarWrapper } from './MdToolbar.styled';
 
@@ -9,131 +10,16 @@ interface MdToolbarProps {
 const MdToolbar = ({ editorRef }: MdToolbarProps) => {
   const handleClicks = {
     bold: () => {
-      const textVal = editorRef.current?.value;
-      const textLen = textVal?.length;
-      const selectStart = editorRef.current?.selectionStart;
-      const selectEnd = editorRef.current?.selectionEnd;
-
-      if (selectStart === undefined || selectEnd === undefined) return;
-      if (!editorRef.current) return;
-
-      const beforeText = textVal?.substring(0, selectStart);
-      const selectedText = textVal?.substring(selectStart, selectEnd);
-      const afterText = textVal?.substring(selectEnd, textLen);
-
-      if (selectStart === selectEnd) {
-        const addText = '****';
-        editorRef.current.value = beforeText + addText + afterText;
-        editorRef.current?.focus();
-        editorRef.current?.setSelectionRange(selectStart + 2, selectStart + 2);
-      } else {
-        const addText = '**';
-        editorRef.current.value =
-          beforeText + addText + selectedText + addText + afterText;
-        editorRef.current?.focus();
-        editorRef.current?.setSelectionRange(selectEnd + 4, selectEnd + 4);
-      }
+      addMark(editorRef, '**', 'current');
     },
     italic: () => {
-      const textVal = editorRef.current?.value;
-      const textLen = textVal?.length;
-      const selectStart = editorRef.current?.selectionStart;
-      const selectEnd = editorRef.current?.selectionEnd;
-
-      if (selectStart === undefined || selectEnd === undefined) return;
-      if (!editorRef.current) return;
-
-      const beforeText = textVal?.substring(0, selectStart);
-      const selectedText = textVal?.substring(selectStart, selectEnd);
-      const afterText = textVal?.substring(selectEnd, textLen);
-
-      if (selectStart === selectEnd) {
-        const addText = '**';
-        editorRef.current.value = beforeText + addText + afterText;
-        editorRef.current?.focus();
-        editorRef.current?.setSelectionRange(selectStart + 1, selectStart + 1);
-      } else {
-        const addText = '*';
-        editorRef.current.value =
-          beforeText + addText + selectedText + addText + afterText;
-        editorRef.current?.focus();
-        editorRef.current?.setSelectionRange(selectEnd + 2, selectEnd + 2);
-      }
+      addMark(editorRef, '*', 'current');
     },
     heading: () => {
-      const textVal = editorRef.current?.value;
-      const textLen = textVal?.length;
-      const selectStart = editorRef.current?.selectionStart;
-      const selectEnd = editorRef.current?.selectionEnd;
-
-      if (selectStart === undefined || selectEnd === undefined) return;
-      if (!editorRef.current) return;
-
-      const lastN = textVal?.lastIndexOf('\n', selectStart - 1);
-
-      if (lastN) {
-        const beforeText = textVal?.substring(0, lastN + 1);
-        const afterText = textVal?.substring(lastN + 1, textLen);
-
-        editorRef.current?.setSelectionRange(lastN + 1, lastN + 1);
-
-        const addText = '# ';
-        const addTextLen = addText.length;
-        editorRef.current.value = beforeText + addText + afterText;
-
-        const nextN = textVal?.indexOf('\n', selectStart);
-
-        if (nextN === undefined || textLen === undefined) return;
-        if (nextN === -1) {
-          editorRef.current?.focus();
-          editorRef.current?.setSelectionRange(
-            textLen + addTextLen,
-            textLen + addTextLen
-          );
-        } else {
-          editorRef.current?.focus();
-          editorRef.current?.setSelectionRange(nextN + 2, nextN + 2);
-        }
-      }
+      addMark(editorRef, '# ', 'first');
     },
     listOl: () => {
-      const textVal = editorRef.current?.value;
-      const textLen = textVal?.length;
-      const selectStart = editorRef.current?.selectionStart;
-      const selectEnd = editorRef.current?.selectionEnd;
-
-      if (selectStart === undefined || selectEnd === undefined) return;
-      if (!editorRef.current) return;
-
-      const lastN = textVal?.lastIndexOf('\n', selectStart - 1);
-
-      if (lastN) {
-        const beforeText = textVal?.substring(0, lastN + 1);
-        const afterText = textVal?.substring(lastN + 1, textLen);
-
-        editorRef.current?.setSelectionRange(lastN + 1, lastN + 1);
-
-        const addText = '1. ';
-        const addTextLen = addText.length;
-        editorRef.current.value = beforeText + addText + afterText;
-
-        const nextN = textVal?.indexOf('\n', selectStart);
-
-        if (nextN) {
-          editorRef.current?.focus();
-          if (nextN === -1 && textLen) {
-            editorRef.current?.setSelectionRange(
-              textLen + addTextLen,
-              textLen + addTextLen
-            );
-          } else {
-            editorRef.current?.setSelectionRange(
-              nextN + addTextLen,
-              nextN + addTextLen
-            );
-          }
-        }
-      }
+      addMark(editorRef, '1. ', 'first');
     },
     listUl: () => {
       const textVal = editorRef.current?.value;
