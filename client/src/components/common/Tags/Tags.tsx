@@ -31,6 +31,7 @@ const TagItem = React.memo(
         {isWrite && (
           <StyledCancelButton
             type="button"
+            title="태그 지우기"
             onClick={e => onClickRemoveBtn(e, index)}>
             <Icon
               id="removeTagBtn"
