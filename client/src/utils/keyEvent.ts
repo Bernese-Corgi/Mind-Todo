@@ -1,11 +1,10 @@
-import { KeyboardEvent } from 'react';
+import { KeyboardEvent, RefObject } from 'react';
 
 export const keyPressUtils = (
   e: KeyboardEvent<HTMLElement>,
   key: string,
   callback: () => void
 ) => {
-  console.log(key);
   if (e.key === key) callback();
 };
 
@@ -32,5 +31,32 @@ export const preventEnterKeyEvent = (
 
     default:
       break;
+  }
+};
+
+export const insertBlankTab = (
+  inputRef: RefObject<HTMLTextAreaElement>,
+  e: KeyboardEvent<HTMLElement>
+) => {
+  if (!inputRef.current) return;
+
+  const blank = '  ';
+  const blankLen = blank.length;
+
+  const { selectionStart } = inputRef.current;
+
+  const textVal = inputRef.current.value;
+
+  const beforeText = textVal.substring(0, selectionStart);
+  const afterText = textVal.substring(selectionStart, textVal.length);
+
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    inputRef.current.value = beforeText + blank + afterText;
+
+    inputRef.current.setSelectionRange(
+      selectionStart + blankLen,
+      selectionStart + blankLen
+    );
   }
 };
