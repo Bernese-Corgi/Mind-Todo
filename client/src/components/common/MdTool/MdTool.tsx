@@ -1,6 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import theme from 'styles/theme';
+import React, { useEffect, useState } from 'react';
+import useBlur from 'utils/hooks/useBlur';
+import { ToolBox } from '..';
+import { MdToolButtonWrapper, StyledMdToolButton } from './MdTool.styled';
 import Sprite from './sprites.svg';
 
 interface MdToolProps {
@@ -14,47 +15,39 @@ interface MdToolProps {
     | 'list-ul'
     | 'quote'
     | 'heading'
-    | 'italic';
+    | 'italic'
+    | 'code';
   onClick?: () => void;
+  toolbox?: {
+    content: string;
+    clickEvent: () => void;
+  }[];
 }
 
-const StyledMdToolButton = styled.button`
-  margin: 0.2em;
-  padding: 0.2em;
-  background-color: ${theme.colors.gray.light}90;
-  width: 1.4em;
-  height: 1.4em;
-  border-radius: ${theme.borders.radius.square};
-  ${theme.transition()}
+const MdTool = ({ id, title, shape, onClick, toolbox }: MdToolProps) => {
+  const [hasToolbox, setHasToolbox] = useState(false);
 
-  &:hover {
-    background-color: ${theme.colors.gray.light};
+  const handleClick = () => {
+    toolbox ? setHasToolbox(!hasToolbox) : onClick && onClick();
+  };
 
-    use {
-      color: ${theme.colors.gray.dark};
+  useBlur(e => {
+    if (!e) return;
+
+    if (!e.target.classList.contains('toolbox')) {
+      setHasToolbox(false);
     }
-  }
+  }, hasToolbox);
 
-  svg {
-    width: 1em;
-    height: 1em;
-  }
-
-  use {
-    ${theme.transition()}
-    color: ${theme.colors.gray.base};
-    width: 100%;
-    height: 100%;
-  }
-`;
-
-const MdTool = ({ id, title, shape, onClick }: MdToolProps) => {
   return (
-    <StyledMdToolButton type="button" onClick={onClick}>
-      <svg>
-        <use id={id} aria-label={title} xlinkHref={`${Sprite}#${shape}`} />
-      </svg>
-    </StyledMdToolButton>
+    <MdToolButtonWrapper>
+      <StyledMdToolButton type="button" onClick={handleClick}>
+        <svg>
+          <use id={id} aria-label={title} xlinkHref={`${Sprite}#${shape}`} />
+        </svg>
+      </StyledMdToolButton>
+      {toolbox && hasToolbox && <ToolBox tools={toolbox} />}
+    </MdToolButtonWrapper>
   );
 };
 
