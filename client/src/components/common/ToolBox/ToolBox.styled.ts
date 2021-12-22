@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
-export const ToolBoxWrapper = styled.div`
-  background-color: ${theme.colors.gray.light}90;
+export const StyledToolBoxUl = styled.ul`
+  background-color: ${theme.colors.primary.light};
   padding: 0.6em 0.5em 0.2em 0.5em;
   border-radius: ${theme.borders.radius.square};
   position: absolute;

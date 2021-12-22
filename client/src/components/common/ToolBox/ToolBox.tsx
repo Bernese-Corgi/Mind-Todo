@@ -1,6 +1,6 @@
 import React from 'react';
 import { changeFirstStrToUpper } from 'utils/stringUtils';
-import { StyledToolBoxItemLi, ToolBoxWrapper } from './ToolBox.styled';
+import { StyledToolBoxItemLi, StyledToolBoxUl } from './ToolBox.styled';
 
 interface ToolBoxProps {
   tools: {
@@ -30,11 +30,11 @@ const ToolBoxItem = ({ content, onClick }: ToolBoxItemProps) => {
 
 const ToolBox = ({ tools }: ToolBoxProps) => {
   return (
-    <ToolBoxWrapper className="toolbox">
+    <StyledToolBoxUl className="toolbox">
       {tools.map(({ content, clickEvent }, i) => {
         return <ToolBoxItem content={content} key={i} onClick={clickEvent} />;
       })}
-    </ToolBoxWrapper>
+    </StyledToolBoxUl>
   );
 };
 
