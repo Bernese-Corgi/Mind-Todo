@@ -1,4 +1,4 @@
-import { RefObject } from 'react';
+import { KeyboardEvent, RefObject } from 'react';
 
 export const addMark = (
   editorRef: RefObject<HTMLTextAreaElement>,
@@ -12,13 +12,17 @@ export const addMark = (
   const inputLen = value.length;
   const markLen = mark.length;
 
-  if (selectionStart === undefined || selectionEnd === undefined) return;
+  if (
+    typeof selectionStart === 'undefined' ||
+    typeof selectionEnd === 'undefined'
+  )
+    return;
 
   // 개행
   const prevN = value.lastIndexOf('\n', selectionStart - 1);
   const nextN = value.indexOf('\n', selectionStart);
 
-  if (prevN === undefined || nextN === undefined) return;
+  if (typeof prevN === 'undefined' || typeof nextN === 'undefined') return;
 
   // 추가 형태
   if (location === 'first') {
@@ -32,19 +36,20 @@ export const addMark = (
     if (hasMark) {
       editorRef.current.value =
         beforeVal + afterVal.substring(markLen, afterVal.length);
+
+      editorRef.current.focus();
+      editorRef.current.setSelectionRange(
+        selectionStart - markLen,
+        selectionEnd - markLen
+      );
     } else {
       editorRef.current.value = beforeVal + mark + afterVal;
 
-      if (nextN === -1) {
-        editorRef.current.focus();
-        editorRef.current.setSelectionRange(
-          inputLen + markLen,
-          inputLen + markLen
-        );
-      } else {
-        editorRef.current.focus();
-        editorRef.current.setSelectionRange(nextN + markLen, nextN + markLen);
-      }
+      editorRef.current.focus();
+      editorRef.current.setSelectionRange(
+        selectionStart + markLen,
+        selectionEnd + markLen
+      );
     }
   } else {
     // ANCHOR 추가 형태 2. 현재 위치에 위치
@@ -145,3 +150,74 @@ export const addMark = (
 };
 
 // const setCursor = () => {};
+
+export const handleEnterKey = (
+  editorRef: RefObject<HTMLTextAreaElement>,
+  e: KeyboardEvent<HTMLTextAreaElement>,
+  mark: string
+) => {
+  if (!editorRef.current) return;
+
+  const { value, selectionStart, selectionEnd } = editorRef.current;
+
+  const inputLen = value.length;
+  const markLen = mark.length;
+
+  if (selectionStart === undefined || selectionEnd === undefined) return;
+
+  const beforeVal = value.substring(0, selectionStart);
+  const afterVal = value.substring(selectionStart, inputLen);
+
+  const prevN = value.lastIndexOf('\n', selectionStart - 1);
+  const nextN = value.indexOf('\n', selectionStart);
+
+  const findPrevLineMark = value
+    .substring(prevN, prevN + markLen + 1)
+    .includes('\n' + mark);
+
+  const findLastLineMark = value
+    .substring(inputLen - markLen, inputLen)
+    .includes('\n' + mark);
+
+  const firstMarkIdx = beforeVal.indexOf(mark);
+
+  const findLastMark = beforeVal
+    .substring(beforeVal.length - markLen, beforeVal.length)
+    .includes(mark);
+
+  if (
+    (findPrevLineMark && nextN - prevN === markLen + 1) ||
+    (findPrevLineMark && nextN === -1 && findLastMark) ||
+    (firstMarkIdx === 0 && prevN === -1 && beforeVal === mark)
+  ) {
+    e.preventDefault();
+
+    const beforeValLen = beforeVal.length;
+
+    editorRef.current.value =
+      beforeVal.substring(0, beforeValLen - markLen) + afterVal;
+
+    editorRef.current.setSelectionRange(
+      beforeValLen - markLen,
+      beforeValLen - markLen
+    );
+  } else if (
+    (firstMarkIdx === 0 && prevN === -1) ||
+    findPrevLineMark ||
+    findLastLineMark
+  ) {
+    e.preventDefault();
+
+    // const markToAdd = mark.search(/\d/) === -1 ? mark : `1. `;
+    // console.log(mark.search(/\d/));
+    // const prevLineMark = value.substring(inputLen - markLen);
+    // console.log(prevLineMark);
+
+    editorRef.current.value = beforeVal + '\n' + mark + afterVal;
+
+    editorRef.current.setSelectionRange(
+      selectionStart + markLen + 1,
+      selectionStart + markLen + 1
+    );
+  }
+};
