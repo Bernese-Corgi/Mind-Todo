@@ -1,4 +1,6 @@
 import React, { ChangeEvent, KeyboardEvent, RefObject } from 'react';
+import { insertBlankTab, keyPressUtils } from 'utils/keyEvent';
+import { handleEnterKey } from 'utils/toolbarEvent';
 import { ErrorMsg, MdToolbar } from '..';
 
 export type MdEditorTextAreaProps = {
@@ -35,65 +37,14 @@ const MdEditor = ({
     onChange && onChange(e);
   };
 
+  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) =>
+    editorRef && insertBlankTab(editorRef, e);
+
   const handleKeyPress = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (!editorRef) return;
-    const textVal = editorRef.current?.value;
-    const textLen = textVal?.length;
-    const selectStart = editorRef.current?.selectionStart;
-    const selectEnd = editorRef.current?.selectionEnd;
-
-    if (selectStart === undefined || selectEnd === undefined) return;
-    if (!editorRef.current) return;
-
-    const lastN = textVal?.lastIndexOf('\n', selectStart - 1);
-    const nextN = textVal?.indexOf('\n', selectStart);
-
-    if (lastN && nextN) {
-      const beforeText = textVal?.substring(0, selectStart);
-      const afterText = textVal?.substring(selectStart, textLen);
-
-      const findList = textVal?.substring(lastN, lastN + 3).includes('\n- ');
-
-      if (findList && nextN - lastN === 3 && e.key === 'Enter') {
-        e.preventDefault();
-        if (!beforeText) return;
-        editorRef.current.value =
-          beforeText.substring(0, beforeText.length - 2) + afterText;
-        editorRef.current?.setSelectionRange(
-          beforeText.length - 2,
-          beforeText.length - 2
-        );
-        return;
-      }
-      if (!textLen) return;
-      const lastList = textVal
-        ?.substring(textLen - 3, textLen)
-        .includes('\n- ');
-
-      if (lastList && nextN === -1 && e.key === 'Enter') {
-        e.preventDefault();
-        if (!beforeText) return;
-        editorRef.current.value =
-          beforeText.substring(0, beforeText.length - 2) + afterText;
-        editorRef.current?.setSelectionRange(
-          beforeText.length - 2,
-          beforeText.length - 2
-        );
-        return;
-      }
-
-      if (findList && e.key === 'Enter') {
-        e.preventDefault();
-
-        editorRef.current.value = beforeText + '\n- ' + afterText;
-        if (beforeText) {
-          editorRef.current?.setSelectionRange(
-            selectStart + 3,
-            selectStart + 3
-          );
-        }
-      }
-    }
+    editorRef &&
+      keyPressUtils(e, 'Enter', () => handleEnterKey(editorRef, e, '- '));
+    editorRef &&
+      keyPressUtils(e, 'Enter', () => handleEnterKey(editorRef, e, '1. '));
   };
 
   return (
@@ -112,6 +63,7 @@ const MdEditor = ({
         readOnly={readOnly}
         onChange={handleChange}
         onKeyPress={handleKeyPress}
+        onKeyDown={handleKeyDown}
         className={`${errorMsg && 'errorInput'}`}
       />
       <ErrorMsg children={errorMsg} />
