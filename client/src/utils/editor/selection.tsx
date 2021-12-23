@@ -48,3 +48,46 @@ export const getTextareaState = (
       };
   }
 };
+
+export const textWithMarkExcDuplication = (
+  textarea: HTMLTextAreaElement,
+  mark: string,
+  location: 'start' | 'current'
+) => {
+  const markLen = mark.length;
+
+  if (location === 'start') {
+    const { beforeVal, afterVal } = getTextareaState(textarea, 'start');
+
+    const hasMark = afterVal.startsWith(mark);
+
+    return hasMark
+      ? beforeVal + afterVal.substring(markLen, afterVal.length)
+      : beforeVal + mark + afterVal;
+  } else {
+    const { inputLen, beforeVal, afterVal, selectedVal } = getTextareaState(
+      textarea,
+      'current'
+    );
+
+    const hasMarkInside =
+      selectedVal.startsWith(mark) && selectedVal.endsWith(mark);
+
+    const hasMarkOutside =
+      beforeVal.lastIndexOf(mark) !== -1 && afterVal.indexOf(mark) !== -1;
+
+    const textWhenDupInside =
+      beforeVal + selectedVal.substring(markLen, selectedVal.length - markLen);
+
+    const textWhenDupOutside =
+      beforeVal.substring(0, beforeVal.lastIndexOf(mark)) +
+      selectedVal +
+      afterVal.substring(markLen, inputLen);
+
+    return hasMarkInside
+      ? textWhenDupInside
+      : hasMarkOutside
+      ? textWhenDupOutside
+      : false;
+  }
+};
