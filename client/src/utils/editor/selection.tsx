@@ -12,14 +12,14 @@ export const getTextareaState = (
 ) => {
   const { value, selectionStart, selectionEnd } = textarea;
 
-  const inputLen = value.length;
+  const valueLen = value.length;
 
   const prevLine = value.lastIndexOf('\n', selectionStart - 1);
   const nextLine = value.indexOf('\n', selectionStart);
 
   const commonState = {
     value,
-    inputLen,
+    valueLen,
     prevLine,
     nextLine,
     selection: {
@@ -34,21 +34,21 @@ export const getTextareaState = (
         ...commonState,
         beforeVal: value.substring(0, prevLine + 1),
         selectedVal: '',
-        afterVal: value.substring(prevLine + 1, inputLen),
+        afterVal: value.substring(prevLine + 1, valueLen),
       };
     case 'current':
       return {
         ...commonState,
         beforeVal: value.substring(0, selectionStart),
         selectedVal: value.substring(selectionStart, selectionEnd),
-        afterVal: value.substring(selectionEnd, inputLen),
+        afterVal: value.substring(selectionEnd, valueLen),
       };
     default:
       return {
         ...commonState,
         beforeVal: value.substring(0, selectionStart),
         selectedVal: value.substring(selectionStart, selectionEnd),
-        afterVal: value.substring(selectionEnd, inputLen),
+        afterVal: value.substring(selectionEnd, valueLen),
       };
   }
 };
@@ -69,7 +69,7 @@ export const textWithMarkExcDuplication = (
       ? beforeVal + afterVal.substring(markLen, afterVal.length)
       : beforeVal + mark + afterVal;
   } else {
-    const { inputLen, beforeVal, afterVal, selectedVal } = getTextareaState(
+    const { valueLen, beforeVal, afterVal, selectedVal } = getTextareaState(
       textarea,
       'current'
     );
@@ -86,7 +86,7 @@ export const textWithMarkExcDuplication = (
     const textWhenDupOutside =
       beforeVal.substring(0, beforeVal.lastIndexOf(mark)) +
       selectedVal +
-      afterVal.substring(markLen, inputLen);
+      afterVal.substring(markLen, valueLen);
 
     const textWhenNotDup = beforeVal + mark + selectedVal + mark + afterVal;
 
