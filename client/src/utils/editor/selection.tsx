@@ -91,3 +91,22 @@ export const textWithMarkExcDuplication = (
       : false;
   }
 };
+
+export const textWithMarkExcBlank = (selected: string, mark: string) => {
+  const frontBlankIdx = selected.search(/\S/g);
+  const backBlankIdx = selected.search(/[\s\uFEFF\xA0]+$/g);
+
+  const frontBlank =
+    frontBlankIdx === -1 ? '' : selected.substring(0, frontBlankIdx);
+
+  const backBlank =
+    backBlankIdx === -1
+      ? ''
+      : selected.substring(backBlankIdx, selected.length);
+
+  if (!frontBlank && !backBlank) {
+    return mark + selected + mark;
+  } else {
+    return frontBlank + mark + selected.trim() + mark + backBlank;
+  }
+};
