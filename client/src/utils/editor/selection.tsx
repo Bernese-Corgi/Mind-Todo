@@ -88,25 +88,31 @@ export const textWithMarkExcDuplication = (
       selectedVal +
       afterVal.substring(markLen, inputLen);
 
+    const textWhenNotDup = beforeVal + mark + selectedVal + mark + afterVal;
+
     return hasMarkInside
       ? textWhenDupInside
       : hasMarkOutside
       ? textWhenDupOutside
-      : false;
+      : textWhenNotDup;
   }
 };
 
-export const textWithMarkExcBlank = (selected: string, mark: string) => {
-  const frontBlankIdx = selected.search(/\S/g);
-  const backBlankIdx = selected.search(/[\s\uFEFF\xA0]+$/g);
+export const checkBlank = (str: string) => {
+  const frontBlankIdx = str.search(/\S/g);
+  const backBlankIdx = str.search(/[\s\uFEFF\xA0]+$/g);
 
   const frontBlank =
-    frontBlankIdx === -1 ? '' : selected.substring(0, frontBlankIdx);
+    frontBlankIdx === -1 ? '' : str.substring(0, frontBlankIdx);
 
   const backBlank =
-    backBlankIdx === -1
-      ? ''
-      : selected.substring(backBlankIdx, selected.length);
+    backBlankIdx === -1 ? '' : str.substring(backBlankIdx, str.length);
+
+  return { frontBlank, backBlank };
+};
+
+export const textWithMarkExcBlank = (selected: string, mark: string) => {
+  const { frontBlank, backBlank } = checkBlank(selected);
 
   if (!frontBlank && !backBlank) {
     return mark + selected + mark;
