@@ -22,6 +22,10 @@ export const getTextareaState = (
     inputLen,
     prevLine,
     nextLine,
+    selection: {
+      start: selectionStart,
+      end: selectionEnd,
+    },
   };
 
   switch (location) {
