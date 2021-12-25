@@ -9,6 +9,7 @@ const colors = {
   primary: {
     base: '#D2B48C',
     light: '#DFD9D3',
+    xlight: '#f5f3f1',
     dark: '#645645',
     highSat: '#bc8f54',
     lowSat: '#c6b298',

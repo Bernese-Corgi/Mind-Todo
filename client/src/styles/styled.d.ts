@@ -6,6 +6,7 @@ declare module 'styled-components' {
       primary: {
         base: string;
         light: string;
+        xlight: string;
         dark: string;
         highSat: string;
         lowSat: string;
