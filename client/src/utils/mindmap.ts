@@ -1,9 +1,10 @@
 import * as d3 from 'd3';
 import { stratify } from 'd3-hierarchy';
+import { TreeType } from './api/mindmaps';
 import { chunkString } from './stringUtils';
 
-export const stratifiedMindmap = treeData => {
-  const stratifiedData = stratify()
+export const stratifiedMindmap = (treeData: TreeType[]) => {
+  const stratifiedData = stratify<TreeType>()
     .id((d: any) => d.node?.name)
     .parentId((d: any) => d.parent?.name)(treeData);
 
