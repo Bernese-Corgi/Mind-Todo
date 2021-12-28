@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { MouseEventHandler, useEffect, useState } from 'react';
 import {
   StyledNodeGroup,
   StyledTextGroup,
@@ -9,8 +9,22 @@ import {
   StyledAddWrapRect,
 } from './MindmapNode.styled';
 import { getD3NodeSelectionById, getNodeBBox, wrapText } from 'utils/mindmap';
+import { HierarchyNode } from '@visx/hierarchy/lib/types';
 
-const MindmapNode = ({ node, onClickAddButton, onClickNode }) => {
+interface MindmapNodeProps {
+  node: HierarchyNode<any>;
+  onClickAddButton: (
+    e: MouseEventHandler<SVGGElement>,
+    parentId: string
+  ) => void;
+  onClickNode: (e: MouseEventHandler<SVGGElement>, nodeId: string) => void;
+}
+
+const MindmapNode = ({
+  node,
+  onClickAddButton,
+  onClickNode,
+}: MindmapNodeProps) => {
   const nodeId = node.data.node._id;
   const nodeName = node.data.node.name;
   const treeId = node.data._id;
@@ -38,6 +52,8 @@ const MindmapNode = ({ node, onClickAddButton, onClickNode }) => {
       height: nodeTextBBox.height,
     });
   }, [treeId]);
+
+  if (!node) return <p>node 없음</p>;
 
   return (
     <StyledNodeGroup node={node} textsize={textsize} key={treeId}>
