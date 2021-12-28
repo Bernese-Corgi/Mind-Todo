@@ -21,14 +21,16 @@ const SET_POST = 'post/SET_POST';
 const UNLOAD_POST = 'post/UNLOAD_POST';
 
 /* -------------------------- thunk action creator -------------------------- */
-export const writePostAsync = (nodeId: string, newPost: postsApi.Post) =>
+export const writePostAsync = (nodeId: string, newPost: postsApi.PostType) =>
   createRequestThunk(WRITE_POST, postsApi.writePost, nodeId, newPost);
 
 export const readPostAsync = (postId: string) =>
   createRequestThunk(READ_POST, postsApi.readPost, postId);
 
-export const updatePostAsync = (postId: string, updatePost: postsApi.Post) =>
-  createRequestThunk(UPDATE_POST, postsApi.updatePost, postId, updatePost);
+export const updatePostAsync = (
+  postId: string,
+  updatePost: postsApi.PostType
+) => createRequestThunk(UPDATE_POST, postsApi.updatePost, postId, updatePost);
 
 export const removePostAsync = (postId: string) =>
   createRequestThunk(REMOVE_POST, postsApi.removePost, postId);
