@@ -1,8 +1,14 @@
 import client from './client';
+import { UserType } from './auth';
 
 const URI = '/api/todos';
 
 export type TodoType = {
+  publisher?: UserType;
+  nodeId?: {
+    name: string;
+    _id?: string;
+  };
   _id?: string;
   content?: string;
   completed?: boolean;
