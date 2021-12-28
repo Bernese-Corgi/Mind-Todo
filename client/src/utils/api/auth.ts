@@ -14,6 +14,11 @@ export type SignIn = {
   password: string;
 };
 
+export type UserType = {
+  username: string;
+  email: string;
+};
+
 export const signUp = (userInfo: SignUp) =>
   client.post(`${URI}/signup`, userInfo);
 
