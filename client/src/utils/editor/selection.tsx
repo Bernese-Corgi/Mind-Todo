@@ -1,9 +1,10 @@
 export const setSelection = (
   textarea: HTMLTextAreaElement,
-  range: { start: number; end: number }
+  start: number,
+  end: number
 ) => {
   textarea.focus();
-  textarea.setSelectionRange(range.start, range.end);
+  textarea.setSelectionRange(start, end);
 };
 
 export const getTextareaState = (
@@ -56,23 +57,39 @@ export const getTextareaState = (
 export const textWithMarkExcDuplication = (
   textarea: HTMLTextAreaElement,
   mark: string,
-  location: 'start' | 'current'
+  location: 'start' | 'current',
+  selectedRange?: { start: number; end: number }
 ) => {
   const markLen = mark.length;
 
   if (location === 'start') {
-    const { beforeVal, afterVal } = getTextareaState(textarea, 'start');
+    const { beforeVal, afterVal, selection } = getTextareaState(
+      textarea,
+      'start'
+    );
 
     const hasMark = afterVal.startsWith(mark);
 
-    return hasMark
-      ? beforeVal + afterVal.substring(markLen, afterVal.length)
-      : beforeVal + mark + afterVal;
+    return {
+      editedValue: hasMark
+        ? beforeVal + afterVal.substring(markLen, afterVal.length)
+        : beforeVal + mark + afterVal,
+      editedSelection: {
+        start: selectedRange
+          ? selectedRange.start
+          : hasMark
+          ? selection.start - markLen
+          : selection.start + markLen,
+        end: selectedRange
+          ? selectedRange.end
+          : hasMark
+          ? selection.end - markLen
+          : selection.end + markLen,
+      },
+    };
   } else {
-    const { valueLen, beforeVal, afterVal, selectedVal } = getTextareaState(
-      textarea,
-      'current'
-    );
+    const { valueLen, beforeVal, afterVal, selectedVal, selection } =
+      getTextareaState(textarea, 'current');
 
     const hasMarkInside =
       selectedVal.startsWith(mark) && selectedVal.endsWith(mark);
@@ -90,11 +107,29 @@ export const textWithMarkExcDuplication = (
 
     const textWhenNotDup = beforeVal + mark + selectedVal + mark + afterVal;
 
-    return hasMarkInside
-      ? textWhenDupInside
-      : hasMarkOutside
-      ? textWhenDupOutside
-      : textWhenNotDup;
+    return {
+      editedValue: hasMarkInside
+        ? textWhenDupInside
+        : hasMarkOutside
+        ? textWhenDupOutside
+        : textWhenNotDup,
+      editedSelection: {
+        start: selectedRange
+          ? selectedRange.start
+          : hasMarkInside
+          ? selection.start
+          : hasMarkOutside
+          ? selection.start - markLen
+          : selection.start + markLen,
+        end: selectedRange
+          ? selectedRange.end
+          : hasMarkInside
+          ? selection.end - markLen * 2
+          : hasMarkOutside
+          ? selection.end - markLen
+          : selection.end + markLen,
+      },
+    };
   }
 };
 
