@@ -1,7 +1,7 @@
 import React, { ChangeEvent, KeyboardEvent, RefObject } from 'react';
-import { insertBlankTab, keyPressUtils } from 'utils/keyEvent';
-import { handleEnterKey } from 'utils/toolbarEvent';
+import { insertBlankTab, keyPressUtils } from 'utils/events/keyEvent';
 import { ErrorMsg, MdToolbar } from '..';
+import { toggleMarkWhenClickEnter } from 'utils/editor/enterKey';
 
 export type MdEditorTextAreaProps = {
   editorRef?: RefObject<HTMLTextAreaElement>;
@@ -41,10 +41,11 @@ const MdEditor = ({
     editorRef && insertBlankTab(editorRef, e);
 
   const handleKeyPress = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    editorRef &&
-      keyPressUtils(e, 'Enter', () => handleEnterKey(editorRef, e, '- '));
-    editorRef &&
-      keyPressUtils(e, 'Enter', () => handleEnterKey(editorRef, e, '1. '));
+    keyPressUtils(e, 'Enter', () =>
+      toggleMarkWhenClickEnter(e, editorRef!.current, '- ')
+    );
+
+    // keyPressUtils(e, 'Enter', () => handleEnterKey(editorRef, e, '1. '));
   };
 
   return (
