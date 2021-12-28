@@ -4,6 +4,7 @@ import { LinkHorizontal } from '@visx/shape';
 import { setRainbowColor } from 'utils/style';
 import { Group } from '@visx/group';
 import theme from 'styles/theme';
+import { HierarchyPointLink } from '@visx/hierarchy/lib/types';
 
 /* ---------------------------- variable and util --------------------------- */
 const margin = { top: 10, left: 80, right: 80, bottom: 10 };
@@ -83,11 +84,66 @@ interface StyledMindmapLineProps {
   depth: number;
 }
 
-export const StyledMindmapLine = styled(
+export const StyledMindmapHorizontalLine = styled(
   LinkHorizontal
 ).attrs<StyledMindmapLineProps>(({ depth }) => ({
   stroke: setRainbowColor(depth),
 }))<StyledMindmapLineProps>`
+  stroke-width: 1;
+  fill: none;
+`;
+
+interface StyledMindmapVerLineProps {
+  depth: number;
+  data: HierarchyPointLink<any>;
+  index;
+}
+
+const setLocation = (data, index: number) => {
+  const root = data.source;
+  const prev = index === 0 ? root : data.source.children[index - 1];
+  const next = data.source.children[index];
+
+  return {
+    x1: prev ? prev.y : 0,
+    y1: prev ? prev.x : 0,
+    x2: next ? next.y : 0,
+    y2: next ? next.x : 0,
+  };
+};
+
+const definePath = (
+  { x1, x2, y1, y2 }: { x1: number; x2: number; y1: number; y2: number },
+  diff: number,
+  i: number
+) => {
+  const quarter = (y2 - y1) / 4;
+  const isOdd = i % 2 !== 0;
+
+  return isOdd
+    ? `M${x1},${y1} C${x1 + diff},${y1 + quarter} ${x1 + diff},${
+        y2 - quarter
+      } ${x2},${y2}`
+    : `M${x1},${y1} C${x1 - diff},${y1 + quarter} ${x1 - diff},${
+        y2 - quarter
+      } ${x2},${y2}`;
+};
+
+export const StyledMindmapVerticalLine = styled.path.attrs<StyledMindmapVerLineProps>(
+  ({ depth, data, index }) => {
+    const x1 = setLocation(data, index).x1;
+    const y1 = setLocation(data, index).y1;
+    const x2 = setLocation(data, index).x2;
+    const y2 = setLocation(data, index).y2;
+
+    const diff = 20;
+
+    return {
+      stroke: setRainbowColor(depth),
+      d: definePath({ x1, x2, y1, y2 }, diff, index),
+    };
+  }
+)<StyledMindmapVerLineProps>`
   stroke-width: 1;
   fill: none;
 `;
@@ -97,4 +153,4 @@ MindmapWrapper.displayName = 'MindmapWrapper';
 StyledMindmapSvg.displayName = 'StyledMindmapSvg';
 StyledTree.displayName = 'StyledTree';
 StyledMindmapTreeGroup.displayName = 'StyledMindmapTreeGroup';
-StyledMindmapLine.displayName = 'StyledMindmapLine';
+StyledMindmapHorizontalLine.displayName = 'StyledMindmapHorizontalLine';
