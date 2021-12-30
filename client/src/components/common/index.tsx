@@ -24,6 +24,7 @@ export { default as EditDeleteButtonUnit } from './EditDeleteButtonUnit/EditDele
 export { default as MdTool } from './MdTool/MdTool';
 export { default as MdToolbar } from './MdToolbar/MdToolbar';
 export { default as ToolBox } from './ToolBox/ToolBox';
+export { default as Heading } from './Heading';
 
 /* styled component ---------------------------- */
 export { default as StyledForm } from './Form.styled';
