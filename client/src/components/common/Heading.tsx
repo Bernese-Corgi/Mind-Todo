@@ -7,7 +7,7 @@ interface HeadingProps {
 }
 
 const Heading = ({
-  level,
+  level = 2,
   children,
   className,
   ...restProps
