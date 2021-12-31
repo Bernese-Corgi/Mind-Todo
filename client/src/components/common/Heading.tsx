@@ -2,8 +2,8 @@ import React from 'react';
 
 interface HeadingProps {
   level?: number;
-  children: string;
-  className: string;
+  children: React.ReactChild;
+  className?: string;
 }
 
 const Heading = ({
