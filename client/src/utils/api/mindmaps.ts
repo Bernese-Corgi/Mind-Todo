@@ -1,12 +1,31 @@
+import { UserType } from './auth';
 import client from './client';
+import { PostType } from './posts';
+import { TodoType } from './todos';
 
 const URI = '/api/mindmaps';
 
 export type MindmapType = {
+  _id?: string;
   title: string;
+  publisher?: string | UserType;
+  body?: TreeType[];
+  createdAt?: string;
 };
 
-export type NodeType = {
+export type TreeType = {
+  _id?: string;
+  node: NodeType;
+  parent: NodeType;
+};
+
+export type NodeType = NodeReqType & {
+  _id?: string;
+  post?: PostType;
+  todos?: TodoType;
+};
+
+export type NodeReqType = {
   name: string;
   parentId?: string;
 };

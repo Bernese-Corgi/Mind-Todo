@@ -12,7 +12,8 @@ export const StyledPostEditorForm = styled.form`
     margin-bottom: 0.5em;
   }
 
-  .inputLabelWrapper {
+  .inputLabelWrapper,
+  .mdEditorWrapper {
     margin-bottom: 1.5em;
   }
 
@@ -22,12 +23,16 @@ export const StyledPostEditorForm = styled.form`
   }
 
   .tagInputWrapper {
+    margin-top: 2em;
     height: 18%;
 
     ul {
       margin-left: 1em;
       font-size: 85%;
       width: 60%;
+      padding: 0.3em;
+      border-radius: ${theme.borders.radius.square};
+      background-color: ${theme.colors.primary.light}40;
     }
 
     ${theme.flexes.mixin('row', 'center', 'start')}

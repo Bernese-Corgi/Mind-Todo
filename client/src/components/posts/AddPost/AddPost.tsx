@@ -1,4 +1,10 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { DeleteDialog } from 'components/common';
 import { PostEditor, PostViewer } from '..';
 import { StyledAddPostArticle } from './AddPost.styled';
@@ -24,6 +30,8 @@ const AddPost = ({
   onEdit,
   history,
 }: AddPostProps & RouteComponentProps<AddPostParams>) => {
+  const editorRef = useRef<HTMLTextAreaElement>(null);
+
   const initialState = {
     values: { title: '', body: '', tag: '' },
     errors: { title: '', body: '', tag: '', post: '' },
@@ -179,6 +187,7 @@ const AddPost = ({
           onSubmit={handleSubmitPost}
           onChanges={handleChanges}
           onClicks={handleClicks}
+          editorRef={editorRef}
         />
       </section>
       <section className="section postViewer">

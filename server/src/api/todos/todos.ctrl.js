@@ -14,7 +14,7 @@ export const list = async (ctx) => {
     // todos 컬렉션에서 todo list 받아오기
     const todos = await Todo.find({ publisher: user._id })
       .sort({ _id: -1 })
-      .populate('publisher');
+      .populate({ path: 'nodeId', select: 'name _id' });
 
     // todos 응답
     ctx.body = todos;

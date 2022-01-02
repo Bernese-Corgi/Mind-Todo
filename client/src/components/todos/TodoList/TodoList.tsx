@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 import { TodoType } from 'utils/api/todos';
-import { isEmptyArray } from 'utils/checkUtils';
+import { isEmptyArray } from 'utils/arrayUtils';
 import { TodoItem } from '..';
 
 const StyledTodoListUl = styled.ul`
@@ -43,14 +43,12 @@ const TodoList = ({ todos, onToggle, onEdit, onDelete }: TodoListProps) => {
         {todos?.map(todo => {
           if (!todo.completed)
             return (
-              <li key={todo._id}>
-                <TodoItem
-                  todo={todo}
-                  onToggle={onToggle}
-                  onEdit={onEdit}
-                  onDelete={onDelete}
-                />
-              </li>
+              <TodoItem
+                todo={todo}
+                onToggle={onToggle}
+                onEdit={onEdit}
+                onDelete={onDelete}
+              />
             );
         })}
       </div>
@@ -60,14 +58,12 @@ const TodoList = ({ todos, onToggle, onEdit, onDelete }: TodoListProps) => {
         {todos?.map(todo => {
           if (todo.completed)
             return (
-              <li key={todo._id}>
-                <TodoItem
-                  todo={todo}
-                  onToggle={onToggle}
-                  onEdit={onEdit}
-                  onDelete={onDelete}
-                />
-              </li>
+              <TodoItem
+                todo={todo}
+                onToggle={onToggle}
+                onEdit={onEdit}
+                onDelete={onDelete}
+              />
             );
         })}
       </div>

@@ -52,6 +52,7 @@ export const MdViewerWrapper = styled.article`
     padding: 0;
 
     li {
+      font-size: 1em;
       list-style: inside;
     }
   }
