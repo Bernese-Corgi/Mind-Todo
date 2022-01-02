@@ -1,18 +1,16 @@
 import client from './client';
 import { UserType } from './auth';
+import { NodeType } from './mindmaps';
 
 const URI = '/api/todos';
 
 export type TodoType = {
   publisher?: UserType;
-  // TODO 중복되니까 하나로 합치기
-  nodeId?: {
-    name: string;
-    _id?: string;
-  };
+  nodeId?: Partial<NodeType>;
   _id?: string;
   content?: string;
   completed?: boolean;
+  createdAt?: string;
 };
 
 export type TodoListType = TodoType[];
