@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 import { TodoType } from 'utils/api/todos';
-import { isEmptyArray } from 'utils/checkUtils';
+import { isEmptyArray } from 'utils/arrayUtils';
 import { TodoItem } from '..';
 
 const StyledTodoListUl = styled.ul`
