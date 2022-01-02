@@ -22,7 +22,7 @@ const StyledTodoListUl = styled.ul`
 `;
 
 interface TodoListProps {
-  todos: [TodoType];
+  todos: TodoType[];
   onToggle: (todoId: string, completed: boolean) => void;
   onEdit: (todoId: string, content: string) => void;
   onDelete: (todoId: string) => void;
