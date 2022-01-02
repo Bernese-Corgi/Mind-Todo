@@ -1,15 +1,12 @@
-import { NodeRoute } from 'components/node';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'redux/modules';
 import { readMindmapAsync } from 'redux/modules/mindmaps/mindmap';
+import { NodeRoute } from 'components/node';
+import { NodeType } from 'utils/api/mindmaps';
 
 interface NodeRouteContainerProps {
-  node: {
-    _id: string;
-    name: string;
-    mindmapId: string;
-  };
+  node: Partial<NodeType>;
 }
 
 const NodeRouteContainer = ({ node }: NodeRouteContainerProps) => {
@@ -22,12 +19,18 @@ const NodeRouteContainer = ({ node }: NodeRouteContainerProps) => {
     })
   );
 
-  const [nodeRoute, setNodeRoute] = useState<string>(node.name);
+  const [nodeRoute, setNodeRoute] = useState<string>('');
 
-  const isSettingRoute = useRef<boolean>();
+  const isSetRoute = useRef<boolean>();
+
+  // 첫 마운트 시에만 실행
+  useEffect(() => {
+    node.name && setNodeRoute(node.name);
+    isSetRoute.current = true;
+  }, []);
 
   useEffect(() => {
-    dispatch(readMindmapAsync(node.mindmapId));
+    node.mindmapId && dispatch(readMindmapAsync(node.mindmapId));
   }, [dispatch, node._id, node.mindmapId]);
 
   const addParentName = useCallback(
@@ -62,9 +65,12 @@ const NodeRouteContainer = ({ node }: NodeRouteContainerProps) => {
 
       if (matchNode) {
         addParentName(matchNode);
+        isSetRoute.current = false;
       }
     }
   }, [addParentName, mindmapData, node._id, node.name]);
+
+  // if (isSetRoute.current) return <p>a</p>;
 
   return <NodeRoute content={nodeRoute} />;
 };
