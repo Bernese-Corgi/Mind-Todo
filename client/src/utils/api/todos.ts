@@ -5,6 +5,7 @@ const URI = '/api/todos';
 
 export type TodoType = {
   publisher?: UserType;
+  // TODO 중복되니까 하나로 합치기
   nodeId?: {
     name: string;
     _id?: string;
@@ -13,6 +14,8 @@ export type TodoType = {
   content?: string;
   completed?: boolean;
 };
+
+export type TodoListType = TodoType[];
 
 export const listTodos = () => client.get(`${URI}`);
 
