@@ -1,19 +1,19 @@
 import React from 'react';
-import AddMindmapDialogContainer from 'container/mindmaps/AddMindmapDialogContainer';
 import {
   AddPostPage,
   AuthPage,
   HomePage,
   MindmapListPage,
+  MindmapPage,
   NodePage,
   PostListPage,
   PostPage,
+  TodoListPage,
 } from 'pages';
+import { HeaderbarContainer } from 'container/common';
+import { AddMindmapDialogContainer } from 'container/mindmaps';
 import { Route, Switch } from 'react-router';
 import './App.css';
-import MindmapPage from 'pages/MindmapPage';
-import { HeaderbarContainer } from 'container/common';
-import TodoListPage from 'pages/TodoListPage';
 
 function App() {
   return (
