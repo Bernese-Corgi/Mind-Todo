@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'redux/modules';
 import { readNodeAsync } from 'redux/modules/mindmaps/node';
 import { removeTodoAsync, updateTodoAsync } from 'redux/modules/todos/todo';
+import { useDispatchTodos } from 'utils/hooks';
 
 interface TodoListContainerProps {
   todos?: any;
@@ -26,17 +27,7 @@ const TodoListContainer = ({ mindmapId, nodeId }: TodoListContainerProps) => {
     }
   );
 
-  const handleToggleTodo = (todoId: string, completed: boolean) => {
-    dispatch(updateTodoAsync(todoId, { completed: !completed }));
-  };
-
-  const handleEditTodo = (todoId: string, content: string) => {
-    dispatch(updateTodoAsync(todoId, { content }));
-  };
-
-  const handleDeleteTodo = (todoId: string) => {
-    dispatch(removeTodoAsync(todoId));
-  };
+  const { handleToggle, handleEdit, handleDelete } = useDispatchTodos();
 
   useLayoutEffect(() => {
     if (!nodeTodos) {
@@ -51,9 +42,9 @@ const TodoListContainer = ({ mindmapId, nodeId }: TodoListContainerProps) => {
   return (
     <TodoList
       todos={nodeTodos ? nodeTodos : todos}
-      onToggle={handleToggleTodo}
-      onEdit={handleEditTodo}
-      onDelete={handleDeleteTodo}
+      onToggle={handleToggle}
+      onEdit={handleEdit}
+      onDelete={handleDelete}
     />
   );
 };
