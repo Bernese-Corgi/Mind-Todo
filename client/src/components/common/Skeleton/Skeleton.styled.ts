@@ -25,6 +25,12 @@ const dateSkeleton = css`
   width: 30%;
   height: 1em;
 `;
+
+const subInfoSkeleton = css`
+  width: 30%;
+  height: 1em;
+`;
+
 const avatarSkeleton = css`
   width: 100%;
   height: 100%;
@@ -34,6 +40,11 @@ const avatarSkeleton = css`
 const todosSkeleton = css`
   width: 100%;
   height: 3em;
+`;
+
+const postSkeleton = css`
+  width: 100%;
+  height: 7em;
 `;
 
 export const StyledSkeletonElem = styled.div.attrs<StyledSkeletonElemProps>(
@@ -67,9 +78,19 @@ export const StyledSkeletonElem = styled.div.attrs<StyledSkeletonElemProps>(
           ${dateSkeleton}
         `;
 
+      case 'subInfo':
+        return css`
+          ${subInfoSkeleton}
+        `;
+
       case 'todos':
         return css`
           ${todosSkeleton}
+        `;
+
+      case 'post':
+        return css`
+          ${postSkeleton}
         `;
 
       default:
