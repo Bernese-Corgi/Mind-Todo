@@ -6,11 +6,12 @@ interface NodeRouteProps {
   level?: number;
   link?: string;
   content: string;
+  className?: string;
 }
 
-const NodeRoute = ({ level = 3, link, content }: NodeRouteProps) => {
+const NodeRoute = ({ level = 3, link, content, className }: NodeRouteProps) => {
   return (
-    <Heading level={level}>
+    <Heading level={level} className={className}>
       {link ? <Link to={link} children={content} /> : content}
     </Heading>
   );
