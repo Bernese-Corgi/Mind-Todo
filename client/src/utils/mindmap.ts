@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import { stratify } from 'd3-hierarchy';
-import { TreeType } from './api/mindmaps';
+import { NodeType, TreeType } from './api/mindmaps';
 import { chunkString } from './stringUtils';
 
 export const stratifiedMindmap = (treeData: TreeType[]) => {
@@ -68,3 +68,9 @@ export const checkIsRoot = (mindmap, nodeId) => {
   const rootNode = mindmap?.body.find(tree => tree.parent === null);
   return rootNode?.node._id === nodeId;
 };
+
+export const findMatchNodeByMindmapBody = (
+  nodeToFind: Partial<NodeType>,
+  mindmapBody: TreeType[]
+) =>
+  mindmapBody.find((obj: TreeType) => obj.node?._id === nodeToFind._id && obj);
