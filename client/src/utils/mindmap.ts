@@ -74,3 +74,32 @@ export const findMatchNodeByMindmapBody = (
   mindmapBody: TreeType[]
 ) =>
   mindmapBody.find((obj: TreeType) => obj.node?._id === nodeToFind._id && obj);
+
+export const getNodeRoute = (
+  nodeToFindRoute: TreeType,
+  mindmapBody: TreeType[],
+  mark: string = '>'
+) => {
+  const markWithBlank = ' ' + mark + ' ';
+
+  let array: string[] = [];
+
+  array.push(nodeToFindRoute.node.name);
+
+  (function insertParentName(prev, arr) {
+    if (!prev.parent) return;
+
+    const parent = mindmapBody.find((obj: TreeType) =>
+      obj.node._id === prev.parent._id ? obj : null
+    );
+
+    if (parent?.node.name) {
+      arr.push(parent?.node.name);
+      insertParentName(parent, arr);
+    }
+
+    return arr;
+  })(nodeToFindRoute, array);
+
+  return array.reverse().join(markWithBlank);
+};
