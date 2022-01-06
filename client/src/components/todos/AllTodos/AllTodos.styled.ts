@@ -7,7 +7,7 @@ export const AllTodosWrapper = styled.div`
 
   .allTodosTitle {
     font-size: 1.3em;
-    margin: 0.5em;
+    margin: 0 0 1em 0;
     text-align: left;
     color: ${theme.colors.primary.dark}99;
   }
@@ -16,7 +16,7 @@ export const AllTodosWrapper = styled.div`
     .uncompletedList,
     .completedList {
       width: 100%;
-      margin: 1em;
+      margin: 0.2em;
     }
     ${({ theme }) => theme.media.desktop`
       ${theme.flexes.mixin('row', 'start', 'start')}

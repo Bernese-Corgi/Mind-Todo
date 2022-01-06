@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
-import { chunkDateString } from 'utils/stringUtils';
-import { LoadingIcon } from 'components/common';
-import { TodoList } from '..';
 import { AllTodosWrapper } from './AllTodos.styled';
-import { NodeRouteContainer } from 'container/nodes';
 import { TodoListType } from 'utils/api/todos';
+import { TodosByNodeContainer } from 'container/todos';
 
-interface AllTodosProps {
+export type AllTodosProps = TodoDataHandlerType & {
   todoList: TodoListType;
+  loading;
+  error;
+};
+
+export type TodoDataHandlerType = {
   onToggle: (todoId: string, completed: boolean) => void;
   onEdit: (todoId: string, content: string) => void;
   onDelete: (todoId: string) => void;
-  loading;
-  error;
-}
+};
 
 const AllTodos = ({
   todoList,
@@ -59,29 +59,19 @@ const AllTodos = ({
   }, [todoList]);
 
   // if (todoList) return <p>no data</p>;
-  // if (loading) return <LoadingIcon />;
+  // if (loading) return ;
+
   if (error) return <p>error</p>;
 
   return (
     <AllTodosWrapper>
       <h2 className="allTodosTitle">Todo List</h2>
       {allTodos.map(todoListByNode => {
-        const node = todoListByNode[0].nodeId;
-        const createdDate =
-          todoListByNode[0].createdAt &&
-          chunkDateString(todoListByNode[0].createdAt);
-
         return (
-          <article>
-            {node && <NodeRouteContainer node={node} />}
-            <time>{createdDate}</time>
-            <TodoList
-              todos={todoListByNode}
-              onToggle={onToggle}
-              onEdit={onEdit}
-              onDelete={onDelete}
-            />
-          </article>
+          <TodosByNodeContainer
+            node={todoListByNode[0].nodeId}
+            todoListByNode={todoListByNode}
+          />
         );
       })}
     </AllTodosWrapper>
