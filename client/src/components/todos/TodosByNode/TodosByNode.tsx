@@ -25,6 +25,8 @@ const TodosByNode = ({
   const createdDate =
     todoListByNode[0].createdAt && chunkDateString(todoListByNode[0].createdAt);
 
+  const link = `/mindmap/${node?.mindmapId}/${node?._id}`;
+
   const [nodeRoute, setNodeRoute] = useState<string>('');
 
   useEffect(() => {
@@ -39,7 +41,7 @@ const TodosByNode = ({
     }
   }, [mindmap, node, node?._id]);
 
-  if (nodeRoute === '')
+  if (nodeRoute === '' || !node)
     return (
       <StyledTodosByNodeArticle>
         <Skeleton types={['title', 'date', 'todos']} />
@@ -48,7 +50,7 @@ const TodosByNode = ({
 
   return (
     <StyledTodosByNodeArticle>
-      <NodeRoute content={nodeRoute} />
+      <NodeRoute content={nodeRoute} link={link} />
       <time>{createdDate}</time>
       <TodoList
         todos={todoListByNode}
