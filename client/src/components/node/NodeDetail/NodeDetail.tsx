@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   StyledNodeDetailSection,
   StyledNodeName,
   StyledNodePostSection,
+  StyledNodeRoute,
   StyledNodeTodoSection,
 } from './NodeDetail.styled';
-import { NodeName } from '..';
+import { NodeName, NodeRoute } from '..';
 import { TodoUnit } from 'components/todos';
 import { PostViewerContainer } from 'container/posts';
-import { LoadingIcon } from 'components/common';
-import { checkIsRoot } from 'utils/mindmap';
+import { Skeleton } from 'components/common';
+import {
+  checkIsRoot,
+  findMatchNodeByMindmapBody,
+  getNodeRoute,
+} from 'utils/mindmap';
 
 interface NodeDetailProps {
   links: {
@@ -44,14 +49,36 @@ const NodeDetail = ({
   onEdit,
   onRemove,
 }: NodeDetailProps) => {
+  const [nodeRoute, setNodeRoute] = useState<string>();
+
+  useEffect(() => {
+    if (mindmap && mindmap.body && node) {
+      const matchNode = findMatchNodeByMindmapBody(node, mindmap.body);
+
+      if (matchNode) {
+        const route = getNodeRoute(matchNode, mindmap.body);
+        setNodeRoute(route);
+      }
+    }
+  }, [mindmap, mindmap?.body, node]);
+
   // if (!node) return <p>aa</p>;
-  if (loading) return <LoadingIcon />;
+  if (loading) return null;
   if (error) return <p>error 발생!</p>;
 
   return (
     <>
       {/* node detail ------------------------------ */}
       <StyledNodeDetailSection className="nodeDetailSection">
+        {/* node route */}
+        <StyledNodeRoute>
+          {nodeRoute ? (
+            <NodeRoute content={nodeRoute} className="title" />
+          ) : (
+            <Skeleton types={['title']} />
+          )}
+        </StyledNodeRoute>
+
         {/* node name */}
         <StyledNodeName>
           <NodeName

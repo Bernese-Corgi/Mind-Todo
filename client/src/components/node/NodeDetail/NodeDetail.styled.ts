@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import theme from 'styles/theme';
 
 export const StyledNodeDetailSection = styled.section`
@@ -25,6 +25,14 @@ export const StyledNodeDetailSection = styled.section`
     border-top: 1px solid #DCDCDC;
     padding-top: 1em;
   `}
+`;
+
+export const StyledNodeRoute = styled.div`
+  .title {
+    font-size: 0.8em;
+    font-weight: ${theme.fonts.weight.normal};
+    padding-left: 0.8em;
+  }
 `;
 
 export const StyledNodeName = styled.div`
@@ -67,7 +75,7 @@ export const StyledNodeTodoSection = styled.section`
      max-height: 40%;
   `}
 
-  s${({ theme }) => theme.media.mobile`
+  ${({ theme }) => theme.media.mobile`
     max-height: 200px;
   `}
 
