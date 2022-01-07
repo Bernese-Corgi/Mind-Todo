@@ -13,6 +13,7 @@ interface EditDeleteButtonUnitProps {
   editName?: string;
   editVal?: string;
   completed?: boolean;
+  date?: string;
   editRef?: RefObject<HTMLTextAreaElement>;
   errorMsg?: string;
   delDialogText?: string;
@@ -31,6 +32,7 @@ const EditDeleteButtonUnit = ({
   editName,
   editVal,
   completed,
+  date,
   editRef,
   errorMsg,
   delDialogText,
@@ -94,6 +96,11 @@ const EditDeleteButtonUnit = ({
               className="editTextArea"
               preventEnter="both"
             />
+          )}
+          {date && (
+            <div className="dateWrapper">
+              <time>{date}</time>
+            </div>
           )}
           <div className="iconBtnWrapper">
             {isEdit ? (

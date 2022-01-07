@@ -29,11 +29,14 @@ const PostViewerContainer = ({
   match,
 }: PostViewerContainerProps & RouteComponentProps<PostViewerParams>) => {
   const dispatch = useDispatch();
-  const { post, loading, error } = useSelector(({ post }: RootState) => ({
-    post: post.post,
-    loading: post.loading,
-    error: post.error,
-  }));
+  const { post, currentUser, loading, error } = useSelector(
+    ({ post, user }: RootState) => ({
+      post: post.post,
+      currentUser: user.user,
+      loading: post.loading,
+      error: post.error,
+    })
+  );
 
   const { mindmapId, nodeId, postId } = match.params;
 
@@ -57,6 +60,7 @@ const PostViewerContainer = ({
   return (
     <PostViewer
       post={nodePost ? nodePost : post}
+      currentUser={currentUser}
       hasEdit
       onRemove={handleRemove}
       writePath={writePath}

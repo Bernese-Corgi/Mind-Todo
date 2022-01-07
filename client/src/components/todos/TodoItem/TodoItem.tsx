@@ -10,6 +10,7 @@ import { CheckBox, EditDeleteButtonUnit } from 'components/common';
 import { StyledTodoItemLi } from './TodoItem.styled';
 import theme from 'styles/theme';
 import { useCompare } from 'utils/hooks';
+import { chunkDateString } from 'utils/stringUtils';
 
 interface TodoItemProps {
   todo: TodoType;
@@ -21,7 +22,10 @@ interface TodoItemProps {
 const TodoItem = React.memo(
   ({ todo, onToggle, onEdit, onDelete }: TodoItemProps) => {
     const todoId = todo?._id;
-    const { content, completed } = todo;
+
+    const { content, completed, createdAt } = todo;
+
+    const chunckedDate = createdAt && chunkDateString(createdAt);
 
     const editRef = useRef<HTMLTextAreaElement>(null);
 
@@ -83,6 +87,7 @@ const TodoItem = React.memo(
           editName="content"
           editVal={contentVal}
           completed={completed}
+          date={chunckedDate}
           editRef={editRef}
           errorMsg={contentError}
           iconMode
