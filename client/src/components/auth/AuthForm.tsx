@@ -5,8 +5,7 @@ import { SignIn, SignUp } from 'utils/api/auth';
 
 type AuthFormProps = {
   authType: 'sign-in' | 'sign-up';
-  // form: SignUp | SignIn | null;
-  form: any;
+  form: SignUp | SignIn | null;
   errors: any;
   onSubmit?: (e: FormEvent<HTMLFormElement>) => void;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -42,7 +41,7 @@ const AuthForm = ({
               id="email"
               label="email"
               name="email"
-              value={authType === 'sign-up' && form?.email}
+              value={(form as SignUp)?.email}
               errorMsg={errors.email}
               // TODO placeholder 변경
               placeholder="이메일을 입력해주세요"
@@ -75,7 +74,7 @@ const AuthForm = ({
               id="passwordConfirm"
               label="passwordConfirm"
               name="passwordConfirm"
-              value={form?.passwordConfirm}
+              value={(form as SignUp)?.passwordConfirm}
               errorMsg={errors.passwordConfirm}
               // TODO placeholder 변경
               placeholder="비밀번호를 한 번 더 입력해주세요"
