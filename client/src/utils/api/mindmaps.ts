@@ -1,3 +1,8 @@
+import {
+  HierarchyNode,
+  HierarchyPointLink,
+  HierarchyPointNode,
+} from '@visx/hierarchy/lib/types';
 import { UserType } from './auth';
 import client from './client';
 import { PostType } from './posts';
@@ -19,8 +24,14 @@ export type TreeType = {
   parent: NodeType;
 };
 
+export type CustomHierarchyNode = HierarchyNode<TreeType>;
+
+export type CustomHierarchyPointNode = HierarchyPointNode<TreeType>;
+export type CustomHierarchyPointLink = HierarchyPointLink<TreeType>;
+
 export type NodeType = NodeReqType & {
   _id?: string;
+  mindmapId?: string;
   post?: PostType;
   todos?: TodoType;
 };
