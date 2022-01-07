@@ -10,7 +10,7 @@ export type ListItemLinksType = {
 
 interface ListItemProps {
   title: string;
-  username: string;
+  username?: string;
   createdAt?: string;
   body?: string;
   links?: ListItemLinksType;
