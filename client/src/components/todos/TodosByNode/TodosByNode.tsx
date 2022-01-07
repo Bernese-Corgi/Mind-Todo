@@ -51,7 +51,6 @@ const TodosByNode = ({
   return (
     <StyledTodosByNodeArticle>
       <NodeRoute content={nodeRoute} link={link} />
-      <time>{createdDate}</time>
       <TodoList
         todos={todoListByNode}
         onToggle={onToggle}

@@ -41,4 +41,9 @@ export const StyledTodosByNodeArticle = styled.article`
   .todos {
     margin-bottom: 3em;
   }
+
+  &:before {
+    ${theme.defElem.divider()}
+    margin-bottom: 1em;
+  }
 `;

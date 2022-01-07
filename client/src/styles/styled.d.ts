@@ -90,6 +90,16 @@ declare module 'styled-components' {
         topLeft: string;
         center: string;
       };
+      mixin: (
+        position: string,
+        offset?: {
+          top?: string;
+          left?: string;
+          right?: string;
+          bottom?: string;
+        },
+        transform?: { transX?: string; transY?: string }
+      ) => string;
     };
     transition: (sec?: string, timing?: string) => string;
     sizes: {
