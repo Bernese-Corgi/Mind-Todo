@@ -1,9 +1,15 @@
 import client from './client';
 import qs from 'qs';
+import { UserType } from './auth';
+import { MindmapType } from './mindmaps';
 
 const URI = '/api/posts';
 
 export type PostType = {
+  publisher?: UserType | string;
+  mindmapId?: Partial<MindmapType> | string;
+  nodeId?: string;
+  createdAt?: string;
   title: string;
   body: string;
   tags?: string[];
