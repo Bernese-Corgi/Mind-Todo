@@ -7,14 +7,14 @@ import { StyledTagsUl, StyledTagLi, StyledCancelButton } from './Tags.styled';
 interface TagsProps {
   tags: string[] | undefined;
   isWrite: boolean;
-  onClickRemoveBtn?: any;
+  onClickRemoveBtn?: (e, key: number) => void;
 }
 
 interface TagItemprops {
   tag: string;
   isWrite: boolean;
   index: number;
-  onClickRemoveBtn?: any;
+  onClickRemoveBtn?: (e, key: number) => void;
 }
 
 const TagItem = React.memo(
@@ -32,7 +32,7 @@ const TagItem = React.memo(
           <StyledCancelButton
             type="button"
             title="태그 지우기"
-            onClick={e => onClickRemoveBtn(e, index)}>
+            onClick={onClickRemoveBtn && (e => onClickRemoveBtn(e, index))}>
             <Icon
               id="removeTagBtn"
               title="태그 지우기"

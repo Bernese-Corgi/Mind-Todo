@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, MouseEvent, MouseEventHandler } from 'react';
 import theme from 'styles/theme';
 import { Button, InputField, Tags } from '.';
 
@@ -13,7 +13,7 @@ interface TagFormProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onClicks: {
     addTagBtn: () => void;
-    removeTagBtn: (e, key) => void;
+    removeTagBtn: (e, key: number) => void;
   };
   className?: string;
 }
