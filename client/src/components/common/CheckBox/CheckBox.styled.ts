@@ -10,6 +10,14 @@ export const CheckBoxWrapper = styled.div<CheckBoxWrapperProps>`
   margin: 0.5em;
   cursor: pointer;
 
+  &:active svg {
+    width: 0.94em;
+    height: 0.94em;
+    margin: 0.06em;
+
+    ${theme.transition('50ms')}
+  }
+
   ${({ shape }) => css`
     ${handleSvgHoverColor(handleHoverColorType(shape))}
   `}
