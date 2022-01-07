@@ -5,6 +5,8 @@ import { MindmapType } from './mindmaps';
 
 const URI = '/api/posts';
 
+export type PostListType = PostType[];
+
 export type PostType = {
   publisher?: UserType | string;
   mindmapId?: Partial<MindmapType> | string;
@@ -13,6 +15,7 @@ export type PostType = {
   title: string;
   body: string;
   tags?: string[];
+  _id?: string;
 };
 
 export type PostQueryType = {
