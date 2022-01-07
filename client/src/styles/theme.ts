@@ -126,8 +126,22 @@ const positions = {
       top: 50%;
       left: 50%;
       transform: translateX(-50%) translateY(-50%);
-    `,
+      `,
   },
+  mixin: (position, offset, transform) => `
+  position: ${position};
+  ${offset && offset.top && `top: ${offset.top};`}
+  ${offset && offset.left && `left: ${offset.left};`}
+  ${offset && offset.right && `right: ${offset.right};`}
+  ${offset && offset.bottom && `bottom: ${offset.bottom};`}
+  ${
+    transform &&
+    (transform.transX || transform.transY) &&
+    `transform: ${transform.transX && `translateX(${transform.transX})`} ${
+      transform.transY && `translateY(${transform.transY})`
+    }`
+  });
+`,
 };
 
 const transition = (sec = '200ms', timing = 'ease-in-out') => `
