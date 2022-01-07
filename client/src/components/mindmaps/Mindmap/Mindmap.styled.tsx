@@ -5,6 +5,10 @@ import { setRainbowColor } from 'utils/style';
 import { Group } from '@visx/group';
 import theme from 'styles/theme';
 import { HierarchyPointLink } from '@visx/hierarchy/lib/types';
+import {
+  CustomHierarchyNode,
+  CustomHierarchyPointNode,
+} from 'utils/api/mindmaps';
 
 /* ---------------------------- variable and util --------------------------- */
 const margin = { top: 10, left: 80, right: 80, bottom: 10 };
@@ -20,7 +24,7 @@ const setMindmapSize = (treeData, parentSize) => {
 
 /* ----------------------------- mindmap wrapper ---------------------------- */
 interface MindmapWrapperProps {
-  treeData;
+  treeData: CustomHierarchyNode;
 }
 
 export const MindmapWrapper = styled.div<MindmapWrapperProps>`
@@ -34,7 +38,7 @@ export const MindmapWrapper = styled.div<MindmapWrapperProps>`
 /* ------------------------------- mindmap svg ------------------------------ */
 interface StyledMindmapSvgProps {
   parentSize: { width: number; height: number };
-  treeData;
+  treeData: CustomHierarchyNode;
 }
 
 export const StyledMindmapSvg = styled.svg.attrs<StyledMindmapSvgProps>(
@@ -66,7 +70,8 @@ export const StyledTree = styled(Tree).attrs<StyledTreeProps>(
       size: [treeSize.width, treeSize.height],
       top: 0,
       left: 0,
-      separation: (a, b) => setMindmapSeparation(a, b),
+      separation: (a: CustomHierarchyPointNode, b: CustomHierarchyPointNode) =>
+        setMindmapSeparation(a, b),
     };
   }
 )<StyledTreeProps>`
@@ -96,10 +101,12 @@ export const StyledMindmapHorizontalLine = styled(
 interface StyledMindmapVerLineProps {
   depth: number;
   data: HierarchyPointLink<any>;
-  index;
+  index: number;
 }
 
-const setLocation = (data, index: number) => {
+const setLocation = (data: HierarchyPointLink<any>, index: number) => {
+  if (!data.source.children) return;
+
   const root = data.source;
   const prev = index === 0 ? root : data.source.children[index - 1];
   const next = data.source.children[index];
@@ -131,10 +138,10 @@ const definePath = (
 
 export const StyledMindmapVerticalLine = styled.path.attrs<StyledMindmapVerLineProps>(
   ({ depth, data, index }) => {
-    const x1 = setLocation(data, index).x1;
-    const y1 = setLocation(data, index).y1;
-    const x2 = setLocation(data, index).x2;
-    const y2 = setLocation(data, index).y2;
+    const x1 = setLocation(data, index)?.x1 || 0;
+    const y1 = setLocation(data, index)?.y1 || 0;
+    const x2 = setLocation(data, index)?.x2 || 0;
+    const y2 = setLocation(data, index)?.y2 || 0;
 
     const diff = 20;
 
