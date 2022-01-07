@@ -9,6 +9,19 @@ export const PostViewerWrapper = styled.div<PostViewerProps>`
   text-align: left;
   position: relative;
 
+  .nodeRoute {
+    display: inline-block;
+    color: ${theme.colors.gray.base};
+    font-size: 0.9em;
+    font-weight: ${theme.fonts.weight.normal};
+    margin: 0 0 1em 1em;
+
+    &:hover {
+      text-decoration: underline;
+      color: ${theme.colors.gray.dark};
+    }
+  }
+
   .postTitleText {
     padding: 0.8em 0 0.8em 0;
 
