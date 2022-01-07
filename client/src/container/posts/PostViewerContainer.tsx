@@ -8,6 +8,7 @@ import {
   removePostAsync,
   unloadPost,
 } from 'redux/modules/posts/post';
+import { PostType } from 'utils/api/posts';
 
 interface PostViewerParams {
   mindmapId?: string;
@@ -16,7 +17,7 @@ interface PostViewerParams {
 }
 
 interface PostViewerContainerProps {
-  nodePost?: any;
+  nodePost?: PostType;
 }
 
 const PostViewerContainer = ({
