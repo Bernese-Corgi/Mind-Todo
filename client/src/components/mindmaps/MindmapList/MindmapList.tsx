@@ -1,9 +1,11 @@
 import React from 'react';
 import { Button, ListItem, LoadingIcon } from 'components/common';
 import { MindmapListWrapper } from './MindmapList.styld';
+import { MindmapType } from 'utils/api/mindmaps';
+import { UserType } from 'utils/api/auth';
 
 interface MindmapListProps {
-  mindmaps: any;
+  mindmaps: MindmapType[];
   loading: boolean;
   error;
 }
@@ -28,23 +30,18 @@ const MindmapList = ({ mindmaps, loading, error }: MindmapListProps) => {
       />
       <ul className="mindmapList">
         {mindmaps?.map(mindmap => {
-          const {
-            _id,
-            title,
-            publisher: { username },
-            createdAt,
-          } = mindmap;
+          const { _id, title, publisher, createdAt } = mindmap;
 
           const links = {
             title: `/mindmap/${_id}`,
-            username: `/mindmap?${username}`,
+            username: `/mindmap?${(publisher as UserType)?.username}`,
           };
 
           return (
             <ListItem
               key={_id}
               title={title}
-              username={username}
+              username={(publisher as UserType)?.username}
               createdAt={createdAt}
               links={links}
             />

@@ -5,9 +5,10 @@ import styled from 'styled-components';
 import theme from 'styles/theme';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { UserType } from 'utils/api/auth';
+import { PostListType } from 'utils/api/posts';
 
 interface PostListProps {
-  posts: any;
+  posts: PostListType;
   currentUser?: UserType;
   loading: boolean;
   error;
@@ -57,7 +58,7 @@ const PostList = ({
 
           const links = {
             title: `/posts/${_id}`,
-            username: `/posts?username=${publisher.username}`,
+            username: `/posts?username=${(publisher as UserType)?.username}`,
           };
 
           return (
@@ -65,7 +66,7 @@ const PostList = ({
               key={_id}
               title={title}
               body={body}
-              username={publisher.username}
+              username={(publisher as UserType)?.username}
               createdAt={createdAt}
               links={links}
             />

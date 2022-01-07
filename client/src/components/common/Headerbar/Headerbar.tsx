@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { RefObject, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { UserType } from 'utils/api/auth';
 import { Button, DeleteDialog, Dim, Navigation, Responsive } from '..';
 import {
   AuthButtonWrapper,
@@ -9,9 +10,9 @@ import {
 } from './Headerbar.styled';
 
 interface HeaderbarProps {
-  user: any;
-  navRef?: any;
-  navDimRef?: any;
+  user: UserType;
+  navRef?: RefObject<HTMLElement>;
+  navDimRef?: RefObject<HTMLDivElement>;
   onOpenNav?: () => void;
   onCloseNav?: () => void;
   onSignOut?: () => void;

@@ -9,6 +9,7 @@ import { DeleteDialog } from 'components/common';
 import { PostEditor, PostViewer } from '..';
 import { StyledAddPostArticle } from './AddPost.styled';
 import { RouteComponentProps, withRouter } from 'react-router';
+import { PostType } from 'utils/api/posts';
 
 interface AddPostParams {
   postId?: string;
@@ -17,10 +18,10 @@ interface AddPostParams {
 }
 
 interface AddPostProps {
-  post?: any;
-  postErrMsg?: any;
-  onWrite: (newPost) => void;
-  onEdit: (updatePost) => void;
+  post?: PostType;
+  postErrMsg?: string;
+  onWrite: (newPost: PostType) => void;
+  onEdit: (updatePost: PostType) => void;
 }
 
 const AddPost = ({
@@ -166,6 +167,9 @@ const AddPost = ({
   useEffect(() => {
     if (post) {
       setValues({ title: post.title, body: post.body, tag: '' });
+    }
+
+    if (post?.tags) {
       setLocalTags(post.tags);
     }
   }, [post]);
@@ -174,6 +178,7 @@ const AddPost = ({
     if (postErrMsg) {
       setErrors({ ...errors, post: postErrMsg });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postErrMsg]);
 
   return (

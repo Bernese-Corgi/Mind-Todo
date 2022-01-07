@@ -3,18 +3,20 @@ import React, {
   ChangeEvent,
   FormEvent,
   MouseEventHandler,
+  useCallback,
   useEffect,
   useState,
 } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import { isEmptyArray } from 'utils/checkUtils';
+import { CustomHierarchyNode, MindmapType } from 'utils/api/mindmaps';
+import { isEmptyArray } from 'utils/arrayUtils';
 import { stratifiedMindmap } from 'utils/mindmap';
 import { AddNodeDialog, Mindmap } from '..';
 import { StyledMindmapDetailSection } from './MindmapDetail.styled';
 
 interface MindmapDetailProps {
-  mindmap;
+  mindmap: MindmapType;
   onWrite: (newNode) => void;
 }
 
@@ -33,26 +35,32 @@ const MindmapDetail = ({
   // parent state
   const [parent, setParent] = useState('');
   // tree data state
-  const [treeData, setTreeData] = useState<any>();
+  const [treeData, setTreeData] = useState<CustomHierarchyNode>();
 
   const handleClicks = {
     // click add node button
-    addBtn: (e: MouseEventHandler<SVGGElement>, parentId: string) => {
-      const rootNodeId = mindmap.body[0].node._id;
-      const _parentId = parentId ? parentId : rootNodeId;
+    addBtn: useCallback(
+      (e: MouseEventHandler<SVGGElement>, parentId: string) => {
+        const rootNodeId = mindmap!.body![0].node._id;
+        const _parentId = parentId ? parentId : rootNodeId;
 
-      setParent(_parentId);
-      setIsWrite(true);
-    },
+        _parentId && setParent(_parentId);
+        setIsWrite(true);
+      },
+      [mindmap]
+    ),
     // click node
-    node: (e: MouseEventHandler<SVGGElement>, nodeId: string) => {
-      history.push(`/mindmap/${mindmapId}/${nodeId}`);
-    },
+    node: useCallback(
+      (e: MouseEventHandler<SVGGElement>, nodeId: string) => {
+        history.push(`/mindmap/${mindmapId}/${nodeId}`);
+      },
+      [history, mindmapId]
+    ),
     // close dialog
-    closeDialog: () => {
+    closeDialog: useCallback(() => {
       setIsWrite(false);
       setErrorMsg('');
-    },
+    }, []),
   };
 
   // change write input value
@@ -73,7 +81,7 @@ const MindmapDetail = ({
   const handleSubmitWriteNode = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const overlapNodeName = mindmap?.body.find(
+    const overlapNodeName = mindmap!.body!.find(
       tree => tree.node.name === writeInput
     );
 
@@ -101,10 +109,17 @@ const MindmapDetail = ({
 
   // set tree data
   useEffect(() => {
-    if (!isEmptyArray(mindmap?.body) && mindmap) {
-      setTreeData(stratifiedMindmap(mindmap?.body));
+    if (mindmap!.body) {
+      if (!isEmptyArray(mindmap!.body) && mindmap) {
+        setTreeData(stratifiedMindmap(mindmap!.body));
+      }
     }
   }, [mindmap]);
+
+  useEffect(() => {
+    // console.log(mindmap);
+    // console.log(treeData);
+  }, [mindmap, treeData]);
 
   if (!treeData) return <LoadingIcon />;
 
