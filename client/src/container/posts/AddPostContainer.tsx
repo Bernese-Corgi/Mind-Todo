@@ -9,6 +9,7 @@ import {
 } from 'redux/modules/posts/post';
 import { useReduxDispatch } from 'redux/store';
 import { LoadingIcon } from 'components/common';
+import { PostType } from 'utils/api/posts';
 
 const AddPostContainer = ({ history, match }) => {
   const dispatch = useReduxDispatch();
@@ -25,7 +26,7 @@ const AddPostContainer = ({ history, match }) => {
 
   const [postErrMsg, setPostErrMsg] = useState('');
 
-  const handleWrite = async newPost => {
+  const handleWrite = async (newPost: PostType) => {
     const newPostData = await dispatch(writePostAsync(nodeId, newPost));
 
     if (newPostData) {
@@ -33,7 +34,7 @@ const AddPostContainer = ({ history, match }) => {
     }
   };
 
-  const handleEdit = async updatePost => {
+  const handleEdit = async (updatePost: PostType) => {
     const updatedPostData = await dispatch(
       updatePostAsync(post?._id, updatePost)
     );

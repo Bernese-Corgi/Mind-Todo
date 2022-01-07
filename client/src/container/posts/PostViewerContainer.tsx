@@ -1,8 +1,7 @@
-import { WriteActionBtn } from 'components/common';
 import { PostViewer } from 'components/posts';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RouteComponentProps, withRouter, WithRouterProps } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router';
 import { RootState } from 'redux/modules';
 import {
   readPostAsync,
@@ -22,9 +21,6 @@ interface PostViewerContainerProps {
 
 const PostViewerContainer = ({
   nodePost,
-  // nodeId,
-  // mindmapId,
-  // postId,
   history,
   match,
 }: PostViewerContainerProps & RouteComponentProps<PostViewerParams>) => {
