@@ -8,11 +8,14 @@ import { PostList } from 'components/posts';
 
 const PostListContainer = ({ location }) => {
   const dispatch = useDispatch();
-  const { posts, loading, error } = useSelector(({ posts }: RootState) => ({
-    posts: posts.posts,
-    loading: posts.loading,
-    error: posts.loading,
-  }));
+  const { posts, currentUser, loading, error } = useSelector(
+    ({ posts, user }: RootState) => ({
+      posts: posts.posts,
+      currentUser: user.user,
+      loading: posts.loading,
+      error: posts.loading,
+    })
+  );
 
   useEffect(() => {
     const { tag, username } = qs.parse(location.search, {
@@ -22,7 +25,14 @@ const PostListContainer = ({ location }) => {
     dispatch(listPostsAsync({ username, tag }));
   }, [dispatch, location.search]);
 
-  return <PostList posts={posts} loading={loading} error={error} />;
+  return (
+    <PostList
+      currentUser={currentUser}
+      posts={posts}
+      loading={loading}
+      error={error}
+    />
+  );
 };
 
 export default withRouter(PostListContainer);
