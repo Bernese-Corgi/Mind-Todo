@@ -1,10 +1,14 @@
 import React from 'react';
-import { ListItem, LoadingIcon } from 'components/common';
+import qs from 'qs';
+import { Heading, ListItem, LoadingIcon } from 'components/common';
 import styled from 'styled-components';
 import theme from 'styles/theme';
+import { RouteComponentProps, withRouter } from 'react-router';
+import { UserType } from 'utils/api/auth';
 
 interface PostListProps {
   posts: any;
+  currentUser?: UserType;
   loading: boolean;
   error;
 }
@@ -21,7 +25,19 @@ const PostListWrapper = styled.section`
   }
 `;
 
-const PostList = ({ posts, loading, error }: PostListProps) => {
+const PostList = ({
+  posts,
+  currentUser,
+  loading,
+  error,
+  location,
+}: PostListProps & RouteComponentProps) => {
+  const { tag, username } = qs.parse(location.search, {
+    ignoreQueryPrefix: true,
+  });
+
+  const isMyPost = currentUser?.username === username;
+
   if (loading) return <LoadingIcon />;
 
   if (!posts) return <p>데이터 없음</p>;
@@ -30,20 +46,18 @@ const PostList = ({ posts, loading, error }: PostListProps) => {
 
   return (
     <PostListWrapper>
-      <h2>Post List</h2>
+      {tag && <Heading children={`# ${tag}`} />}
+      {username && (
+        <Heading children={isMyPost ? 'My Post' : `Post by ${username}`} />
+      )}
+      {!tag && !username && <Heading children="Post List" />}
       <ul>
         {posts.map(post => {
-          const {
-            _id,
-            title,
-            body,
-            publisher: { username },
-            createdAt,
-          } = post;
+          const { _id, title, body, publisher, createdAt } = post;
 
           const links = {
             title: `/posts/${_id}`,
-            username: `/posts?${username}`,
+            username: `/posts?username=${publisher.username}`,
           };
 
           return (
@@ -51,7 +65,7 @@ const PostList = ({ posts, loading, error }: PostListProps) => {
               key={_id}
               title={title}
               body={body}
-              username={username}
+              username={publisher.username}
               createdAt={createdAt}
               links={links}
             />
@@ -62,4 +76,4 @@ const PostList = ({ posts, loading, error }: PostListProps) => {
   );
 };
 
-export default PostList;
+export default withRouter(PostList);
