@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { AllTodosWrapper } from './AllTodos.styled';
 import { TodoListType } from 'utils/api/todos';
 import { TodosByNodeContainer } from 'container/todos';
+import { filterTodosByNode } from 'utils/todo';
 
 export type AllTodosProps = TodoDataHandlerType & {
   todoList: TodoListType;
@@ -25,35 +26,10 @@ const AllTodos = ({
 }: AllTodosProps) => {
   const [allTodos, setAllTodos] = useState<TodoListType[]>([]);
 
-  const filterTodoListByNode = (allTodoArray: TodoListType) => {
-    const extractIndividualNodeId = allTodoArray.filter((todo, i, todos) => {
-      if (!todo) return;
-
-      return todo?.nodeId!._id !== todos[i + 1]?.nodeId!._id;
-    });
-
-    let arrayOfTodoListSortedByNode: TodoListType[] = [];
-
-    extractIndividualNodeId.map(todo => {
-      let todosWithMatchNode: TodoListType = [];
-
-      // eslint-disable-next-line array-callback-return
-      allTodoArray.map(_todo => {
-        if (todo!.nodeId!._id === _todo!.nodeId!._id) {
-          todosWithMatchNode.push(_todo);
-        }
-      });
-
-      arrayOfTodoListSortedByNode.push(todosWithMatchNode);
-    });
-
-    return arrayOfTodoListSortedByNode;
-  };
-
   useEffect(() => {
     if (!todoList) return;
 
-    const filtered = filterTodoListByNode(todoList);
+    const filtered = filterTodosByNode(todoList);
 
     setAllTodos(filtered);
   }, [todoList]);
