@@ -1,13 +1,15 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import theme from 'styles/theme';
 import { handleSvgHoverColor } from 'utils/style';
 import { EditDeleteIconButtonsUnitProps } from './EditDeleteButtonUnit';
 
 export const EditDeleteButtonUnitWrapper = styled.div<EditDeleteIconButtonsUnitProps>`
   width: 100%;
+  position: relative;
 
   &:hover {
-    .iconBtnWrapper {
+    .iconBtnWrapper,
+    .dateWrapper {
       opacity: 100;
     }
   }
@@ -18,6 +20,23 @@ export const EditDeleteButtonUnitWrapper = styled.div<EditDeleteIconButtonsUnitP
     .editTextArea {
       ${theme.transition('0ms')}
     }
+  }
+
+  .dateWrapper {
+    opacity: ${({ hoverEffect }) => (hoverEffect ? 0 : 100)};
+    width: 100%;
+
+    time {
+      display: block;
+      font-size: 0.8em;
+      text-align: right;
+      color: ${theme.colors.gray.base};
+    }
+
+    ${theme.positions.mixin('absolute', {
+      top: '-50%',
+      right: '0',
+    })}
   }
 
   .iconBtnWrapper {
@@ -42,7 +61,6 @@ export const EditDeleteButtonUnitWrapper = styled.div<EditDeleteIconButtonsUnitP
       ${handleSvgHoverColor(theme.colors.red)}
     }
 
-    ${theme.transition()}
     ${theme.flexes.row('start')}
   }
 
