@@ -1,12 +1,12 @@
 import * as d3 from 'd3';
 import { stratify } from 'd3-hierarchy';
-import { NodeType, TreeType } from './api/mindmaps';
+import { MindmapType, NodeType, TreeType } from './api/mindmaps';
 import { chunkString } from './stringUtils';
 
 export const stratifiedMindmap = (treeData: TreeType[]) => {
   const stratifiedData = stratify<TreeType>()
-    .id((d: any) => d.node?.name)
-    .parentId((d: any) => d.parent?.name)(treeData);
+    .id(d => d.node?.name)
+    .parentId(d => d.parent?.name)(treeData);
 
   return stratifiedData;
 };
@@ -19,7 +19,7 @@ export const stratifiedMindmap = (treeData: TreeType[]) => {
  * @param [coordinates] 문자를 배치할 좌표를 x, y로 지정해 객체로 전달합니다. 기본적으로 좌표는 숫자로 지정합니다. x좌표는 예외적으로 '0.5em'과 같이 문자열을 전달할 수 있지만, y좌표는 문자열이 허용되지 않습니다.
  */
 export const wrapText = (
-  selection,
+  selection: d3.Selection<d3.BaseType, unknown, HTMLElement, any>,
   text: string,
   splitLength: number = 10,
   coordinates?: { x?: number | string; y?: number }
@@ -49,9 +49,12 @@ export const wrapText = (
  * @param id 엘리먼트의 id 어트리뷰트와 매치되는 id 값
  * @returns 엘리먼트의 d3 selection 객체
  */
-export const getD3NodeSelectionById = (selector, id: string | undefined) => {
-  const selection = d3.selectAll(selector).filter(function (this) {
-    return this.getAttribute('id') === id ? this : null;
+export const getD3NodeSelectionById = (
+  selector: string,
+  id: string | undefined
+) => {
+  const selection = d3.selectAll(selector).select(function (this) {
+    return (this as HTMLElement).getAttribute('id') === id ? this : null;
   });
 
   return selection;
@@ -62,10 +65,12 @@ export const getD3NodeSelectionById = (selector, id: string | undefined) => {
  * @param selection getBBox 반환 객체를 받을 d3 selection 객체
  * @returns 엘리먼트의 getBBox가 반환하는 SVGRect 객체
  */
-export const getNodeBBox = selection => selection.node()?.getBBox();
+export const getNodeBBox = (
+  selection: d3.Selection<d3.BaseType, unknown, HTMLElement, any>
+) => (selection.node() as SVGRectElement).getBBox();
 
-export const checkIsRoot = (mindmap, nodeId) => {
-  const rootNode = mindmap?.body.find(tree => tree.parent === null);
+export const checkIsRoot = (mindmap: MindmapType, nodeId: string) => {
+  const rootNode = mindmap?.body?.find(tree => tree.parent === null);
   return rootNode?.node._id === nodeId;
 };
 
