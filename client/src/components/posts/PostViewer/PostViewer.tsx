@@ -2,13 +2,17 @@ import {
   EditDeleteButtonUnit,
   LoadingIcon,
   MdViewer,
+  Skeleton,
   SubInfo,
   Tags,
   WriteActionBtn,
 } from 'components/common';
+import { NodeRoute } from 'components/node';
+import { useEffect, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import { UserType } from 'utils/api/auth';
+import { getNodeRoute } from 'utils/mindmap';
 import { PostViewerWrapper } from './PostViewer.styled';
 
 interface PostViewerParams {
@@ -44,6 +48,21 @@ const PostViewer = ({
   const isOwnPost =
     currentUser && post?.publisher.username === currentUser.username;
 
+  const nodeLink = post && `/mindmap/${post.mindmapId._id}/${post.nodeId}`;
+
+  const [nodeRoute, setNodeRoute] = useState<string>();
+
+  useEffect(() => {
+    if (post && post.mindmapId.body) {
+      const matchNode = post.mindmapId.body?.find(
+        tree => tree.node._id === post.nodeId
+      );
+
+      const route = getNodeRoute(matchNode, post.mindmapId.body);
+      setNodeRoute(route);
+    }
+  }, [post]);
+
   if (loading) return <LoadingIcon />;
 
   if (!post)
@@ -61,6 +80,9 @@ const PostViewer = ({
 
   return (
     <PostViewerWrapper className="postViewerWrapper" post={post}>
+      {nodeRoute && (
+        <NodeRoute content={nodeRoute} link={nodeLink} className="nodeRoute" />
+      )}
       <div className="postTitleText">
         {postId ? (
           <p aria-label="글 제목" children={post.title} />
