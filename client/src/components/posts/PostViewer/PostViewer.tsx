@@ -2,11 +2,13 @@ import {
   EditDeleteButtonUnit,
   LoadingIcon,
   MdViewer,
+  SubInfo,
   Tags,
   WriteActionBtn,
 } from 'components/common';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
+import { UserType } from 'utils/api/auth';
 import { PostViewerWrapper } from './PostViewer.styled';
 
 interface PostViewerParams {
@@ -17,6 +19,7 @@ interface PostViewerParams {
 
 export interface PostViewerProps {
   post;
+  currentUser?: UserType;
   localTags?: string[];
   hasEdit?: boolean;
   onRemove?: () => void;
@@ -27,6 +30,7 @@ export interface PostViewerProps {
 
 const PostViewer = ({
   post,
+  currentUser,
   localTags,
   hasEdit,
   onRemove,
@@ -36,6 +40,9 @@ const PostViewer = ({
   match,
 }: PostViewerProps & RouteComponentProps<PostViewerParams>) => {
   const { postId } = match.params;
+
+  const isOwnPost =
+    currentUser && post?.publisher.username === currentUser.username;
 
   if (loading) return <LoadingIcon />;
 
@@ -65,7 +72,9 @@ const PostViewer = ({
           />
         )}
       </div>
-      {hasEdit && (
+      <SubInfo writer={post.publisher.username} writtenDate={post.createdAt} />
+
+      {hasEdit && isOwnPost && (
         <EditDeleteButtonUnit
           id="editDelPost"
           mode="post"
