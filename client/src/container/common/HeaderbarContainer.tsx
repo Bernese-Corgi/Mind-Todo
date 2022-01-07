@@ -9,8 +9,8 @@ const HeaderbarContainer = ({ history }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: RootState) => state.user);
 
-  const navDimRef = useRef<HTMLDivElement>();
-  const navRef = useRef<HTMLElement>();
+  const navDimRef = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLElement>(null);
 
   const handleNavMenu = () => {
     navDimRef.current?.classList.add('activeDim');
