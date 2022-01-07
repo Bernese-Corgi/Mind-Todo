@@ -15,17 +15,20 @@ import {
   findMatchNodeByMindmapBody,
   getNodeRoute,
 } from 'utils/mindmap';
+import { MindmapType, NodeType } from 'utils/api/mindmaps';
+import { PostType } from 'utils/api/posts';
+import { TodoListType } from 'utils/api/todos';
 
 interface NodeDetailProps {
   links: {
     mindmap: string;
   };
   nodeId: string;
-  mindmap: any;
-  node;
-  post: any;
-  todos: any;
-  loading;
+  mindmap: MindmapType;
+  node: NodeType;
+  post: PostType;
+  todos: TodoListType;
+  loading: boolean;
   error;
   onEdit: {
     nodeName: (updateNodeName: string) => void;
