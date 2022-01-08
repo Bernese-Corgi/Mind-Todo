@@ -4,11 +4,11 @@ import { TodoList } from 'components/todos';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'redux/modules';
 import { readNodeAsync } from 'redux/modules/mindmaps/node';
-import { removeTodoAsync, updateTodoAsync } from 'redux/modules/todos/todo';
 import { useDispatchTodos } from 'utils/hooks';
+import { TodoListType } from 'utils/api/todos';
 
 interface TodoListContainerProps {
-  todos?: any;
+  todos?: TodoListType;
   mindmapId: string;
   nodeId: string;
 }
@@ -31,7 +31,6 @@ const TodoListContainer = ({ mindmapId, nodeId }: TodoListContainerProps) => {
 
   useLayoutEffect(() => {
     if (!nodeTodos) {
-      // FIXME 동작 불확실
       dispatch(readNodeAsync(mindmapId, nodeId));
     }
   }, [dispatch, mindmapId, nodeId, nodeTodos]);
