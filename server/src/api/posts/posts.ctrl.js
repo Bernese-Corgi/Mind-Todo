@@ -1,6 +1,9 @@
+import mongoose from 'mongoose';
 import { Post, User } from '../../model';
 import { Node } from '../../model/Mindmap';
 import { validateRequest } from '../../utils';
+
+const { ObjectId } = mongoose.Types;
 
 /* -------------------------------- list post ------------------------------- */
 // GET /api/post
@@ -89,7 +92,45 @@ export const write = async (ctx) => {
 /* --------------------------- read specific post --------------------------- */
 // GET /api/posts/:postId
 export const read = async (ctx) => {
-  ctx.body = ctx.state.post;
+  // const post = ctx.state.post;
+  // console.log(post);
+  const { postId } = ctx.params;
+
+  const post = await Post.findById(postId).populate([
+    {
+      path: 'publisher',
+      select: 'username email',
+    },
+    {
+      path: 'mindmapId',
+      select: 'body',
+      populate: {
+        path: 'body',
+        populate: [
+          { path: 'node', select: 'name _id' },
+          { path: 'parent', select: 'name _id' },
+        ],
+      },
+    },
+  ]);
+
+  try {
+    if (!ObjectId.isValid(postId)) {
+      ctx.status = 400;
+      ctx.body = `url의 params의 값이 ObjectId 형식에 맞지 않습니다.`;
+      return;
+    }
+
+    if (!post) {
+      ctx.status = 404;
+      ctx.body = `존재하지 않는 post입니다`;
+      return;
+    }
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+
+  ctx.body = post;
 };
 
 /* -------------------------- update specific post -------------------------- */
