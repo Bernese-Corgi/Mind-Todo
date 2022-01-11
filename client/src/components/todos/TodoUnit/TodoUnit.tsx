@@ -2,6 +2,7 @@ import React from 'react';
 import { AddTodoContainer, TodoListContainer } from 'container/todos';
 import { TodoUnitWrapper } from './TodoUnit.styled';
 import { RouteComponentProps, withRouter } from 'react-router';
+import { TodoListType } from 'utils/api/todos';
 
 interface TodoUnitRouteParams {
   mindmapId: string;
@@ -9,7 +10,7 @@ interface TodoUnitRouteParams {
 }
 
 interface TodoUnitProps {
-  todos?: any;
+  todos?: TodoListType;
   hasColumn?: boolean;
 }
 
