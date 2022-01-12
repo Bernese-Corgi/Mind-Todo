@@ -1,11 +1,11 @@
 import React from 'react';
 import { Responsive } from 'components/common';
-import { SignButton } from 'components/auth';
+import { SignButtonContainer } from 'container/auth';
 
 const HomePage = () => {
   return (
     <Responsive>
-      <SignButton />
+      <SignButtonContainer />
     </Responsive>
   );
 };
