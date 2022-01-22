@@ -1,5 +1,5 @@
 import React, { ChangeEvent, forwardRef, KeyboardEvent } from 'react';
-import { preventEnterKeyEvent } from 'utils/keyEvent';
+import { preventEnterKeyEvent } from 'utils/events/keyEvent';
 import { ErrorMsg } from '..';
 import { StyledEditTextArea } from './EditTextArea.styled';
 
