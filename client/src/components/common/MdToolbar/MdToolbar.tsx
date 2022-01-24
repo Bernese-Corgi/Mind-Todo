@@ -1,5 +1,6 @@
 import React, { RefObject } from 'react';
-import { addMark } from 'utils/toolbarEvent';
+import { getTextareaState } from 'utils/editor/selection';
+import { insertMark } from 'utils/editor/toolbarEvent';
 import { MdTool } from '..';
 import { MdToolbarWrapper } from './MdToolbar.styled';
 
@@ -10,96 +11,61 @@ interface MdToolbarProps {
 const MdToolbar = ({ editorRef }: MdToolbarProps) => {
   const handleClicks = {
     bold: () => {
-      addMark(editorRef, '**', 'current');
+      editorRef.current && insertMark.current(editorRef.current, '**');
     },
     italic: () => {
-      addMark(editorRef, '*', 'current');
+      editorRef.current && insertMark.current(editorRef.current, '*');
     },
     heading: () => {
-      addMark(editorRef, '# ', 'first');
+      editorRef.current && insertMark.lineStart(editorRef.current, '# ');
     },
     listOl: () => {
-      addMark(editorRef, '1. ', 'first');
+      editorRef.current && insertMark.lineStart(editorRef.current, '1. ');
     },
     listUl: () => {
-      const textVal = editorRef.current?.value;
-      const textLen = textVal?.length;
-      const selectStart = editorRef.current?.selectionStart;
-      const selectEnd = editorRef.current?.selectionEnd;
-
-      if (selectStart === undefined || selectEnd === undefined) return;
-      if (!editorRef.current) return;
-
-      const lastN = textVal?.lastIndexOf('\n', selectStart - 1);
-
-      if (lastN) {
-        const beforeText = textVal?.substring(0, lastN + 1);
-        const afterText = textVal?.substring(lastN + 1, textLen);
-
-        editorRef.current?.setSelectionRange(lastN + 1, lastN + 1);
-
-        const addText = '- ';
-        const addTextLen = addText.length;
-        editorRef.current.value = beforeText + addText + afterText;
-
-        const nextN = textVal?.indexOf('\n', selectStart);
-
-        if (nextN) {
-          editorRef.current?.focus();
-          if (nextN === -1 && textLen) {
-            editorRef.current?.setSelectionRange(
-              textLen + addTextLen,
-              textLen + addTextLen
-            );
-          } else {
-            editorRef.current?.setSelectionRange(
-              nextN + addTextLen,
-              nextN + addTextLen
-            );
-          }
-        }
-      }
+      editorRef.current && insertMark.lineStart(editorRef.current, '- ');
     },
     link: () => {
-      const textVal = editorRef.current?.value;
-      const textLen = textVal?.length;
-      const selectStart = editorRef.current?.selectionStart;
-      const selectEnd = editorRef.current?.selectionEnd;
-
-      if (selectStart === undefined || selectEnd === undefined) return;
       if (!editorRef.current) return;
 
-      const nextN = textVal?.indexOf('\n', selectStart);
+      const mark = '\n[Title](link)\n';
+      const markLen = mark.length;
 
-      const addText = '\n\n[Title](link)\n';
-      const addTextLen = addText.length;
+      const { nextLine } = getTextareaState(editorRef.current, 'start');
 
-      if (nextN === undefined || textLen === undefined) return;
-
-      if (nextN === -1) {
-        const beforeText = textVal?.substring(0, selectStart);
-        const afterText = textVal?.substring(selectStart, textLen);
-
-        editorRef.current.value = beforeText + addText + afterText;
-
-        editorRef.current?.focus();
-
-        editorRef.current?.setSelectionRange(
-          textLen + addTextLen - 6,
-          textLen + addTextLen - 2
-        );
-      } else {
-        const beforeText = textVal?.substring(0, nextN);
-        const afterText = textVal?.substring(nextN, textLen);
-
-        editorRef.current.value = beforeText + addText + afterText;
-
-        editorRef.current?.focus();
-        editorRef.current?.setSelectionRange(
-          nextN + addTextLen - 6,
-          nextN + addTextLen - 2
-        );
-      }
+      insertMark.lineStart(editorRef.current, mark, {
+        start: nextLine + markLen - 6,
+        end: nextLine + markLen - 2,
+      });
+      // const textVal = editorRef.current?.value;
+      // const textLen = textVal?.length;
+      // const selectStart = editorRef.current?.selectionStart;
+      // const selectEnd = editorRef.current?.selectionEnd;
+      // if (selectStart === undefined || selectEnd === undefined) return;
+      // if (!editorRef.current) return;
+      // const nextN = textVal?.indexOf('\n', selectStart);
+      // const addText = '\n\n[Title](link)\n';
+      // const addTextLen = addText.length;
+      // if (nextN === undefined || textLen === undefined) return;
+      // if (nextN === -1) {
+      //   const beforeText = textVal?.substring(0, selectStart);
+      //   const afterText = textVal?.substring(selectStart, textLen);
+      //   editorRef.current.value = beforeText + addText + afterText;
+      //   editorRef.current?.focus();
+      //   editorRef.current?.setSelectionRange(
+      //     textLen + addTextLen - 6,
+      //     textLen + addTextLen - 2
+      //   );
+      // } else {
+      //   const beforeText = textVal?.substring(0, nextN);
+      //   const afterText = textVal?.substring(nextN, textLen);
+      //   editorRef.current.value = beforeText + addText + afterText;
+      //   editorRef.current?.focus();
+      //   editorRef.current?.setSelectionRange(
+      //     nextN + addTextLen - 6,
+      //     nextN + addTextLen - 2
+      //   );
+      // }
     },
     image: () => {
       const textVal = editorRef.current?.value;
@@ -183,7 +149,35 @@ const MdToolbar = ({ editorRef }: MdToolbarProps) => {
         );
       }
     },
+    code: () => {
+      // addMark(editorRef, '```\n```', 'first');
+    },
   };
+
+  const array = [
+    {
+      content: 'H1',
+      clickEvent: () => {
+        // addMark(editorRef, '# ', 'first');
+        editorRef.current && insertMark.lineStart(editorRef.current, '# ');
+      },
+    },
+    {
+      content: 'H2',
+      clickEvent: () => {
+        // addMark(editorRef, '## ', 'first');
+        editorRef.current && insertMark.lineStart(editorRef.current, '## ');
+      },
+    },
+    {
+      content: 'H3',
+      clickEvent: () => {
+        // addMark(editorRef, '### ', 'first');
+        editorRef.current && insertMark.lineStart(editorRef.current, '### ');
+      },
+    },
+  ];
+
   return (
     <MdToolbarWrapper>
       <MdTool
@@ -203,6 +197,7 @@ const MdToolbar = ({ editorRef }: MdToolbarProps) => {
         title="제목"
         shape="heading"
         onClick={handleClicks.heading}
+        toolbox={array}
       />
       <MdTool
         id="listOlTool"
@@ -233,6 +228,12 @@ const MdToolbar = ({ editorRef }: MdToolbarProps) => {
         title="인용구 삽입"
         shape="quote"
         onClick={handleClicks.quote}
+      />
+      <MdTool
+        id="codeTool"
+        title="코드 블럭 삽입"
+        shape="code"
+        onClick={handleClicks.code}
       />
     </MdToolbarWrapper>
   );
