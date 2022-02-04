@@ -51,7 +51,7 @@ const PostViewer = ({
   const postPublisherAssert = post?.publisher as UserType;
 
   const mindmapOfPost = postMindmapAssert?.body;
-  const mindmapIdOfPost = postMindmapAssert._id;
+  const mindmapIdOfPost = postMindmapAssert?._id;
   const postUsername = postPublisherAssert?.username;
 
   const isOwnPost = currentUser && postUsername === currentUser.username;
