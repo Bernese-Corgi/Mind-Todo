@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import theme from 'styles/theme';
 
 export const StyledToolBoxUl = styled.ul`
-  background-color: ${theme.colors.primary.light};
+  background-color: #f0ebe4;
   padding: 0.6em 0.5em 0.2em 0.5em;
   border-radius: ${theme.borders.radius.square};
   position: absolute;
