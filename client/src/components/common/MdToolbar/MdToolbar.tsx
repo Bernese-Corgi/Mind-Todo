@@ -154,7 +154,7 @@ const MdToolbar = ({ editorRef }: MdToolbarProps) => {
     },
   };
 
-  const array = [
+  const headingToolbox = [
     {
       content: 'H1',
       clickEvent: () => {
@@ -178,6 +178,60 @@ const MdToolbar = ({ editorRef }: MdToolbarProps) => {
     },
   ];
 
+  const imageToolbox = [
+    {
+      content: 'file',
+      type: 'file',
+      clickEvent: () => {
+        editorRef.current && insertMark.lineStart(editorRef.current, '');
+      },
+    },
+    {
+      content: 'url',
+      clickEvent: () => {
+        const textVal = editorRef.current?.value;
+        const textLen = textVal?.length;
+        const selectStart = editorRef.current?.selectionStart;
+        const selectEnd = editorRef.current?.selectionEnd;
+
+        if (selectStart === undefined || selectEnd === undefined) return;
+        if (!editorRef.current) return;
+
+        const nextN = textVal?.indexOf('\n', selectStart);
+
+        const addText = '\n\n![Title](link)\n';
+        const addTextLen = addText.length;
+
+        if (nextN === undefined || textLen === undefined) return;
+
+        if (nextN === -1) {
+          const beforeText = textVal?.substring(0, selectStart);
+          const afterText = textVal?.substring(selectStart, textLen);
+
+          editorRef.current.value = beforeText + addText + afterText;
+
+          editorRef.current?.focus();
+
+          editorRef.current?.setSelectionRange(
+            textLen + addTextLen - 6,
+            textLen + addTextLen - 2
+          );
+        } else {
+          const beforeText = textVal?.substring(0, nextN);
+          const afterText = textVal?.substring(nextN, textLen);
+
+          editorRef.current.value = beforeText + addText + afterText;
+
+          editorRef.current?.focus();
+          editorRef.current?.setSelectionRange(
+            nextN + addTextLen - 6,
+            nextN + addTextLen - 2
+          );
+        }
+      },
+    },
+  ];
+
   return (
     <MdToolbarWrapper>
       <MdTool
@@ -197,7 +251,7 @@ const MdToolbar = ({ editorRef }: MdToolbarProps) => {
         title="제목"
         shape="heading"
         onClick={handleClicks.heading}
-        toolbox={array}
+        toolbox={headingToolbox}
       />
       <MdTool
         id="listOlTool"
@@ -222,6 +276,7 @@ const MdToolbar = ({ editorRef }: MdToolbarProps) => {
         title="이미지 삽입"
         shape="image"
         onClick={handleClicks.image}
+        toolbox={imageToolbox}
       />
       <MdTool
         id="quoteTool"
