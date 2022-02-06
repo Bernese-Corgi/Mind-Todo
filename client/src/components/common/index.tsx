@@ -27,6 +27,7 @@ export { default as ToolBox } from './ToolBox/ToolBox';
 export { default as Heading } from './Heading';
 export { default as Skeleton } from './Skeleton/Skeleton';
 export { default as SubInfo } from './SubInfo/SubInfo';
+export { default as ImgUploadBtn } from './ImgUploadBtn/ImgUploadBtn';
 
 /* styled component ---------------------------- */
 export { default as StyledForm } from './Form.styled';
