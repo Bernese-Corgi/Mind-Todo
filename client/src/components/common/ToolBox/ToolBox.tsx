@@ -23,7 +23,11 @@ const ToolBoxItem = ({ content, type, onClick }: ToolBoxItemProps) => {
   return (
     <StyledToolBoxItemLi className="toolbox">
       {type === 'file' ? (
-        <ImgUploadBtn id="" label={content} className="toolbox" />
+        <ImgUploadBtn
+          id={`${content}ToolboxItem`}
+          label={content}
+          className="toolbox"
+        />
       ) : (
         <button
           id={`add${changeFirstStrToUpper(content)}Btn`}
