@@ -67,7 +67,7 @@ const ImgUploadBtn = ({
   return (
     <>
       <StyledFileLabel
-        htmlFor={name || 'file'}
+        htmlFor={id}
         onClick={onImgInputBtnClick}
         className={className}>
         {label}
