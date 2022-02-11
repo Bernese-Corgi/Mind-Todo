@@ -92,6 +92,67 @@ const S3FileUpload = () => {
     });
   };
 
+  const uploadBlobImage = () => {
+    const mindmapSvgElem = d3.select('.mindmap-svg').node() as SVGRectElement;
+    console.log(mindmapSvgElem);
+    // width, height 얻기
+    const mindmapBBox = mindmapSvgElem?.getBBox();
+    // node 복제
+    const cloneMindmapSvgElem = mindmapSvgElem?.cloneNode(true);
+    // outerHTML
+    const outerHTML = (cloneMindmapSvgElem as HTMLElement)?.outerHTML;
+
+    // data
+    const data = new XMLSerializer().serializeToString(mindmapSvgElem);
+
+    // blob
+    let blob;
+    // blob = new Blob([outerHTML], { type: 'image/svg+xml; charset=utf-8' });
+    blob = new Blob([data], { type: 'image/svg+xml' });
+    // URL
+    let URL = window.URL || window.webkitURL || window;
+    let blobURL = URL.createObjectURL(blob);
+
+    // image elem
+    let image = new Image();
+
+    image.onload = () => {
+      // 이미지가 로드되면 트리거
+      // canvas 생성
+      let canvas = d3
+        .create('canvas')
+        .attr('width', mindmapBBox.width)
+        .attr('height', mindmapBBox.height)
+        .node();
+
+      // 컨텍스트
+      let context = canvas?.getContext('2d');
+      // draw image
+      context?.drawImage(image, 0, 0, mindmapBBox.width, mindmapBBox.height);
+
+      // 2. Canvas를 이미지로 다운로드
+      let png = canvas?.toDataURL();
+
+      URL.revokeObjectURL(blob);
+
+      const URI = canvas
+        ?.toDataURL('image/png')
+        .replace('image/png', 'octet/stream');
+
+      const link = d3
+        .create('a')
+        .attr('download', 'test.png')
+        .attr('href', URI!)
+        .node();
+      link?.click();
+      window.URL.revokeObjectURL(URI!);
+      link?.remove();
+
+      document.append(link!);
+    };
+    image.src = blobURL;
+  };
+
   return (
     <>
       <div style={{ margin: '1em', background: '#badadd' }}>
