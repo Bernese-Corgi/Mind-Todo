@@ -1,27 +1,10 @@
 import React, { useState } from 'react';
-import AWS from 'aws-sdk';
-import fs from 'fs';
-
-const {
-  REACT_APP_S3_BUCKET,
-  REACT_APP_S3_REGION,
-  REACT_APP_S3_ACCESS_KEY,
-  REACT_APP_S3_SECRET_ACCESS_KEY,
-} = process.env;
-
-/* -------------------------------- S3 정보 설정 -------------------------------- */
-AWS.config.update({
-  accessKeyId: REACT_APP_S3_ACCESS_KEY,
-  secretAccessKey: REACT_APP_S3_SECRET_ACCESS_KEY,
-});
-
-const myBucket = new AWS.S3({
-  params: { Bucket: REACT_APP_S3_BUCKET },
-  region: REACT_APP_S3_REGION,
-});
+import * as d3 from 'd3';
+import { useS3Bucket } from 'utils/hooks';
 
 /* ------------------------------- upload 컴포넌트 ------------------------------ */
 const S3FileUpload = () => {
+  const { servS3Obj, Bucket } = useS3Bucket();
   const [progress, setProgress] = useState(0);
   const [selectedFile, setSelectedFile] = useState(null);
   const [key, setKey] = useState('');
@@ -42,15 +25,16 @@ const S3FileUpload = () => {
 
   // TODO upload file 함수 -> utils로 분리
   const uploadFile = file => {
+    console.log(file);
     const params = {
       ACL: 'public-read',
       Body: file,
-      Bucket: REACT_APP_S3_BUCKET!,
+      Bucket: Bucket!,
       ContentType: file.mimetype,
       Key: file.name,
     };
 
-    myBucket
+    servS3Obj
       .putObject(params)
       .on('httpUploadProgress', e => {
         setProgress(Math.round(e.loaded / e.total) * 100);
@@ -68,22 +52,28 @@ const S3FileUpload = () => {
 
   const getFilesByKey = key => {
     const params = {
-      // ACL: 'public-read',
-      Bucket: REACT_APP_S3_BUCKET!,
+      Bucket: Bucket!,
       Key: key,
     };
 
-    myBucket.getObject(params, (error, data) => {
+    // servS3Obj.getObject(params, (error, data) => {
+    //   if (error) {
+    //     console.log(error);
+    //   }
+    //   console.log(data);
+    //   // fs.writeFileSync('', data.Body!.toString());
+    // });
+
+    servS3Obj.getSignedUrl('getObject', params, (error, url) => {
       if (error) {
         console.log(error);
       }
-      console.log(data);
-      // fs.writeFileSync('', data.Body!.toString());
+      console.log(url);
     });
   };
 
   const getAllFiles = () => {
-    myBucket.listObjectsV2({ Bucket: REACT_APP_S3_BUCKET! }, (err, data) => {
+    servS3Obj.listObjectsV2({ Bucket: Bucket! }, (err, data) => {
       let lists: any[] = [];
 
       if (err) {
@@ -153,6 +143,9 @@ const S3FileUpload = () => {
           }}>
           get all files
         </button>
+      </div>
+      <div>
+        <button onClick={() => uploadBlobImage()}>blob 객체 보내기</button>
       </div>
     </>
   );
