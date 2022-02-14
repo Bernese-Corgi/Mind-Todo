@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import useBlur from 'utils/hooks/useBlur';
 import { ToolBox } from '..';
+import { ToolBoxItemProps } from '../ToolBox/ToolBox';
 import { MdToolButtonWrapper, StyledMdToolButton } from './MdTool.styled';
 import Sprite from './sprites.svg';
 
@@ -18,10 +19,7 @@ interface MdToolProps {
     | 'italic'
     | 'code';
   onClick?: () => void;
-  toolbox?: {
-    content: string;
-    clickEvent: () => void;
-  }[];
+  toolbox?: ToolBoxItemProps[];
 }
 
 const MdTool = ({ id, title, shape, onClick, toolbox }: MdToolProps) => {

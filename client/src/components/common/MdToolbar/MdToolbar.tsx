@@ -157,21 +157,21 @@ const MdToolbar = ({ editorRef }: MdToolbarProps) => {
   const headingToolbox = [
     {
       content: 'H1',
-      clickEvent: () => {
+      onClick: () => {
         // addMark(editorRef, '# ', 'first');
         editorRef.current && insertMark.lineStart(editorRef.current, '# ');
       },
     },
     {
       content: 'H2',
-      clickEvent: () => {
+      onClick: () => {
         // addMark(editorRef, '## ', 'first');
         editorRef.current && insertMark.lineStart(editorRef.current, '## ');
       },
     },
     {
       content: 'H3',
-      clickEvent: () => {
+      onClick: () => {
         // addMark(editorRef, '### ', 'first');
         editorRef.current && insertMark.lineStart(editorRef.current, '### ');
       },
@@ -182,13 +182,16 @@ const MdToolbar = ({ editorRef }: MdToolbarProps) => {
     {
       content: 'file',
       type: 'file',
-      clickEvent: () => {
-        editorRef.current && insertMark.lineStart(editorRef.current, '');
+      onClick: () => {},
+      getUrlandSetInput: (url: string) => {
+        console.log(url);
+        editorRef.current &&
+          insertMark.lineStart(editorRef.current, `![image](${url})`);
       },
     },
     {
       content: 'url',
-      clickEvent: () => {
+      onClick: () => {
         const textVal = editorRef.current?.value;
         const textLen = textVal?.length;
         const selectStart = editorRef.current?.selectionStart;
