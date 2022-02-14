@@ -184,7 +184,6 @@ const MdToolbar = ({ editorRef }: MdToolbarProps) => {
       type: 'file',
       onClick: () => {},
       getUrlandSetInput: (url: string) => {
-        console.log(url);
         editorRef.current &&
           insertMark.lineStart(editorRef.current, `![image](${url})`);
       },
