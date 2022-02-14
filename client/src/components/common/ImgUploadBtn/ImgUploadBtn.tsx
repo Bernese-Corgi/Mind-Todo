@@ -5,7 +5,7 @@ interface ImgUploadBtnProps {
   id: string;
   label: string;
   name?: string;
-  onGetImgInfo?: (x) => void;
+  onChangeFileInput?: (e: ChangeEvent<HTMLInputElement>) => void;
   className?: string;
 }
 
@@ -13,7 +13,7 @@ const ImgUploadBtn = ({
   id,
   name,
   label,
-  onGetImgInfo,
+  onChangeFileInput,
   className,
 }: ImgUploadBtnProps) => {
   const [imgBase64, setImgBase64] = useState<string[]>([]);
@@ -78,7 +78,7 @@ const ImgUploadBtn = ({
         name={name || 'file'}
         type="file"
         accept="image/*"
-        onChange={handleChangeFileInput}
+        onChange={onChangeFileInput}
         className={className}
       />
     </>
