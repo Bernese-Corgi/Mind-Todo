@@ -99,7 +99,6 @@ const ImgUploadBtnContainer = ({
 
   useEffect(() => {
     if (imageUrl !== '') {
-      // FIXME 호출되지 않음
       getUrlandSetInput && getUrlandSetInput(imageUrl);
     }
   }, [getUrlandSetInput, imageUrl]);
