@@ -10,6 +10,7 @@ interface ImgUploadBtnContainerProps {
   name?: string;
   className?: string;
   getUrlandSetInput?: (url: string) => void;
+  onCloseToolbox?: () => void;
 }
 
 const ImgUploadBtnContainer = ({
@@ -18,6 +19,7 @@ const ImgUploadBtnContainer = ({
   label,
   className,
   getUrlandSetInput,
+  onCloseToolbox,
 }: ImgUploadBtnContainerProps) => {
   const { servS3Obj, Bucket } = useS3Bucket();
 
@@ -76,10 +78,9 @@ const ImgUploadBtnContainer = ({
     [Bucket, servS3Obj]
   );
 
-  const handleChangeFileInput = async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeFileInput = (e: ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target?.files!);
-    // FIXME fileKey 수정 : 파일 이름이 중복될 수 있으므로 이 부분 수정
-    const fileKey = `${nodeId}_${files[0].name}`;
+    const fileKey = `post/${nodeId}/${files[0].name}`;
 
     setKey(fileKey);
     setFileInfo(files[0]);
@@ -100,8 +101,10 @@ const ImgUploadBtnContainer = ({
   useEffect(() => {
     if (imageUrl !== '') {
       getUrlandSetInput && getUrlandSetInput(imageUrl);
+      // FIXME 메모리 누수 경고
+      onCloseToolbox && onCloseToolbox();
     }
-  }, [getUrlandSetInput, imageUrl]);
+  }, [getUrlandSetInput, imageUrl, onCloseToolbox]);
 
   return (
     <>

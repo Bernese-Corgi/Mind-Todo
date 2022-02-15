@@ -5,10 +5,12 @@ import { StyledToolBoxItemLi, StyledToolBoxUl } from './ToolBox.styled';
 
 interface ToolBoxProps {
   tools: ToolTypes[];
+  onCloseToolbox?: () => void;
 }
 
 export interface ToolBoxItemProps {
   tool: ToolTypes;
+  onCloseToolbox?: () => void;
 }
 
 export type ToolTypes = {
@@ -18,7 +20,7 @@ export type ToolTypes = {
   getUrlandSetInput?: (url: string) => void;
 };
 
-const ToolBoxItem = ({ tool }: ToolBoxItemProps) => {
+const ToolBoxItem = ({ tool, onCloseToolbox }: ToolBoxItemProps) => {
   const { content, type, onClick, getUrlandSetInput } = tool;
   // TODO 1. 버튼이 이미지인 경우 추가하기
   // TODO 2. type이 file인 경우 ImgUploadBtn 렌더링하기
@@ -30,6 +32,7 @@ const ToolBoxItem = ({ tool }: ToolBoxItemProps) => {
           label={content}
           className="toolbox"
           getUrlandSetInput={getUrlandSetInput}
+          onCloseToolbox={onCloseToolbox}
         />
       ) : (
         <button
@@ -44,11 +47,13 @@ const ToolBoxItem = ({ tool }: ToolBoxItemProps) => {
   );
 };
 
-const ToolBox = ({ tools }: ToolBoxProps) => {
+const ToolBox = ({ tools, onCloseToolbox }: ToolBoxProps) => {
   return (
     <StyledToolBoxUl className="toolbox">
       {tools.map((tool, i) => {
-        return <ToolBoxItem key={i} tool={tool} />;
+        return (
+          <ToolBoxItem key={i} tool={tool} onCloseToolbox={onCloseToolbox} />
+        );
       })}
     </StyledToolBoxUl>
   );

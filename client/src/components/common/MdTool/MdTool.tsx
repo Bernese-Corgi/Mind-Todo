@@ -29,6 +29,10 @@ const MdTool = ({ id, title, shape, onClick, toolbox }: MdToolProps) => {
     toolbox ? setHasToolbox(!hasToolbox) : onClick && onClick();
   };
 
+  const handleCloseToolbox = () => {
+    setHasToolbox(false);
+  };
+
   useBlur(e => {
     if (!e) return;
 
@@ -44,7 +48,9 @@ const MdTool = ({ id, title, shape, onClick, toolbox }: MdToolProps) => {
           <use id={id} aria-label={title} xlinkHref={`${Sprite}#${shape}`} />
         </svg>
       </StyledMdToolButton>
-      {toolbox && hasToolbox && <ToolBox tools={toolbox} />}
+      {toolbox && hasToolbox && (
+        <ToolBox tools={toolbox} onCloseToolbox={handleCloseToolbox} />
+      )}
     </MdToolButtonWrapper>
   );
 };
