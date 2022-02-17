@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import useBlur from 'utils/hooks/useBlur';
 import { ToolBox } from '..';
+import { ToolTypes } from '../ToolBox/ToolBox';
 import { MdToolButtonWrapper, StyledMdToolButton } from './MdTool.styled';
 import Sprite from './sprites.svg';
 
@@ -18,10 +19,7 @@ interface MdToolProps {
     | 'italic'
     | 'code';
   onClick?: () => void;
-  toolbox?: {
-    content: string;
-    clickEvent: () => void;
-  }[];
+  toolbox?: ToolTypes[];
 }
 
 const MdTool = ({ id, title, shape, onClick, toolbox }: MdToolProps) => {
@@ -29,6 +27,10 @@ const MdTool = ({ id, title, shape, onClick, toolbox }: MdToolProps) => {
 
   const handleClick = () => {
     toolbox ? setHasToolbox(!hasToolbox) : onClick && onClick();
+  };
+
+  const handleCloseToolbox = () => {
+    setHasToolbox(false);
   };
 
   useBlur(e => {
@@ -46,7 +48,9 @@ const MdTool = ({ id, title, shape, onClick, toolbox }: MdToolProps) => {
           <use id={id} aria-label={title} xlinkHref={`${Sprite}#${shape}`} />
         </svg>
       </StyledMdToolButton>
-      {toolbox && hasToolbox && <ToolBox tools={toolbox} />}
+      {toolbox && hasToolbox && (
+        <ToolBox tools={toolbox} onCloseToolbox={handleCloseToolbox} />
+      )}
     </MdToolButtonWrapper>
   );
 };

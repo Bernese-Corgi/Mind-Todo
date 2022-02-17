@@ -11,7 +11,7 @@ import { StyledAddPostArticle } from './AddPost.styled';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { PostType } from 'utils/api/posts';
 
-interface AddPostParams {
+export interface AddPostParams {
   postId?: string;
   mindmapId?: string;
   nodeId?: string;

@@ -24,3 +24,7 @@ yarn-error.log*
 
 # example for practice
 example/
+
+package-lock.json
+
+.env

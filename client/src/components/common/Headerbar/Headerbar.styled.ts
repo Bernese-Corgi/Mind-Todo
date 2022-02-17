@@ -44,8 +44,12 @@ export const AuthButtonWrapper = styled.div`
 
   ${({ theme }) => theme.media.mobile`
     button {
-      font-size: 1rem;
-      padding: .4em .6em;
+      font-size: 0.8rem;
+      
+      a {
+        font-weight: 500;
+        padding: .4em .6em;
+      } 
     }
   `}
 `;
