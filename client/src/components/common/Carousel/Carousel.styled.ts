@@ -1,8 +1,9 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import theme from 'styles/theme';
-import { StyledCarouselItemProps } from './Carousel';
+import { Button } from '..';
+import { CarouselButtonProps, CarouselItemProps } from './Carousel';
 
-export const StyledCarouselItem = styled.img<StyledCarouselItemProps>`
+export const StyledCarouselItem = styled.img<CarouselItemProps>`
   opacity: 0;
   ${theme.positions.absolute}
   width: 100%;
@@ -34,4 +35,17 @@ export const StyledCarousel = styled.div`
     -moz-transform-style: preserve-3d;
     transform-style: preserve-3d;
   }
+`;
+
+export const StyledCarouselButton = styled(Button).attrs<CarouselButtonProps>(
+  ({ direction }) => ({ shape: 'up', color: theme.colors.primary.highSat })
+)<CarouselButtonProps>`
+  ${({ direction }) =>
+    direction === 'prev'
+      ? css`
+          transform: rotate(270deg);
+        `
+      : css`
+          transform: rotate(90deg);
+        `}
 `;
