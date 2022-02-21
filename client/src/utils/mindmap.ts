@@ -5,8 +5,10 @@ import { chunkString } from './stringUtils';
 
 export const stratifiedMindmap = (treeData: TreeType[]) => {
   const stratifiedData = stratify<TreeType>()
-    .id(d => d.node?.name)
-    .parentId(d => d.parent?.name)(treeData);
+    .id(d => (typeof d.node !== 'string' ? d.node?.name : d.node))
+    .parentId(d => (typeof d.parent !== 'string' ? d.parent?.name : d.parent))(
+    treeData
+  );
 
   return stratifiedData;
 };
@@ -71,14 +73,16 @@ export const getNodeBBox = (
 
 export const checkIsRoot = (mindmap: MindmapType, nodeId: string) => {
   const rootNode = mindmap?.body?.find(tree => tree.parent === null);
-  return rootNode?.node._id === nodeId;
+  return (rootNode?.node as NodeType)._id === nodeId;
 };
 
 export const findMatchNodeByMindmapBody = (
   nodeToFind: Partial<NodeType>,
   mindmapBody: TreeType[]
 ) =>
-  mindmapBody.find((obj: TreeType) => obj.node?._id === nodeToFind._id && obj);
+  mindmapBody.find(
+    (obj: TreeType) => (obj.node as NodeType)?._id === nodeToFind._id && obj
+  );
 
 export const getNodeRoute = (
   nodeToFindRoute: TreeType,
@@ -89,18 +93,18 @@ export const getNodeRoute = (
 
   let array: string[] = [];
 
-  array.push(nodeToFindRoute.node.name);
+  array.push((nodeToFindRoute.node as NodeType).name);
 
   (function insertParentName(prev, arr) {
     if (!prev.parent) return;
 
     const parent = mindmapBody.find((obj: TreeType) =>
-      obj.node._id === prev.parent._id ? obj : null
+      (obj.node as NodeType)._id === (prev.parent as NodeType)._id ? obj : null
     );
 
-    if (parent?.node.name) {
-      arr.push(parent?.node.name);
-      insertParentName(parent, arr);
+    if ((parent?.node as NodeType).name) {
+      arr.push((parent?.node as NodeType).name);
+      insertParentName(parent as TreeType, arr);
     }
 
     return arr;

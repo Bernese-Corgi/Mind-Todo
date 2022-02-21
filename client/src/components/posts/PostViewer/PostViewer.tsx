@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import { UserType } from 'utils/api/auth';
-import { MindmapType } from 'utils/api/mindmaps';
+import { MindmapType, NodeType } from 'utils/api/mindmaps';
 import { PostType } from 'utils/api/posts';
 import { getNodeRoute } from 'utils/mindmap';
 import { PostViewerWrapper } from './PostViewer.styled';
@@ -63,7 +63,7 @@ const PostViewer = ({
   useEffect(() => {
     if (post && mindmapOfPost) {
       const matchNode = mindmapOfPost?.find(
-        tree => tree.node._id === post.nodeId
+        tree => (tree.node as NodeType)._id === post.nodeId
       );
 
       const route = matchNode && getNodeRoute(matchNode, mindmapOfPost);

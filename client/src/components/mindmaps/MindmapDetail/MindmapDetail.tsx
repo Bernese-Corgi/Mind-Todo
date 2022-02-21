@@ -9,7 +9,7 @@ import React, {
 } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import { CustomHierarchyNode, MindmapType } from 'utils/api/mindmaps';
+import { CustomHierarchyNode, MindmapType, NodeType } from 'utils/api/mindmaps';
 import { isEmptyArray } from 'utils/arrayUtils';
 import { stratifiedMindmap } from 'utils/mindmap';
 import { AddNodeDialog, Mindmap } from '..';
@@ -41,7 +41,7 @@ const MindmapDetail = ({
     // click add node button
     addBtn: useCallback(
       (e: MouseEventHandler<SVGGElement>, parentId: string) => {
-        const rootNodeId = mindmap!.body![0].node._id;
+        const rootNodeId = (mindmap!.body![0].node as NodeType)._id;
         const _parentId = parentId ? parentId : rootNodeId;
 
         _parentId && setParent(_parentId);
@@ -82,7 +82,7 @@ const MindmapDetail = ({
     e.preventDefault();
 
     const overlapNodeName = mindmap!.body!.find(
-      tree => tree.node.name === writeInput
+      tree => (tree.node as NodeType).name === writeInput
     );
 
     if (overlapNodeName) {
