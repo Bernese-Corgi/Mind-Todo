@@ -23,3 +23,15 @@ export const StyledCarouselItem = styled.img<StyledCarouselItemProps>`
       z-index: 100;
     `}
 `;
+
+export const StyledCarousel = styled.div`
+  overflow: hidden;
+  width: 90%;
+  margin: auto;
+
+  .carousel {
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+  }
+`;
