@@ -28,6 +28,7 @@ export { default as Heading } from './Heading';
 export { default as Skeleton } from './Skeleton/Skeleton';
 export { default as SubInfo } from './SubInfo/SubInfo';
 export { default as ImgUploadBtn } from './ImgUploadBtn/ImgUploadBtn';
+export { default as Carousel } from './Carousel/Carousel';
 
 /* styled component ---------------------------- */
 export { default as StyledForm } from './Form.styled';
