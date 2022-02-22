@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { Button, LoadingIcon, SubInfo } from 'components/common';
 import {
   MindmapListWrapper,
-  StyledMindmapItemLi,
+  StyledMindmapItemLink,
+  StyledMindmapListLi,
   StyledMindmapListUl,
 } from './MindmapList.styld';
 import { CustomHierarchyNode, MindmapType } from 'utils/api/mindmaps';
@@ -20,9 +21,10 @@ interface MindmapListProps {
 
 interface MindmapItemProps {
   mindmap: MindmapType;
+  onLoad?: (e: any) => void;
 }
 
-const MindmapItem = ({ mindmap }: MindmapItemProps) => {
+export const MindmapItem = ({ mindmap, onLoad }: MindmapItemProps) => {
   const [treeData, setTreeData] = useState<CustomHierarchyNode>();
 
   const { _id, title, publisher, createdAt } = mindmap;
@@ -44,17 +46,15 @@ const MindmapItem = ({ mindmap }: MindmapItemProps) => {
   if (!treeData) return <LoadingIcon />;
 
   return (
-    <StyledMindmapItemLi>
-      <Link to={links.title} className="link">
-        <div className="dim"></div>
-        <MindmapPreview treeData={treeData} />
-        <p children={title} className="title" />
-        <SubInfo
-          writer={(publisher as UserType).username}
-          writtenDate={createdAt}
-        />
-      </Link>
-    </StyledMindmapItemLi>
+    <StyledMindmapItemLink to={links.title} className="link">
+      <div className="dim"></div>
+      <MindmapPreview treeData={treeData} className="preview" />
+      <p children={title} className="title" />
+      <SubInfo
+        writer={(publisher as UserType).username}
+        writtenDate={createdAt}
+      />
+    </StyledMindmapItemLink>
   );
 };
 
@@ -79,7 +79,11 @@ const MindmapList = ({ mindmaps, loading, error }: MindmapListProps) => {
 
       <StyledMindmapListUl>
         {mindmaps?.map((mindmap, keyId) => {
-          return <MindmapItem mindmap={mindmap} key={keyId} />;
+          return (
+            <StyledMindmapListLi>
+              <MindmapItem mindmap={mindmap} key={keyId} />
+            </StyledMindmapListLi>
+          );
         })}
       </StyledMindmapListUl>
     </MindmapListWrapper>
