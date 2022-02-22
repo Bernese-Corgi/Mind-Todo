@@ -1,84 +1,120 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { MindmapItem } from 'components/mindmaps/MindmapList/MindmapList';
+import React, { forwardRef, useEffect, useRef } from 'react';
+import useCarousel from 'utils/hooks/useCarousel';
 import {
   StyledCarousel,
   StyledCarouselButton,
   StyledCarouselItem,
+  StyledCarouselSlides,
 } from './Carousel.styled';
 
-interface CarouselProps {}
+interface CarouselProps {
+  datas: any[];
+}
 
 export type CarouselItemProps = {
-  prev;
-  next;
-  active;
-  src;
+  data;
+  children;
 };
 
 export type CarouselButtonProps = {
   direction: 'prev' | 'next';
 };
 
-const Carousel = ({}: CarouselProps) => {
-  const totalItems = 5;
-  const [current, setCurrent] = useState(0);
+const CarouselItem = forwardRef<HTMLDivElement, CarouselItemProps>(
+  ({ data, children }, ref) => {
+    return (
+      <StyledCarouselItem data={data} ref={ref}>
+        {children}
+      </StyledCarouselItem>
+    );
+  }
+);
 
-  const isMoving = useRef(false);
+const Carousel = ({ datas }: CarouselProps) => {
+  const {
+    width,
+    currentSlide,
+    duration,
+    isMoving,
+    setWidth,
+    setIsMoving,
+    move,
+  } = useCarousel();
+
+  const itemRef = useRef<HTMLDivElement>(null);
+
+  const handleLoadItem = (e: any /* TODO 타입 변경 */) => {
+    if (width !== e.target.offsetWidth) setWidth(e.target.offsetWidth);
+    move(1);
+  };
 
   useEffect(() => {
-    isMoving.current = true;
+    if (!itemRef.current?.offsetWidth) return;
 
-    setTimeout(() => {
-      isMoving.current = false;
-    }, 500);
-  }, [current]);
+    if (width !== itemRef.current?.offsetWidth)
+      setWidth(itemRef.current?.offsetWidth);
 
-  const moveNext = () => {
-    if (!isMoving.current) {
-      current === totalItems - 1 ? setCurrent(0) : setCurrent(current + 1);
-    }
+    move(1);
+  }, [move, setWidth, width]);
+
+  const handleClickPrev = () => {
+    if (isMoving) return;
+    console.log('first');
+
+    move(currentSlide + 1 * -1, 500);
   };
 
-  const movePrev = () => {
-    if (!isMoving.current) {
-      current === 0 ? setCurrent(totalItems - 1) : setCurrent(current - 1);
-    }
+  const handleClickNext = () => {
+    if (isMoving) return;
+
+    move(currentSlide + 1, 500);
   };
 
-  const ItemList = Array(totalItems)
-    .fill(null)
-    .map((_, i) => {
-      const key = `item_${i}`;
+  const handleTransitionEnd = () => {
+    setIsMoving(false);
 
-      const prev = current === 0 ? totalItems - 1 : current - 1;
-      const next = current === totalItems - 1 ? 0 : current + 1;
+    const delta =
+      currentSlide === 0 ? 1 : currentSlide === datas.length + 1 ? -1 : 0;
 
-      return (
-        <StyledCarouselItem
-          src={`https://picsum.photos/id/${i}/1600/900`}
-          key={key}
-          active={i === current}
-          prev={i === prev}
-          next={i === next}></StyledCarouselItem>
-      );
-    });
+    if (delta) move(currentSlide + datas.length * delta);
+  };
+  console.log(currentSlide);
+
+  const Slides = [datas[datas.length - 1], ...datas, datas[0]];
 
   return (
-    <StyledCarousel>
-      {ItemList}
+    <StyledCarousel width={width}>
+      {/* slides --------------------------------- */}
+      <StyledCarouselSlides
+        duration={duration}
+        currentSlide={currentSlide}
+        onTransitionEnd={handleTransitionEnd}>
+        {Slides.map((data, i) => (
+          // TODO svg일 때, img일 때 다르게..
+          // <img key={i} src={url} onLoad={handleLoadItem} alt="" />
+          <CarouselItem data={data} ref={itemRef}>
+            <MindmapItem mindmap={data} key={i} onLoad={handleLoadItem} />
+          </CarouselItem>
+        ))}
+
+        {/* {datas} */}
+      </StyledCarouselSlides>
+
+      {/* button --------------------------------- */}
       <StyledCarouselButton
         type="button"
-        id="prevItemBtn"
+        id="prev"
         title="이전 슬라이드"
         direction="prev"
-        onClick={movePrev}
+        onClick={handleClickPrev}
       />
-
       <StyledCarouselButton
         type="button"
-        id="nextItemBtn"
+        id="next"
         title="다음 슬라이드"
         direction="next"
-        onClick={moveNext}
+        onClick={handleClickNext}
       />
     </StyledCarousel>
   );
