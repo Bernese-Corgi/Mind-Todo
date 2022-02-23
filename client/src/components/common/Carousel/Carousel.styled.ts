@@ -3,8 +3,10 @@ import theme from 'styles/theme';
 import { Button } from '..';
 import { CarouselButtonProps, CarouselItemProps } from './Carousel';
 
-export const StyledCarouselItem = styled.div<CarouselItemProps>`
-  width: 300px;
+export const StyledCarouselWrapper = styled.div`
+  width: 100%;
+  position: relative;
+  ${theme.flexes.row('center')}
 `;
 
 interface StyledCarouselProps {
@@ -12,25 +14,26 @@ interface StyledCarouselProps {
 }
 
 export const StyledCarousel = styled.div<StyledCarouselProps>`
-  background-color: slateblue;
-  /* width: ${({ width }) => width}px; */
-  width: 50%;
-  position: relative;
-  margin: 0 auto;
-  overflow: hidden;
-  /* opacity: ${({ width }) => (width ? 1 : 0)}; ; */
+  width: 90%;
 `;
 
-interface StyledCarouselSlidesProps {
+interface StyledCarouselUlProps {
   duration: number;
   currentSlide: number;
 }
 
-export const StyledCarouselSlides = styled.ul<StyledCarouselSlidesProps>`
-  display: flex;
+export const StyledCarouselUl = styled.ul<StyledCarouselUlProps>`
+  overflow: hidden;
+  ${theme.flexes.row('center')}
+
   transition: transform ${({ duration }) => duration};
   transform: translate3d(calc(var(--currentSlide) * 100%), 0, 0);
   transform: translate3d(${({ currentSlide }) => currentSlide * -100}%, 0);
+`;
+
+export const StyledCarouselItem = styled.li<CarouselItemProps>`
+  width: 300px;
+  margin: 1em;
 `;
 
 export const StyledCarouselButton = styled(Button).attrs<CarouselButtonProps>(
@@ -43,26 +46,13 @@ export const StyledCarouselButton = styled(Button).attrs<CarouselButtonProps>(
   top: 50%;
   transform: translateY(-50%) rotate(90deg);
   z-index: 99;
-  background: rgb(255, 255, 255);
 
   ${({ direction }) =>
     direction === 'prev'
       ? css`
           left: 0;
-          background: linear-gradient(
-            0deg,
-            rgba(255, 255, 255, 1) 0%,
-            rgba(255, 255, 255, 0.8) 54%,
-            rgba(0, 0, 0, 0) 100%
-          );
         `
       : css`
           right: 0;
-          background: linear-gradient(
-            180deg,
-            rgba(255, 255, 255, 1) 0%,
-            rgba(255, 255, 255, 0.8) 54%,
-            rgba(0, 0, 0, 0) 100%
-          );
         `}
 `;
