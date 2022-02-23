@@ -1,19 +1,19 @@
-import { MindmapItem } from 'components/mindmaps/MindmapList/MindmapList';
 import React, { forwardRef, useEffect, useRef } from 'react';
 import useCarousel from 'utils/hooks/useCarousel';
 import {
+  StyledCarouselWrapper,
   StyledCarousel,
   StyledCarouselButton,
   StyledCarouselItem,
-  StyledCarouselSlides,
+  StyledCarouselUl,
 } from './Carousel.styled';
 
 interface CarouselProps {
   datas: any[];
+  slides?: any;
 }
 
 export type CarouselItemProps = {
-  data;
   children;
 };
 
@@ -21,17 +21,13 @@ export type CarouselButtonProps = {
   direction: 'prev' | 'next';
 };
 
-const CarouselItem = forwardRef<HTMLDivElement, CarouselItemProps>(
-  ({ data, children }, ref) => {
-    return (
-      <StyledCarouselItem data={data} ref={ref}>
-        {children}
-      </StyledCarouselItem>
-    );
+const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(
+  ({ children }, ref) => {
+    return <StyledCarouselItem ref={ref}>{children}</StyledCarouselItem>;
   }
 );
 
-const Carousel = ({ datas }: CarouselProps) => {
+const Carousel = ({ datas, slides }: CarouselProps) => {
   const {
     width,
     currentSlide,
@@ -42,7 +38,7 @@ const Carousel = ({ datas }: CarouselProps) => {
     move,
   } = useCarousel();
 
-  const itemRef = useRef<HTMLDivElement>(null);
+  const itemRef = useRef<HTMLLIElement>(null);
 
   const handleLoadItem = (e: any /* TODO 타입 변경 */) => {
     if (width !== e.target.offsetWidth) setWidth(e.target.offsetWidth);
@@ -84,22 +80,18 @@ const Carousel = ({ datas }: CarouselProps) => {
   const Slides = [datas[datas.length - 1], ...datas, datas[0]];
 
   return (
-    <StyledCarousel width={width}>
-      {/* slides --------------------------------- */}
-      <StyledCarouselSlides
-        duration={duration}
-        currentSlide={currentSlide}
-        onTransitionEnd={handleTransitionEnd}>
-        {Slides.map((data, i) => (
-          // TODO svg일 때, img일 때 다르게..
-          // <img key={i} src={url} onLoad={handleLoadItem} alt="" />
-          <CarouselItem data={data} ref={itemRef}>
-            <MindmapItem mindmap={data} key={i} onLoad={handleLoadItem} />
-          </CarouselItem>
-        ))}
-
-        {/* {datas} */}
-      </StyledCarouselSlides>
+    <StyledCarouselWrapper>
+      <StyledCarousel>
+        {/* slides --------------------------------- */}
+        <StyledCarouselUl
+          duration={duration}
+          currentSlide={currentSlide}
+          onTransitionEnd={handleTransitionEnd}>
+          {slides?.map((slide, i) => (
+            <CarouselItem>{slide}</CarouselItem>
+          ))}
+        </StyledCarouselUl>
+      </StyledCarousel>
 
       {/* button --------------------------------- */}
       <StyledCarouselButton
@@ -116,7 +108,7 @@ const Carousel = ({ datas }: CarouselProps) => {
         direction="next"
         onClick={handleClickNext}
       />
-    </StyledCarousel>
+    </StyledCarouselWrapper>
   );
 };
 
