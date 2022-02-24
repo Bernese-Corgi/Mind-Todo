@@ -12,11 +12,12 @@ import {
 
 interface MindmapPreviewProps {
   treeData: CustomHierarchyNode;
+  className?: string;
 }
 
-const MindmapPreview = ({ treeData }: MindmapPreviewProps) => {
+const MindmapPreview = ({ treeData, className }: MindmapPreviewProps) => {
   return (
-    <MindmapPreviewWrapper>
+    <MindmapPreviewWrapper className={className}>
       <ParentSize>
         {({ width, height }) => {
           const parentSize = { width, height };
