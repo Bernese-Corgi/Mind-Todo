@@ -4,7 +4,6 @@ import { RootState } from 'redux/modules';
 import { listMindmapAsync } from 'redux/modules/mindmaps/mindmaps';
 import { MindmapItem } from 'components/mindmaps/MindmapList/MindmapList';
 import { Carousel, LoadingIcon } from 'components/common';
-import MindmapCarousel from 'components/mindmaps/MindmapCarousel/MindmapCarousel';
 
 interface MindmapCarouselContainerProps {
   //
@@ -25,15 +24,15 @@ const MindmapCarouselContainer = ({}: MindmapCarouselContainerProps) => {
 
   console.log(mindmaps);
 
+  if (!mindmaps) return <LoadingIcon />;
+
   const slides = mindmaps.map((mindmap, i) => (
     <MindmapItem mindmap={mindmap} />
   ));
 
-  if (!mindmaps) return <LoadingIcon />;
-
   return (
     <>
-      <Carousel datas={mindmaps} slides={slides} />
+      <Carousel slides={slides} />
     </>
   );
 };
