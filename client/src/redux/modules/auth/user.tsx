@@ -1,6 +1,6 @@
 import { createRequestActionTypes } from 'utils/createRequestThunk';
 import * as authApi from 'utils/api/auth';
-import { finishLoading, startLoading } from '../loading';
+import { finishLoading, startLoading } from '../common/loading';
 
 /* --------------------------------- action --------------------------------- */
 // 새로 고침 이후 임시 로그인 처리
