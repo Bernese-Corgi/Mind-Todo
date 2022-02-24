@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'redux/modules';
 import { listMindmapAsync } from 'redux/modules/mindmaps/mindmaps';
 import { MindmapItem } from 'components/mindmaps/MindmapList/MindmapList';
-import { Carousel, LoadingIcon } from 'components/common';
+import { Carousel, Heading, LoadingIcon } from 'components/common';
+import { Link } from 'react-router-dom';
 
 interface MindmapCarouselContainerProps {
   //
@@ -22,17 +23,18 @@ const MindmapCarouselContainer = ({}: MindmapCarouselContainerProps) => {
     dispatch(listMindmapAsync());
   }, [dispatch]);
 
-  console.log(mindmaps);
-
   if (!mindmaps) return <LoadingIcon />;
-
-  const slides = mindmaps.map((mindmap, i) => (
-    <MindmapItem mindmap={mindmap} />
-  ));
 
   return (
     <>
-      <Carousel slides={slides} />
+      <Heading>
+        <Link to={`/mindmaps`}>나의 마인드맵</Link>
+      </Heading>
+      <Carousel slidesToShow={3} centerMode={true}>
+        {mindmaps.map((mindmap, i) => (
+          <MindmapItem mindmap={mindmap} key={i} />
+        ))}
+      </Carousel>
     </>
   );
 };
