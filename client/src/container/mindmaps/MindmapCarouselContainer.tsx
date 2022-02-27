@@ -6,14 +6,11 @@ import { MindmapItem } from 'components/mindmaps/MindmapList/MindmapList';
 import { Carousel, Heading, LoadingIcon } from 'components/common';
 import { Link } from 'react-router-dom';
 
-interface MindmapCarouselContainerProps {
-  //
-}
-
-const MindmapCarouselContainer = ({}: MindmapCarouselContainerProps) => {
+const MindmapCarouselContainer = () => {
   const dispatch = useDispatch();
 
-  const { mindmaps } = useSelector(({ mindmaps }: RootState) => ({
+  const { mindmaps, user } = useSelector(({ mindmaps, user }: RootState) => ({
+    user: user.user,
     mindmaps: mindmaps.mindmaps,
     loading: mindmaps.loading,
     error: mindmaps.error,
@@ -22,6 +19,8 @@ const MindmapCarouselContainer = ({}: MindmapCarouselContainerProps) => {
   useEffect(() => {
     dispatch(listMindmapAsync());
   }, [dispatch]);
+
+  if (!user) return null;
 
   if (!mindmaps) return <LoadingIcon />;
 
