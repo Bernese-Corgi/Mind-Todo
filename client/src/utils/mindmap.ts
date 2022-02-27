@@ -73,7 +73,7 @@ export const getNodeBBox = (
 
 export const checkIsRoot = (mindmap: MindmapType, nodeId: string) => {
   const rootNode = mindmap?.body?.find(tree => tree.parent === null);
-  return (rootNode?.node as NodeType)._id === nodeId;
+  return (rootNode?.node as NodeType)?._id === nodeId;
 };
 
 export const findMatchNodeByMindmapBody = (
