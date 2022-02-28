@@ -22,7 +22,7 @@ export const list = async (ctx) => {
     // post 컬렉션에서 post list 받아오기
     const posts = await Post.find(query)
       .sort({ _id: -1 })
-      .populate('publisher')
+      .populate({ path: 'publisher', select: '_id username email' })
       .lean()
       .exec();
 

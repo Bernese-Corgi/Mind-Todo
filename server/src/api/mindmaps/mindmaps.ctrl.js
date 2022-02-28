@@ -13,7 +13,10 @@ export const listMindmap = async (ctx) => {
     // mind map 컬렉션에서 list 받아오기
     const mindmaps = await Mindmap.find({ publisher: user._id })
       .sort({ _id: -1 })
-      .populate([{ path: 'publisher' }, { path: 'body' }]);
+      .populate([
+        { path: 'publisher', select: '_id username email' },
+        { path: 'body' },
+      ]);
 
     // mindmap list를 응답
     ctx.body = mindmaps;
