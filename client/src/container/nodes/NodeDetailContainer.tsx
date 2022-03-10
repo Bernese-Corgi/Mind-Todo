@@ -39,6 +39,7 @@ const NodeDetailContainer = ({ history, match }) => {
       await dispatch(
         updateNodeAsync(mindmapId, nodeId, { ...node, name: updateNodeName })
       );
+      dispatch(readMindmapAsync(mindmapId));
       dispatch(readNodeAsync(mindmapId, nodeId));
     },
     mindmapTitle: async (updateMindmapTitle: string) => {
@@ -57,9 +58,9 @@ const NodeDetailContainer = ({ history, match }) => {
   };
 
   const handleRemove = {
-    nodeName: () => {
+    nodeName: async () => {
       dispatch(removeNodeAsync(mindmapId, nodeId));
-      dispatch(readMindmapAsync(mindmapId));
+      await dispatch(readMindmapAsync(mindmapId));
       history.push(`/mindmap/${mindmapId}`);
     },
     mindmapTitle: () => {
