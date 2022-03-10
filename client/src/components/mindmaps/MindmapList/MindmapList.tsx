@@ -10,8 +10,7 @@ import { CustomHierarchyNode, MindmapType } from 'utils/api/mindmaps';
 import { UserType } from 'utils/api/auth';
 import { isEmptyArray } from 'utils/arrayUtils';
 import { stratifiedMindmap } from 'utils/mindmap';
-import { Link } from 'react-router-dom';
-import { MindmapPreview } from '..';
+import { MindmapPreview, WriteMindmapBtn } from '..';
 
 interface MindmapListProps {
   mindmaps: MindmapType[];
@@ -68,24 +67,31 @@ const MindmapList = ({ mindmaps, loading, error }: MindmapListProps) => {
   return (
     <MindmapListWrapper>
       <h2 className="sectionH2">Mindmap List</h2>
-      <Button
-        id="openAddMindmapDialog"
-        title="마인드맵 생성 다이얼로그 열기"
-        linkTo="/mindmaps/create-mindmap"
-        primary
-        children="마인드맵 생성하기"
-        className="addMindmapBtn"
-      />
 
-      <StyledMindmapListUl>
-        {mindmaps?.map((mindmap, keyId) => {
-          return (
-            <StyledMindmapListLi>
-              <MindmapItem mindmap={mindmap} key={keyId} />
-            </StyledMindmapListLi>
-          );
-        })}
-      </StyledMindmapListUl>
+      {isEmptyArray(mindmaps) ? (
+        <WriteMindmapBtn />
+      ) : (
+        <>
+          <Button
+            id="openAddMindmapDialog"
+            title="마인드맵 생성 다이얼로그 열기"
+            linkTo="/mindmaps/create-mindmap"
+            primary
+            children="마인드맵 생성하기"
+            className="addMindmapBtn"
+          />
+
+          <StyledMindmapListUl>
+            {mindmaps?.map((mindmap, keyId) => {
+              return (
+                <StyledMindmapListLi>
+                  <MindmapItem mindmap={mindmap} key={keyId} />
+                </StyledMindmapListLi>
+              );
+            })}
+          </StyledMindmapListUl>
+        </>
+      )}
     </MindmapListWrapper>
   );
 };
