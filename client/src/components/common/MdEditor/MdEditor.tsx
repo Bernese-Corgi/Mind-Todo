@@ -44,8 +44,9 @@ const MdEditor = ({
     keyPressUtils(e, 'Enter', () =>
       toggleMarkWhenClickEnter(e, editorRef!.current, '- ')
     );
-
-    // keyPressUtils(e, 'Enter', () => handleEnterKey(editorRef, e, '1. '));
+    keyPressUtils(e, 'Enter', () =>
+      toggleMarkWhenClickEnter(e, editorRef!.current, '1. ')
+    );
   };
 
   return (
