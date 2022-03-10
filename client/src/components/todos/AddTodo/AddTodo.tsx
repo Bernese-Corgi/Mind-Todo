@@ -1,4 +1,10 @@
-import React, { ChangeEvent, FormEvent, useRef, useState } from 'react';
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { Button, EditTextArea } from 'components/common';
 import { StyledAddTodoForm } from './AddTodo.styled';
 
@@ -40,12 +46,17 @@ const AddTodo = ({ onAddTodo }: AddTodoProps) => {
   const handleClicks = {
     openAddTodo: () => {
       setIsEdit(true);
-      addInputRef.current?.focus();
     },
     closeAddTodo: () => {
       setIsEdit(false);
     },
   };
+
+  useEffect(() => {
+    if (isEdit) {
+      addInputRef.current?.focus();
+    }
+  }, [isEdit]);
 
   return (
     <StyledAddTodoForm onSubmit={handleSubmit}>
