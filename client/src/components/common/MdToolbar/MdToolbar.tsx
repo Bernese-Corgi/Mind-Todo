@@ -150,7 +150,7 @@ const MdToolbar = ({ editorRef }: MdToolbarProps) => {
       }
     },
     code: () => {
-      // addMark(editorRef, '```\n```', 'first');
+      editorRef.current && insertMark.lineStart(editorRef.current, '```\n```');
     },
   };
 
@@ -158,21 +158,18 @@ const MdToolbar = ({ editorRef }: MdToolbarProps) => {
     {
       content: 'H1',
       onClick: () => {
-        // addMark(editorRef, '# ', 'first');
         editorRef.current && insertMark.lineStart(editorRef.current, '# ');
       },
     },
     {
       content: 'H2',
       onClick: () => {
-        // addMark(editorRef, '## ', 'first');
         editorRef.current && insertMark.lineStart(editorRef.current, '## ');
       },
     },
     {
       content: 'H3',
       onClick: () => {
-        // addMark(editorRef, '### ', 'first');
         editorRef.current && insertMark.lineStart(editorRef.current, '### ');
       },
     },
