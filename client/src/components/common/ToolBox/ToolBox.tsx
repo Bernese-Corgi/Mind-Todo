@@ -24,6 +24,12 @@ const ToolBoxItem = ({ tool, onCloseToolbox }: ToolBoxItemProps) => {
   const { content, type, onClick, getUrlandSetInput } = tool;
   // TODO 1. 버튼이 이미지인 경우 추가하기
   // TODO 2. type이 file인 경우 ImgUploadBtn 렌더링하기
+
+  const handleClickToolbox = () => {
+    onClick();
+    onCloseToolbox && onCloseToolbox();
+  };
+
   return (
     <StyledToolBoxItemLi className="toolbox">
       {type === 'file' ? (
@@ -38,7 +44,7 @@ const ToolBoxItem = ({ tool, onCloseToolbox }: ToolBoxItemProps) => {
         <button
           id={`add${changeFirstStrToUpper(content)}Btn`}
           type="button"
-          onClick={onClick}
+          onClick={handleClickToolbox}
           className="toolbox">
           {content}
         </button>
