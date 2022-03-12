@@ -7,13 +7,22 @@ import { RootState } from 'redux/modules';
 import {
   initializeMindmapForm,
   readMindmapAsync,
+  removeMindmapAsync,
+  updateMindmapAsync,
 } from 'redux/modules/mindmaps/mindmap';
-import { readNodeAsync, writeNodeAsync } from 'redux/modules/mindmaps/node';
+import {
+  readNodeAsync,
+  updateNodeAsync,
+  writeNodeAsync,
+} from 'redux/modules/mindmaps/node';
 /* -------------------------------- component ------------------------------- */
 import { LoadingIcon } from 'components/common';
 /* ---------------------------------- utils --------------------------------- */
 import { withRouter } from 'react-router';
 import MindmapDetail from 'components/mindmaps/MindmapDetail/MindmapDetail';
+import { listMindmapAsync } from 'redux/modules/mindmaps/mindmaps';
+import { findRootNode } from 'utils/mindmap';
+import { NodeType } from 'utils/api/mindmaps';
 
 const MindmapContainer = ({ history, match }) => {
   const dispatch = useReduxDispatch();
@@ -53,13 +62,41 @@ const MindmapContainer = ({ history, match }) => {
     }
   };
 
+  const handleEdit = async (updateMindmapTitle: string) => {
+    const rootNode = findRootNode(mindmap)?.node as NodeType;
+
+    if (rootNode._id) {
+      await dispatch(
+        updateMindmapAsync(mindmapId, { title: updateMindmapTitle })
+      );
+      await dispatch(
+        updateNodeAsync(mindmapId, rootNode._id, {
+          ...rootNode,
+          name: updateMindmapTitle,
+        })
+      );
+      await dispatch(readMindmapAsync(mindmapId));
+    }
+  };
+
+  const handleRemove = () => {
+    dispatch(removeMindmapAsync(mindmapId));
+    dispatch(listMindmapAsync());
+    history.push('/mindmaps');
+  };
+
   if (mindmapLoading) return <LoadingIcon />;
 
   if (!mindmap) return <LoadingIcon />;
 
   return (
     <>
-      <MindmapDetail mindmap={mindmap} onWrite={handleWrite} />
+      <MindmapDetail
+        mindmap={mindmap}
+        onWrite={handleWrite}
+        onEdit={handleEdit}
+        onRemove={handleRemove}
+      />
     </>
   );
 };
