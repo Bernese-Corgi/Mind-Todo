@@ -76,6 +76,9 @@ export const checkIsRoot = (mindmap: MindmapType, nodeId: string) => {
   return (rootNode?.node as NodeType)?._id === nodeId;
 };
 
+export const findRootNode = (mindmap: MindmapType): TreeType | undefined =>
+  mindmap?.body?.find(tree => tree.parent === null);
+
 export const findMatchNodeByMindmapBody = (
   nodeToFind: Partial<NodeType>,
   mindmapBody: TreeType[]
