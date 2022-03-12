@@ -5,3 +5,4 @@ export { default as AddNodeDialog } from './AddNodeDialog/AddNodeDialog';
 export { default as MindmapNode } from './MindmapNode/MindmapNode';
 export { default as MindmapPreview } from './MindmapPreview/MindmapPreview';
 export { default as WriteMindmapBtn } from './WriteMindmapBtn/WriteMindmapBtn';
+export { default as MindmapTitle } from './MindmapTitle/MindmapTitle';
