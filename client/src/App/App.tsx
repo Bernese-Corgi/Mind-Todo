@@ -11,7 +11,6 @@ import {
   TodoListPage,
 } from 'pages';
 import { HeaderbarContainer } from 'container/common';
-import { AddMindmapDialogContainer } from 'container/mindmaps';
 import { Route, Switch } from 'react-router';
 import './App.css';
 
@@ -25,10 +24,6 @@ function App() {
         <Route component={AuthPage} path="/auth" />
 
         <Route exact component={MindmapListPage} path="/mindmaps" />
-        <Route
-          component={AddMindmapDialogContainer}
-          path="/mindmaps/create-mindmap"
-        />
 
         <Route component={MindmapPage} path="/mindmap/:mindmapId" exact />
         <Route component={NodePage} path="/mindmap/:mindmapId/:nodeId" exact />

@@ -16,6 +16,7 @@ interface MindmapListProps {
   mindmaps: MindmapType[];
   loading: boolean;
   error;
+  onOpenDialog: () => void;
 }
 
 interface MindmapItemProps {
@@ -57,7 +58,12 @@ export const MindmapItem = ({ mindmap, onLoad }: MindmapItemProps) => {
   );
 };
 
-const MindmapList = ({ mindmaps, loading, error }: MindmapListProps) => {
+const MindmapList = ({
+  mindmaps,
+  loading,
+  error,
+  onOpenDialog,
+}: MindmapListProps) => {
   if (loading) return <LoadingIcon />;
 
   if (!mindmaps) return <p>데이터 없음</p>;
@@ -75,10 +81,10 @@ const MindmapList = ({ mindmaps, loading, error }: MindmapListProps) => {
           <Button
             id="openAddMindmapDialog"
             title="마인드맵 생성 다이얼로그 열기"
-            linkTo="/mindmaps/create-mindmap"
             primary
             children="마인드맵 생성하기"
             className="addMindmapBtn"
+            onClick={onOpenDialog}
           />
 
           <StyledMindmapListUl>
