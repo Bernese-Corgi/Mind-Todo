@@ -17,6 +17,7 @@ export type SignIn = {
 export type UserType = {
   username?: string;
   email?: string;
+  _id?: string;
 };
 
 export const signUp = (userInfo: SignUp) =>

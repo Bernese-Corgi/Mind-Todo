@@ -47,30 +47,35 @@ const PostViewer = ({
 }: PostViewerProps & RouteComponentProps<PostViewerParams>) => {
   const { postId } = match.params;
 
+  // mindmapId가 MindmapType의 일부인 경우
   const postMindmapAssert = post?.mindmapId as Partial<MindmapType>;
-  const postPublisherAssert = post?.publisher as UserType;
-
-  const mindmapOfPost = postMindmapAssert?.body;
+  const mindmapBodyOfPost = postMindmapAssert?.body;
   const mindmapIdOfPost = postMindmapAssert?._id;
-  const postUsername = postPublisherAssert?.username;
 
-  const isOwnPost = currentUser && postUsername === currentUser.username;
+  // publisher가 UserType인 경우의 username
+  const usernameOfPost = (post?.publisher as UserType)?.username;
+
+  const isOwnPost =
+    currentUser &&
+    (typeof post?.publisher === 'string'
+      ? post?.publisher === currentUser?._id // post.publisher가 string 타입인 경우
+      : (post?.publisher as UserType)?._id === currentUser?._id); // post.publisher가 UserType인 경우
 
   const nodeLink = post && `/mindmap/${mindmapIdOfPost}/${post.nodeId}`;
 
   const [nodeRoute, setNodeRoute] = useState<string>();
 
   useEffect(() => {
-    if (post && mindmapOfPost) {
-      const matchNode = mindmapOfPost?.find(
+    if (post && mindmapBodyOfPost) {
+      const matchNode = mindmapBodyOfPost?.find(
         tree => (tree.node as NodeType)._id === post.nodeId
       );
 
-      const route = matchNode && getNodeRoute(matchNode, mindmapOfPost);
+      const route = matchNode && getNodeRoute(matchNode, mindmapBodyOfPost);
 
       setNodeRoute(route);
     }
-  }, [post, mindmapOfPost]);
+  }, [post, mindmapBodyOfPost]);
 
   if (loading) return <LoadingIcon />;
 
@@ -103,7 +108,7 @@ const PostViewer = ({
           />
         )}
       </div>
-      <SubInfo writer={postUsername} writtenDate={post.createdAt} />
+      <SubInfo writer={usernameOfPost} writtenDate={post.createdAt} />
 
       {hasEdit && isOwnPost && (
         <EditDeleteButtonUnit
