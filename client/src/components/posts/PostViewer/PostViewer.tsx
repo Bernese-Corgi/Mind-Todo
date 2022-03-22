@@ -2,19 +2,16 @@ import {
   EditDeleteButtonUnit,
   LoadingIcon,
   MdViewer,
-  Skeleton,
   SubInfo,
   Tags,
   WriteActionBtn,
 } from 'components/common';
 import { NodeRoute } from 'components/node';
-import { useEffect, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import { UserType } from 'utils/api/auth';
-import { MindmapType, NodeType } from 'utils/api/mindmaps';
+import { MindmapType } from 'utils/api/mindmaps';
 import { PostType } from 'utils/api/posts';
-import { getNodeRoute } from 'utils/mindmap';
 import { PostViewerWrapper } from './PostViewer.styled';
 
 interface PostViewerParams {
@@ -49,8 +46,6 @@ const PostViewer = ({
 
   // mindmapId가 MindmapType의 일부인 경우
   const postMindmapAssert = post?.mindmapId as Partial<MindmapType>;
-  const mindmapBodyOfPost = postMindmapAssert?.body;
-  const mindmapIdOfPost = postMindmapAssert?._id;
 
   // publisher가 UserType인 경우의 username
   const usernameOfPost = (post?.publisher as UserType)?.username;
@@ -60,22 +55,6 @@ const PostViewer = ({
     (typeof post?.publisher === 'string'
       ? post?.publisher === currentUser?._id // post.publisher가 string 타입인 경우
       : (post?.publisher as UserType)?._id === currentUser?._id); // post.publisher가 UserType인 경우
-
-  const nodeLink = post && `/mindmap/${mindmapIdOfPost}/${post.nodeId}`;
-
-  const [nodeRoute, setNodeRoute] = useState<string>();
-
-  useEffect(() => {
-    if (post && mindmapBodyOfPost) {
-      const matchNode = mindmapBodyOfPost?.find(
-        tree => (tree.node as NodeType)._id === post.nodeId
-      );
-
-      const route = matchNode && getNodeRoute(matchNode, mindmapBodyOfPost);
-
-      setNodeRoute(route);
-    }
-  }, [post, mindmapBodyOfPost]);
 
   if (loading) return <LoadingIcon />;
 
@@ -94,8 +73,13 @@ const PostViewer = ({
 
   return (
     <PostViewerWrapper className="postViewerWrapper" post={post}>
-      {nodeRoute && (
-        <NodeRoute content={nodeRoute} link={nodeLink} className="nodeRoute" />
+      {post.nodeId && postId && (
+        <NodeRoute
+          mindmap={postMindmapAssert}
+          nodeIdToFind={post.nodeId}
+          hasLink
+          className="nodeRoute"
+        />
       )}
       <div className="postTitleText">
         {postId ? (

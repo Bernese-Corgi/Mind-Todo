@@ -1,13 +1,16 @@
-import React from 'react';
-import { Heading } from 'components/common';
+import React, { useEffect, useState } from 'react';
+import { Heading, Skeleton } from 'components/common';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import theme from 'styles/theme';
+import { MindmapType } from 'utils/api/mindmaps';
+import { findNodeAsTreeById, getNodeRoute } from 'utils/mindmap';
 
 interface NodeRouteProps {
   level?: number;
-  link?: string;
-  content: string;
+  mindmap: Partial<MindmapType>;
+  nodeIdToFind: string;
+  hasLink?: boolean;
   className?: string;
 }
 
@@ -37,16 +40,42 @@ const NodeRouteContent = ({ content }) => {
   );
 };
 
-const NodeRoute = ({ level = 3, link, content, className }: NodeRouteProps) => {
+const NodeRoute = ({
+  level = 3,
+  mindmap,
+  nodeIdToFind,
+  hasLink,
+  className,
+}: NodeRouteProps) => {
+  const [nodeRoute, setNodeRoute] = useState<string>('');
+
+  const link = `/mindmap/${mindmap?._id}/${nodeIdToFind}`;
+
+  useEffect(() => {
+    if (mindmap?.body && nodeIdToFind) {
+      const matchNode = findNodeAsTreeById(nodeIdToFind, mindmap.body);
+
+      if (matchNode) {
+        const route = getNodeRoute(matchNode, mindmap.body, '>');
+
+        setNodeRoute(route);
+      }
+    }
+  }, [mindmap?.body, nodeIdToFind]);
+
+  if (!nodeRoute) {
+    return <Skeleton types={['subInfo']} />;
+  }
+
   return (
     <Heading level={level} className={className}>
       <>
-        {link ? (
+        {hasLink ? (
           <StyledNodeRouteLink to={link}>
-            <NodeRouteContent content={content} />
+            <NodeRouteContent content={nodeRoute} />
           </StyledNodeRouteLink>
         ) : (
-          <NodeRouteContent content={content} />
+          <NodeRouteContent content={nodeRoute} />
         )}
       </>
     </Heading>
