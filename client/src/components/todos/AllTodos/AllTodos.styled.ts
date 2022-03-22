@@ -12,6 +12,11 @@ export const AllTodosWrapper = styled.div`
     color: ${theme.colors.primary.dark}99;
   }
 
+  .menuTabWrapper {
+    margin-left: 0;
+    width: fit-content;
+  }
+
   ul {
     .uncompletedList,
     .completedList {
