@@ -23,7 +23,7 @@ const AuthPage = ({ history, match }) => {
   return (
     <Dialog visible onClose={handleCloseDialog}>
       <AuthDialogBody>
-        <MenuTab menus={authMenus} />
+        <MenuTab menus={authMenus} linkMode />
         <Switch>
           <Route component={SignUpForm} path="/auth/sign-up" />
           <Route component={SignInForm} path="/auth/sign-in" />
