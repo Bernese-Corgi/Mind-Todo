@@ -1,61 +1,54 @@
-import { NavLink } from 'react-router-dom';
-import styled from 'styled-components';
-import theme from 'styles/theme';
+import {
+  MenuTabWrapper,
+  StyledClickMenuLi,
+  StyledLinkMenuLi,
+  StyledMenuTabNavLink,
+} from './MenuTab.styled';
+
+type LinkMenuType = Array<{ name: string; path: string }>;
+type ClickMenuType = Array<{
+  name: string;
+  active: boolean;
+  onClick: () => void;
+}>;
 
 interface MenuTabProps {
-  menus: Array<{ name: string; path: string }>;
+  menus: LinkMenuType | ClickMenuType;
+  linkMode?: boolean;
 }
 
-const MenuTabWrapper = styled.div`
-  ${theme.flexes.center}
-  font-size: ${theme.fonts.size.base};
-  font-weight: ${theme.fonts.weight.bold};
-  color: ${theme.colors.gray.base};
-
-  ul {
-    ${theme.flexes.center}
-  }
-  li {
-    min-width: max-content;
-    ${theme.transition()}
-
-    &:hover {
-      color: ${theme.colors.primary.lowSat};
-    }
-
-    a {
-      display: block;
-      padding: 0.5em 1.5em;
-      width: 100%;
-      height: 100%;
-    }
-  }
-`;
-
-const activeNaveLinkStyle = {
-  color: `${theme.colors.primary.highSat}`,
+const MenuTab = ({ menus, linkMode = false }: MenuTabProps) => {
+  return (
+    <MenuTabWrapper className="menuTabWrapper">
+      <ul>
+        {linkMode
+          ? (menus as LinkMenuType).map((menu, index) => {
+              return (
+                <>
+                  {index >= 1 && <span>|</span>}
+                  <StyledLinkMenuLi key={index}>
+                    <StyledMenuTabNavLink key={index} to={menu.path}>
+                      {menu.name}
+                    </StyledMenuTabNavLink>
+                  </StyledLinkMenuLi>
+                </>
+              );
+            })
+          : (menus as ClickMenuType).map((menu, index) => {
+              return (
+                <>
+                  <StyledClickMenuLi
+                    key={index}
+                    onClick={menu.onClick}
+                    className={menu.active ? 'active' : ''}>
+                    <p>{menu.name}</p>
+                  </StyledClickMenuLi>
+                </>
+              );
+            })}
+      </ul>
+    </MenuTabWrapper>
+  );
 };
-
-const MenuTab = ({ menus }: MenuTabProps) => (
-  <MenuTabWrapper>
-    <ul>
-      {menus.map((menu, index) => {
-        return (
-          <>
-            {index >= 1 && <span>|</span>}
-            <li key={index}>
-              <NavLink
-                key={index}
-                to={menu.path}
-                activeStyle={activeNaveLinkStyle}>
-                {menu.name}
-              </NavLink>
-            </li>
-          </>
-        );
-      })}
-    </ul>
-  </MenuTabWrapper>
-);
 
 export default MenuTab;
