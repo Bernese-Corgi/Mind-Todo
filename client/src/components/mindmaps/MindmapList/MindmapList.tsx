@@ -75,7 +75,7 @@ const MindmapList = ({
       <h2 className="sectionH2">Mindmap List</h2>
 
       {isEmptyArray(mindmaps) ? (
-        <WriteMindmapBtn />
+        <WriteMindmapBtn onOpenDialog={onOpenDialog} />
       ) : (
         <>
           <Button
