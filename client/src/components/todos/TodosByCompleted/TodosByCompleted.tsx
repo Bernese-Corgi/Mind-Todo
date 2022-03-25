@@ -1,6 +1,5 @@
 import React from 'react';
 import { TodoListType } from 'utils/api/todos';
-import { useDispatchTodos } from 'utils/hooks';
 import { TodoDataHandlerType } from 'utils/hooks/useDispatchTodos';
 import { TodoItem } from '..';
 import { TodosByCompletedWrapper } from './TodosByCompleted.styled';
@@ -19,7 +18,7 @@ const TodosByUncompleted = ({
   return (
     <TodosByCompletedWrapper>
       {todoListByCompleted.map(todos =>
-        todos[0].completed ? (
+        todos[0]?.completed ? (
           <div className="completed">
             <p>완료된 할 일</p>
             <ul>
