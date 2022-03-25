@@ -95,7 +95,7 @@ export const getNodeRoute = (
 
   array.push((nodeToFindRoute.node as NodeType).name);
 
-  (function insertParentName(prev, arr) {
+  (function insertParentName(prev: TreeType, arr: string[]) {
     if (!prev.parent) return;
 
     const parent = mindmapBody.find((obj: TreeType) =>
