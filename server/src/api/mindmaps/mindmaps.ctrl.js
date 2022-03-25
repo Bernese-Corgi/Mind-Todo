@@ -245,11 +245,27 @@ export const updateNode = async (ctx) => {
 // DELETE /api/mindmaps/:mindmapId/:nodeId
 export const removeNode = async (ctx) => {
   const { mindmapId, nodeId } = ctx.params;
+
   try {
     const mindmap = await Mindmap.findById(mindmapId);
 
-    const filteredBody = mindmap.body.filter(
-      (tree) => tree.node.toString() !== nodeId,
+    // 삭제할 노드의 tree
+    const treeToRemove = await Tree.findOne({
+      node: nodeId,
+    });
+
+    // 삭제할 노드의 하위 노드들의 parent 수정
+    await Tree.updateMany(
+      // parent가 nodeId인 노드들 = 삭제할 노드의 하위 노드들
+      { parent: nodeId },
+      // 삭제할 노드의 상위 노드로 parent 수정
+      { parent: treeToRemove.parent.toString() },
+      { new: true },
+    );
+
+    // 삭제할 노드의 tree 인스턴스를 mindmap.body에서 삭제 후 마인드맵 데이터 업데이트
+    const filteredBody = await mindmap.body.filter(
+      (tree) => tree.toString() !== treeToRemove._id.toString(),
     );
 
     await Mindmap.findByIdAndUpdate(
@@ -259,7 +275,9 @@ export const removeNode = async (ctx) => {
     ).exec();
 
     // params에서 받아온 nodeId와 일치하는 node 삭제
-    await Node.findByIdAndRemove(ctx.params.nodeId).exec();
+    await Node.findByIdAndRemove(nodeId).exec();
+    // node가 속한 tree 인스턴스도 삭제
+    await Tree.findOneAndRemove({ node: nodeId }).exec();
 
     // No Content
     ctx.status = 204;
