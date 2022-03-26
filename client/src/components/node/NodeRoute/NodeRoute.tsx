@@ -44,7 +44,7 @@ const NodeRoute = ({
   level = 3,
   mindmap,
   nodeIdToFind,
-  hasLink,
+  hasLink = false,
   className,
 }: NodeRouteProps) => {
   const [nodeRoute, setNodeRoute] = useState<string>('');
@@ -54,7 +54,6 @@ const NodeRoute = ({
   useEffect(() => {
     if (mindmap?.body && nodeIdToFind) {
       const matchNode = findNodeAsTreeById(nodeIdToFind, mindmap.body);
-
       if (matchNode) {
         const route = getNodeRoute(matchNode, mindmap.body, '>');
 
@@ -69,15 +68,13 @@ const NodeRoute = ({
 
   return (
     <Heading level={level} className={className}>
-      <>
-        {hasLink ? (
-          <StyledNodeRouteLink to={link}>
-            <NodeRouteContent content={nodeRoute} />
-          </StyledNodeRouteLink>
-        ) : (
+      {hasLink ? (
+        <StyledNodeRouteLink to={link}>
           <NodeRouteContent content={nodeRoute} />
-        )}
-      </>
+        </StyledNodeRouteLink>
+      ) : (
+        <NodeRouteContent content={nodeRoute} />
+      )}
     </Heading>
   );
 };
