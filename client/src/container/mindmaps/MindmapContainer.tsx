@@ -1,5 +1,6 @@
 /* ---------------------------------- react --------------------------------- */
 import React, { useEffect } from 'react';
+import { withRouter } from 'react-router';
 /* ---------------------------------- redux --------------------------------- */
 import { useSelector } from 'react-redux';
 import { useReduxDispatch } from 'redux/store';
@@ -15,12 +16,11 @@ import {
   updateNodeAsync,
   writeNodeAsync,
 } from 'redux/modules/mindmaps/node';
+import { listMindmapAsync } from 'redux/modules/mindmaps/mindmaps';
 /* -------------------------------- component ------------------------------- */
 import { LoadingIcon } from 'components/common';
+import { MindmapDetail } from 'components/mindmaps';
 /* ---------------------------------- utils --------------------------------- */
-import { withRouter } from 'react-router';
-import MindmapDetail from 'components/mindmaps/MindmapDetail/MindmapDetail';
-import { listMindmapAsync } from 'redux/modules/mindmaps/mindmaps';
 import { findRootNode } from 'utils/mindmap';
 import { NodeType } from 'utils/api/mindmaps';
 
