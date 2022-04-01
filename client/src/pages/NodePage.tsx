@@ -62,8 +62,6 @@ ${({ theme }) => theme.media.mobile`
     .nodeDetailSection {
       width: 100%;
     }
-    
-
   `}
 `;
 
