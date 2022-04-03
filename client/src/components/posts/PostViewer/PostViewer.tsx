@@ -73,7 +73,7 @@ const PostViewer = ({
 
   return (
     <PostViewerWrapper className="postViewerWrapper" post={post}>
-      {post.nodeId && postId && (
+      {post.nodeId && postId && isOwnPost && (
         <NodeRoute
           mindmap={postMindmapAssert}
           nodeIdToFind={post.nodeId}
