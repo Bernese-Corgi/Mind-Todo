@@ -23,12 +23,18 @@ const StyledSignButtonSection = styled.section`
 const StyledSignButton = styled(Button)`
   background-color: transparent;
   border: 1px solid ${theme.colors.primary.base};
-  color: ${theme.colors.primary.highSat};
+
+  a {
+    color: ${theme.colors.primary.highSat};
+  }
 
   &:hover {
     background-color: ${theme.colors.primary.base};
     border: 1px solid transparent;
-    color: #fff;
+
+    a {
+      color: #fff;
+    }
   }
 `;
 
