@@ -1,7 +1,10 @@
+import { Button } from 'components/common';
+import { IconButtonProps } from 'components/common/Button/Button';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
 export const StyledNodeDetailSection = styled.section`
+  position: relative;
   width: 100%;
   height: 100%;
   padding-left: 1em;
@@ -92,7 +95,26 @@ export const StyledNodePostSection = styled.section`
   ${theme.flexes.mixin('column', 'start', 'start')}
 `;
 
+export const StyledNodeDetailClose = styled(Button).attrs<IconButtonProps>(
+  () => ({ shape: 'cancel' })
+)<IconButtonProps>`
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  use {
+    color: ${theme.colors.gray.base};
+  }
+
+  &:hover {
+    use {
+      color: ${theme.colors.red};
+    }
+  }
+`;
+
 StyledNodeDetailSection.displayName = 'StyledNodeDetailSection';
 StyledNodeName.displayName = 'StyledNodeName';
 StyledNodeTodoSection.displayName = 'StyledNodeTodoSection';
 StyledNodePostSection.displayName = 'StyledNodePostSection';
+StyledNodeDetailClose.displayName = 'StyledNodeDetailClose';

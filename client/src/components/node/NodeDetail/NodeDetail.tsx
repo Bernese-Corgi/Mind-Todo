@@ -1,4 +1,5 @@
 import {
+  StyledNodeDetailClose,
   StyledNodeDetailSection,
   StyledNodeName,
   StyledNodePostSection,
@@ -33,6 +34,7 @@ interface NodeDetailProps {
     nodeName: () => void;
     mindmapTitle: () => void;
   };
+  onCloseNodePage: () => void;
 }
 
 const NodeDetail = ({
@@ -45,6 +47,7 @@ const NodeDetail = ({
   error,
   onEdit,
   onRemove,
+  onCloseNodePage,
 }: NodeDetailProps) => {
   if (loading) return null;
   if (error) return <p>error 발생!</p>;
@@ -87,6 +90,12 @@ const NodeDetail = ({
           <h3>post</h3>
           <PostViewerContainer nodePost={post} />
         </StyledNodePostSection>
+
+        <StyledNodeDetailClose
+          id="closeNodePage"
+          title="노드 페이지 닫기"
+          onClick={onCloseNodePage}
+        />
       </StyledNodeDetailSection>
     </>
   );

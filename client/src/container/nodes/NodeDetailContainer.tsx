@@ -70,6 +70,10 @@ const NodeDetailContainer = ({ history, match }) => {
     },
   };
 
+  const handleCloseNodePage = () => {
+    history.push(`/mindmap/${mindmapId}`);
+  };
+
   useEffect(() => {
     // const dispatchReadNode = async () => {
     //   await dispatch(readNodeAsync(mindmapId, nodeId));
@@ -90,6 +94,7 @@ const NodeDetailContainer = ({ history, match }) => {
       error={nodeError}
       onEdit={handleEdit}
       onRemove={handleRemove}
+      onCloseNodePage={handleCloseNodePage}
     />
   );
 };
