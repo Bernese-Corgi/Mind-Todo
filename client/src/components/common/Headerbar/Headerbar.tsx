@@ -35,76 +35,78 @@ const Headerbar = ({
   };
 
   return (
-    <Responsive>
-      <HeaderbarWrapper>
-        {/* navigation button --------------------------- */}
-        <MenuButtonWrapper>
-          {user && (
-            <>
-              <Button
-                id="navOpen"
-                title="네비게이션 열기"
-                shape="bars"
-                onClick={onOpenNav}
-              />
-              <Navigation ref={navRef} onCloseNav={onCloseNav} />
-              <Dim ref={navDimRef} onDimClose={onCloseNav} />
-            </>
-          )}
-        </MenuButtonWrapper>
+    <header>
+      <Responsive>
+        <HeaderbarWrapper>
+          {/* navigation button --------------------------- */}
+          <MenuButtonWrapper>
+            {user && (
+              <>
+                <Button
+                  id="navOpen"
+                  title="네비게이션 열기"
+                  shape="bars"
+                  onClick={onOpenNav}
+                />
+                <Navigation ref={navRef} onCloseNav={onCloseNav} />
+                <Dim ref={navDimRef} onDimClose={onCloseNav} />
+              </>
+            )}
+          </MenuButtonWrapper>
 
-        {/* logo button ------------------------------ */}
-        <LogoWrapper>
-          <Link to="/">Mind Todo</Link>
-        </LogoWrapper>
+          {/* logo button ------------------------------ */}
+          <LogoWrapper>
+            <Link to="/">Mind Todo</Link>
+          </LogoWrapper>
 
-        {/* auth button ------------------------------ */}
-        <AuthButtonWrapper>
-          {user ? (
-            // 로그인 o
-            <>
-              <Button
-                id="userInfoBtn"
-                title="사용자 정보 보기"
-                textOnly
-                children={user.username}
-              />
-              <Button
-                id="signOutBtn"
-                title="로그아웃"
-                onClick={handleClicks.openDialog}
-                children="로그아웃"
-              />
-              <DeleteDialog
-                visible={hasDialog}
-                delDialogText={dialogText}
-                onClose={handleClicks.closeDialog}
-                onConfirmDelete={onSignOut}
-              />
-            </>
-          ) : (
-            // 로그인 x
-            <>
-              <Button
-                id="signInBtn"
-                title="로그인"
-                linkTo="/auth/sign-in"
-                primary
-                children="
+          {/* auth button ------------------------------ */}
+          <AuthButtonWrapper>
+            {user ? (
+              // 로그인 o
+              <>
+                <Button
+                  id="userInfoBtn"
+                  title="사용자 정보 보기"
+                  textOnly
+                  children={user.username}
+                />
+                <Button
+                  id="signOutBtn"
+                  title="로그아웃"
+                  onClick={handleClicks.openDialog}
+                  children="로그아웃"
+                />
+                <DeleteDialog
+                  visible={hasDialog}
+                  delDialogText={dialogText}
+                  onClose={handleClicks.closeDialog}
+                  onConfirmDelete={onSignOut}
+                />
+              </>
+            ) : (
+              // 로그인 x
+              <>
+                <Button
+                  id="signInBtn"
+                  title="로그인"
+                  linkTo="/auth/sign-in"
+                  primary
+                  children="
                   로그인"
-              />
-              <Button
-                id="signUpBtn"
-                title="회원가입"
-                linkTo="/auth/sign-up"
-                primary
-                children="회원가입"
-              />
-            </>
-          )}
-        </AuthButtonWrapper>
-      </HeaderbarWrapper>
-    </Responsive>
+                />
+                <Button
+                  id="signUpBtn"
+                  title="회원가입"
+                  linkTo="/auth/sign-up"
+                  primary
+                  children="회원가입"
+                />
+              </>
+            )}
+          </AuthButtonWrapper>
+        </HeaderbarWrapper>
+      </Responsive>
+    </header>
   );
 };
 
