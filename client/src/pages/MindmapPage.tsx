@@ -13,11 +13,13 @@ const MindmapWrapper = styled.section`
 
 const MindmapPage = ({ history, match }) => {
   return (
-    <Responsive>
-      <MindmapWrapper>
-        <MindmapContainer />
-      </MindmapWrapper>
-    </Responsive>
+    <main>
+      <Responsive>
+        <MindmapWrapper>
+          <MindmapContainer />
+        </MindmapWrapper>
+      </Responsive>
+    </main>
   );
 };
 

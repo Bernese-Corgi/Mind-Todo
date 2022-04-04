@@ -4,9 +4,11 @@ import { PostListContainer } from 'container/posts';
 
 const PostListPage = () => {
   return (
-    <Responsive>
-      <PostListContainer />
-    </Responsive>
+    <main>
+      <Responsive>
+        <PostListContainer />
+      </Responsive>
+    </main>
   );
 };
 

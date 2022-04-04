@@ -5,10 +5,12 @@ import { MindmapCarouselContainer } from 'container/mindmaps';
 
 const HomePage = () => {
   return (
-    <Responsive>
-      <SignButtonContainer />
-      <MindmapCarouselContainer />
-    </Responsive>
+    <main>
+      <Responsive>
+        <SignButtonContainer />
+        <MindmapCarouselContainer />
+      </Responsive>
+    </main>
   );
 };
 

@@ -20,11 +20,13 @@ const StyledPostSection = styled.section`
 
 const PostPage = ({ match, history }) => {
   return (
-    <Responsive>
-      <StyledPostSection>
-        <PostViewerContainer />
-      </StyledPostSection>
-    </Responsive>
+    <main>
+      <Responsive>
+        <StyledPostSection>
+          <PostViewerContainer />
+        </StyledPostSection>
+      </Responsive>
+    </main>
   );
 };
 
