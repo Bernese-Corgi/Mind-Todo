@@ -49,7 +49,7 @@ const TagItem = React.memo(
 
 const Tags = React.memo(({ tags, isWrite, onClickRemoveBtn }: TagsProps) => {
   return (
-    <StyledTagsUl>
+    <StyledTagsUl className="tagsUl">
       {tags?.map((tag, i) => (
         <TagItem
           key={`${i}-${tag}`}

@@ -7,7 +7,6 @@ import theme from 'styles/theme';
 const MindmapWrapper = styled.section`
   font-size: ${theme.fonts.size.sm};
   padding: 2em;
-
   height: 90vh;
 `;
 

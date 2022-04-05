@@ -23,7 +23,7 @@ export const PostViewerWrapper = styled.div<PostViewerProps>`
   }
 
   .postTitleText {
-    padding: 0.8em 0 0.8em 0;
+    padding: 0.8em 0 0 0;
 
     p {
       padding-left: 0.8em;
@@ -48,7 +48,7 @@ export const PostViewerWrapper = styled.div<PostViewerProps>`
   }
 
   .mdViewer {
-    padding: 1em;
+    padding: 0 1em 1em 1em;
   }
 
   .postTitleText {
@@ -65,7 +65,12 @@ export const PostViewerWrapper = styled.div<PostViewerProps>`
       `}
   }
 
-  ul {
+  .subInfoWrapper {
+    padding-top: 0.4em;
+    padding-left: 1em;
+  }
+
+  .tagsUl {
     font-size: 80%;
     padding: 0.5em 1em;
   }
