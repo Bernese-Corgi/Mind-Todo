@@ -46,6 +46,10 @@ export const StyledMindmapItemLink = styled(Link)`
     border-top-left-radius: 2%;
     border-top-right-radius: 2%;
   }
+
+  .subInfoWrapper {
+    padding-left: 0.8em;
+  }
 `;
 
 export const StyledMindmapListLi = styled.li`
