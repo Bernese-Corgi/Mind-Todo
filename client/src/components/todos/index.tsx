@@ -4,3 +4,5 @@ export { default as TodoList } from './TodoList/TodoList';
 export { default as TodoUnit } from './TodoUnit/TodoUnit';
 export { default as AllTodos } from './AllTodos/AllTodos';
 export { default as TodosByNode } from './TodosByNode/TodosByNode';
+export { default as TodosByDate } from './TodosByDate/TodosByDate';
+export { default as TodosByCompleted } from './TodosByCompleted/TodosByCompleted';

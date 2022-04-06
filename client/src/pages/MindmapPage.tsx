@@ -7,17 +7,18 @@ import theme from 'styles/theme';
 const MindmapWrapper = styled.section`
   font-size: ${theme.fonts.size.sm};
   padding: 2em;
-
   height: 90vh;
 `;
 
 const MindmapPage = ({ history, match }) => {
   return (
-    <Responsive>
-      <MindmapWrapper>
-        <MindmapContainer />
-      </MindmapWrapper>
-    </Responsive>
+    <main>
+      <Responsive>
+        <MindmapWrapper>
+          <MindmapContainer />
+        </MindmapWrapper>
+      </Responsive>
+    </main>
   );
 };
 

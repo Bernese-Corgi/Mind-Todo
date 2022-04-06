@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { chunkDateString } from 'utils/stringUtils';
-import { TodoList } from '..';
-import { TodoDataHandlerType } from '../AllTodos/AllTodos';
-import { StyledTodosByNodeArticle } from './TodosByNode.styled';
-import { getNodeRoute, findMatchNodeByMindmapBody } from 'utils/mindmap';
 import { MindmapType } from 'utils/api/mindmaps';
-import { NodeRoute } from 'components/node';
-import { Skeleton } from 'components/common';
 import { TodoListType } from 'utils/api/todos';
+import { TodoDataHandlerType } from 'utils/hooks/useDispatchTodos';
+import { Skeleton } from 'components/common';
+import { NodeRoute } from 'components/node';
+import { TodoList } from '..';
+import { StyledTodosByNodeArticle } from './TodosByNode.styled';
 
 type TodosByNodeProps = TodoDataHandlerType & {
   todoListByNode: TodoListType;
@@ -22,26 +19,8 @@ const TodosByNode = ({
   onDelete,
 }: TodosByNodeProps) => {
   const node = todoListByNode[0].nodeId;
-  const createdDate =
-    todoListByNode[0].createdAt && chunkDateString(todoListByNode[0].createdAt);
 
-  const link = `/mindmap/${node?.mindmapId}/${node?._id}`;
-
-  const [nodeRoute, setNodeRoute] = useState<string>('');
-
-  useEffect(() => {
-    if (mindmap && mindmap?.body && node) {
-      const matchNode = findMatchNodeByMindmapBody(node, mindmap.body);
-
-      if (matchNode) {
-        const route = getNodeRoute(matchNode, mindmap.body, '>');
-
-        setNodeRoute(route);
-      }
-    }
-  }, [mindmap, node, node?._id]);
-
-  if (nodeRoute === '' || !node)
+  if (!node)
     return (
       <StyledTodosByNodeArticle>
         <Skeleton types={['title', 'date', 'todos']} />
@@ -50,7 +29,9 @@ const TodosByNode = ({
 
   return (
     <StyledTodosByNodeArticle>
-      <NodeRoute content={nodeRoute} link={link} />
+      {node?._id && (
+        <NodeRoute mindmap={mindmap} nodeIdToFind={node?._id} hasLink />
+      )}
       <TodoList
         todos={todoListByNode}
         onToggle={onToggle}

@@ -5,9 +5,11 @@ import { AddPostContainer } from 'container/posts';
 
 const AddPostPage = ({ history, match }) => {
   return (
-    <Responsive>
-      <AddPostContainer history={history} match={match} />
-    </Responsive>
+    <main>
+      <Responsive>
+        <AddPostContainer history={history} match={match} />
+      </Responsive>
+    </main>
   );
 };
 

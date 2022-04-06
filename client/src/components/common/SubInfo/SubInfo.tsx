@@ -11,7 +11,7 @@ const SubInfo = ({ writer, writtenDate }: SubInfoProps) => {
   const chunkedDate = writtenDate && chunkDateString(writtenDate);
 
   return (
-    <SubInfoWrapper>
+    <SubInfoWrapper className="subInfoWrapper">
       {writer && <p className="writer">{writer}</p>}
       {writtenDate && <time className="writtenDate">{chunkedDate}</time>}
     </SubInfoWrapper>

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
 import {
+  StyledNodeDetailClose,
   StyledNodeDetailSection,
   StyledNodeName,
   StyledNodePostSection,
@@ -10,11 +10,7 @@ import { NodeName, NodeRoute } from '..';
 import { TodoUnit } from 'components/todos';
 import { PostViewerContainer } from 'container/posts';
 import { Skeleton } from 'components/common';
-import {
-  checkIsRoot,
-  findMatchNodeByMindmapBody,
-  getNodeRoute,
-} from 'utils/mindmap';
+import { checkIsRoot } from 'utils/mindmap';
 import { MindmapType, NodeType } from 'utils/api/mindmaps';
 import { PostType } from 'utils/api/posts';
 import { TodoListType } from 'utils/api/todos';
@@ -38,10 +34,10 @@ interface NodeDetailProps {
     nodeName: () => void;
     mindmapTitle: () => void;
   };
+  onCloseNodePage: () => void;
 }
 
 const NodeDetail = ({
-  links,
   nodeId,
   mindmap,
   node,
@@ -51,21 +47,8 @@ const NodeDetail = ({
   error,
   onEdit,
   onRemove,
+  onCloseNodePage,
 }: NodeDetailProps) => {
-  const [nodeRoute, setNodeRoute] = useState<string>();
-
-  useEffect(() => {
-    if (mindmap && mindmap.body && node) {
-      const matchNode = findMatchNodeByMindmapBody(node, mindmap.body);
-
-      if (matchNode) {
-        const route = getNodeRoute(matchNode, mindmap.body);
-        setNodeRoute(route);
-      }
-    }
-  }, [mindmap, mindmap?.body, node]);
-
-  // if (!node) return <p>aa</p>;
   if (loading) return null;
   if (error) return <p>error 발생!</p>;
 
@@ -75,8 +58,12 @@ const NodeDetail = ({
       <StyledNodeDetailSection className="nodeDetailSection">
         {/* node route */}
         <StyledNodeRoute>
-          {nodeRoute ? (
-            <NodeRoute content={nodeRoute} className="title" />
+          {node?._id ? (
+            <NodeRoute
+              className="title"
+              mindmap={mindmap}
+              nodeIdToFind={node?._id}
+            />
           ) : (
             <Skeleton types={['title']} />
           )}
@@ -103,6 +90,12 @@ const NodeDetail = ({
           <h3>post</h3>
           <PostViewerContainer nodePost={post} />
         </StyledNodePostSection>
+
+        <StyledNodeDetailClose
+          id="closeNodePage"
+          title="노드 페이지 닫기"
+          onClick={onCloseNodePage}
+        />
       </StyledNodeDetailSection>
     </>
   );

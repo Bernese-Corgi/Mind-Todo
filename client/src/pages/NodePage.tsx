@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
-const StyledNodeDetailArticle = styled.article`
+const NodeDetailWrapper = styled.div`
   font-size: ${theme.fonts.size.sm};
   padding: 2em;
   width: 90vw;
@@ -62,19 +62,19 @@ ${({ theme }) => theme.media.mobile`
     .nodeDetailSection {
       width: 100%;
     }
-    
-
   `}
 `;
 
 const NodePage = ({ history, match }) => {
   return (
-    <StyledNodeDetailArticle>
-      <div className="mindmapDetailWrapper">
-        <MindmapContainer />
-      </div>
-      <NodeDetailContainer />
-    </StyledNodeDetailArticle>
+    <main>
+      <NodeDetailWrapper>
+        <div className="mindmapDetailWrapper">
+          <MindmapContainer />
+        </div>
+        <NodeDetailContainer />
+      </NodeDetailWrapper>
+    </main>
   );
 };
 

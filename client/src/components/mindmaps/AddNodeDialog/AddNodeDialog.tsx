@@ -1,5 +1,5 @@
 import { Button, Dialog, ErrorMsg } from 'components/common';
-import { ChangeEvent, FormEvent } from 'react';
+import { ChangeEvent, FormEvent, forwardRef, useEffect, useRef } from 'react';
 import {
   addNodeDialogStyle,
   AddNodeDialogWrapper,
@@ -14,6 +14,21 @@ export interface AddNodeDialogProps {
   onClose?: () => void;
 }
 
+interface AddNodeTextareaProps {
+  name: string;
+  id: string;
+  placeholder: string;
+  autoComplete: string;
+  onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  className: string;
+}
+
+const AddNodeTextarea = forwardRef<HTMLTextAreaElement, AddNodeTextareaProps>(
+  (props, ref = null) => {
+    return <textarea ref={ref} {...props} />;
+  }
+);
+
 const AddNodeDialog = ({
   visible,
   errorMsg,
@@ -21,6 +36,12 @@ const AddNodeDialog = ({
   onChangeInput,
   onClose,
 }: AddNodeDialogProps) => {
+  const writeNodeRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    visible && writeNodeRef && writeNodeRef.current?.focus();
+  }, [visible]);
+
   return (
     <Dialog
       visible
@@ -33,10 +54,10 @@ const AddNodeDialog = ({
       <AddNodeDialogWrapper>
         <h3 className="dialogHead">노드 추가하기</h3>
         <StyledAddNodeForm onSubmit={onSubmit}>
-          <textarea
+          <AddNodeTextarea
             name="writeNode"
             id="writeNode"
-            // value={}
+            ref={writeNodeRef}
             placeholder="추가할 노드의 이름을 입력하세요."
             autoComplete="off"
             onChange={onChangeInput}

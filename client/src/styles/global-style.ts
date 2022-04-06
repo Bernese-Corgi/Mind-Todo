@@ -187,6 +187,13 @@ export const GlobalStyle = createGlobalStyle`
   .formErrorMsg {
     ${theme.defElem.errForm}
   }
+
+  .sectionH2 {
+    font-size: 1.1em;
+    text-align: left;
+    color: ${theme.colors.primary.dark}99;
+    margin: 1em 2em 2em 2em;
+  }
 `;
 
 export default GlobalStyle;

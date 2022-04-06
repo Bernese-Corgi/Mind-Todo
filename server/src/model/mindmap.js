@@ -42,10 +42,12 @@ const MindmapSchema = new Schema({
     type: String,
     required: true,
   },
-  body: {
-    type: [TreeSchema],
-    // TODO default값 추가
-  },
+  body: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Tree',
+    },
+  ],
   createdAt: {
     type: Date,
     default: Date.now,

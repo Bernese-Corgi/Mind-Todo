@@ -12,19 +12,29 @@ import { Link } from 'react-router-dom';
 import { CustomHierarchyNode, MindmapType, NodeType } from 'utils/api/mindmaps';
 import { isEmptyArray } from 'utils/arrayUtils';
 import { stratifiedMindmap } from 'utils/mindmap';
-import { AddNodeDialog, Mindmap } from '..';
+import { AddNodeDialog, Mindmap, MindmapTitle } from '..';
 import { StyledMindmapDetailSection } from './MindmapDetail.styled';
 
 interface MindmapDetailProps {
   mindmap: MindmapType;
   onWrite: (newNode) => void;
+  onEdit: (updateMindmapTitle: string) => void;
+  onRemove: () => void;
+}
+
+interface MindmapDetailParams {
+  mindmapId?: string;
+  nodeId?: string;
 }
 
 const MindmapDetail = ({
   mindmap,
   onWrite,
+  onEdit,
+  onRemove,
   history,
-}: MindmapDetailProps & RouteComponentProps) => {
+  match,
+}: MindmapDetailProps & RouteComponentProps<MindmapDetailParams>) => {
   const mindmapId = mindmap?._id;
 
   // input state
@@ -123,12 +133,24 @@ const MindmapDetail = ({
 
   if (!treeData) return <LoadingIcon />;
 
+  if (!mindmap) return <LoadingIcon />;
+
   return (
     <>
       <StyledMindmapDetailSection>
-        <h2 className="mindmapTitle">
-          <Link to={`/mindmap/${mindmapId}`} children={mindmap?.title} />
-        </h2>
+        {match.params.nodeId ? (
+          // NodePage인 경우
+          <h2 className="mindmapTitle">
+            <Link to={`/mindmap/${mindmapId}`} children={mindmap.title} />
+          </h2>
+        ) : (
+          // MindmapPage인 경우
+          <MindmapTitle
+            title={mindmap.title}
+            onEdit={onEdit}
+            onRemove={onRemove}
+          />
+        )}
         <Mindmap
           treeData={treeData}
           onClickAddButton={handleClicks.addBtn}

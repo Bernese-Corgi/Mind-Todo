@@ -4,9 +4,11 @@ import { Responsive } from 'components/common';
 
 const MindmapListPage = () => {
   return (
-    <Responsive>
-      <MindmapListContainer />
-    </Responsive>
+    <main>
+      <Responsive>
+        <MindmapListContainer />
+      </Responsive>
+    </main>
   );
 };
 

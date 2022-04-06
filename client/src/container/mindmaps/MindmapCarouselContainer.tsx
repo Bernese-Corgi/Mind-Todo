@@ -5,15 +5,13 @@ import { listMindmapAsync } from 'redux/modules/mindmaps/mindmaps';
 import { MindmapItem } from 'components/mindmaps/MindmapList/MindmapList';
 import { Carousel, Heading, LoadingIcon } from 'components/common';
 import { Link } from 'react-router-dom';
+import { isEmptyArray } from 'utils/arrayUtils';
 
-interface MindmapCarouselContainerProps {
-  //
-}
-
-const MindmapCarouselContainer = ({}: MindmapCarouselContainerProps) => {
+const MindmapCarouselContainer = () => {
   const dispatch = useDispatch();
 
-  const { mindmaps } = useSelector(({ mindmaps }: RootState) => ({
+  const { mindmaps, user } = useSelector(({ mindmaps, user }: RootState) => ({
+    user: user.user,
     mindmaps: mindmaps.mindmaps,
     loading: mindmaps.loading,
     error: mindmaps.error,
@@ -23,18 +21,26 @@ const MindmapCarouselContainer = ({}: MindmapCarouselContainerProps) => {
     dispatch(listMindmapAsync());
   }, [dispatch]);
 
+  if (!user) return null;
+
   if (!mindmaps) return <LoadingIcon />;
 
   return (
     <>
-      <Heading>
-        <Link to={`/mindmaps`}>나의 마인드맵</Link>
+      <Heading className="sectionH2">
+        <Link to={`/mindmaps`} style={{ marginLeft: '5em' }}>
+          나의 마인드맵
+        </Link>
       </Heading>
-      <Carousel slidesToShow={3} centerMode={true}>
-        {mindmaps.map((mindmap, i) => (
-          <MindmapItem mindmap={mindmap} key={i} />
-        ))}
-      </Carousel>
+      {isEmptyArray(mindmaps) ? (
+        <p>아직 작성한 마인드맵이 없습니다.</p>
+      ) : (
+        <Carousel slidesToShow={3} centerMode={true}>
+          {mindmaps.map((mindmap, i) => (
+            <MindmapItem mindmap={mindmap} key={i} />
+          ))}
+        </Carousel>
+      )}
     </>
   );
 };

@@ -20,8 +20,8 @@ export type MindmapType = {
 
 export type TreeType = {
   _id?: string;
-  node: NodeType;
-  parent: NodeType;
+  node: NodeType | string;
+  parent: NodeType | string;
 };
 
 export type CustomHierarchyNode = HierarchyNode<TreeType>;

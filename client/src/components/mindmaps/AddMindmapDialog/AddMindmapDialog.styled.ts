@@ -22,7 +22,7 @@ export const AddMindmapDialogWrapper = styled.div`
   }
 `;
 
-export const StyledMindmapForm = styled.form<AddMindmapDialogProps>`
+export const StyledMindmapForm = styled.form`
   width: 95%;
   margin: 0 auto 0 auto;
 

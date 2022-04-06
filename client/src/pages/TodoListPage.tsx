@@ -4,9 +4,11 @@ import { AllTodosContainer } from 'container/todos';
 
 const TodoListPage = () => {
   return (
-    <Responsive>
-      <AllTodosContainer />
-    </Responsive>
+    <main>
+      <Responsive>
+        <AllTodosContainer />
+      </Responsive>
+    </main>
   );
 };
 

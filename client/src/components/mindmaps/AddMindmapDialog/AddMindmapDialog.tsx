@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent } from 'react';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { Button, Dialog, InputField } from 'components/common';
 import { MindmapType } from 'utils/api/mindmaps';
 import {
@@ -8,31 +8,68 @@ import {
 } from './AddMindmapDialog.styled';
 
 export interface AddMindmapDialogProps {
-  values?: MindmapType;
-  errorMsg?: string;
-  onSubmit?: (e: FormEvent<HTMLFormElement>) => void;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  onClickCancel?: () => void;
+  visible?: boolean;
+  error;
+  onWrite: (newMindmapValues: MindmapType) => void;
   onClose?: () => void;
 }
 
 const AddMindmapDialog = ({
-  values,
-  errorMsg,
-  onSubmit,
-  onChange,
-  onClickCancel,
+  visible,
+  error,
+  onWrite,
   onClose,
 }: AddMindmapDialogProps) => {
+  const [values, setValues] = useState({
+    title: '',
+  });
+
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const handleChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+
+    setValues({ ...values, title: value });
+
+    if (values.title) {
+      setErrorMsg('');
+      return;
+    }
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!values.title) {
+      setErrorMsg('마인드맵 제목을 입력해주세요');
+      return;
+    }
+
+    if (values.title.length > 30) {
+      setErrorMsg('마인드맵 제목은 30자 이하로 입력해주세요');
+    }
+
+    if (values.title && values.title.length <= 30) {
+      onWrite(values);
+    }
+  };
+
+  useEffect(() => {
+    if (error) {
+      setErrorMsg('마인드맵 생성에 실패했습니다. 다시 시도해주세요');
+      return;
+    }
+  }, [error]);
+
   return (
     <Dialog
-      visible
+      visible={visible}
       onClose={onClose}
       label="writeMindmap"
       wrapperStyle={addMindmapDialogStyle}>
       <AddMindmapDialogWrapper>
         <h2>마인드맵 생성</h2>
-        <StyledMindmapForm id="writeMindmap" onSubmit={onSubmit}>
+        <StyledMindmapForm id="writeMindmap" onSubmit={handleSubmit}>
           <InputField
             id="mindmapTitle"
             label="마인드맵 제목"
@@ -40,7 +77,7 @@ const AddMindmapDialog = ({
             value={values?.title}
             placeholder="마인드맵 제목을 입력하세요."
             autoComplete="off"
-            onChange={onChange}
+            onChange={handleChangeTitle}
             hideLabel
             errorMsg={errorMsg}
           />
@@ -58,7 +95,7 @@ const AddMindmapDialog = ({
               id="cancelBtn"
               title="마인드맵 생성 취소"
               round="round"
-              onClick={onClickCancel}
+              onClick={onClose}
               children="취소"
             />
           </div>

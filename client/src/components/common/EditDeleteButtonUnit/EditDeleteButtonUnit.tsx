@@ -52,6 +52,7 @@ const EditDeleteButtonUnit = ({
 
   const handleClicks = {
     confirmUpdate: () => {
+      if (errorMsg?.length) return;
       onEdit && onEdit();
       setIsEdit(false);
     },
