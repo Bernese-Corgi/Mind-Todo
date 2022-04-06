@@ -47,7 +47,6 @@ export const MindmapItem = ({ mindmap, onLoad }: MindmapItemProps) => {
 
   return (
     <StyledMindmapItemLink to={links.title} className="link">
-      <div className="dim"></div>
       <MindmapPreview treeData={treeData} className="preview" />
       <p children={title} className="title" />
       <SubInfo

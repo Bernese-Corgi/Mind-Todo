@@ -17,20 +17,9 @@ export const StyledMindmapItemLink = styled(Link)`
   padding-bottom: 1em;
   text-align: left;
 
-  .dim {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 2%;
-    ${theme.transition()}
-  }
-
   &:hover {
     transform: translateY(-0.5em);
-
-    .dim {
-      background-color: rgba(0, 0, 0, 0.05);
-    }
+    background-color: ${theme.colors.primary.xlight};
   }
 
   .title {
