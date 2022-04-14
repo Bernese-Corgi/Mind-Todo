@@ -71,8 +71,6 @@ const AllTodos = ({
     onReadList();
   }, [filterMode]);
 
-  console.log(allTodos);
-
   if (error) return <p>error</p>;
 
   return (
