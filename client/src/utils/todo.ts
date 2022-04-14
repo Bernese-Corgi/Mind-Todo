@@ -53,6 +53,13 @@ export const filterTodosByDate = (allTodos: TodoListType) => {
     filteredArray.push(todosWithMatchDate);
   });
 
+  // 최근 날짜 순으로 정렬
+  filteredArray.sort((a, b) => {
+    if (!a[0].createdAt || !b[0].createdAt) return 0;
+
+    return a[0].createdAt < b[0].createdAt ? 1 : -1;
+  });
+
   return filteredArray;
 };
 
