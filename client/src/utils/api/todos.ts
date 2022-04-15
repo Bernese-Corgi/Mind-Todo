@@ -23,7 +23,6 @@ export const writeTodo = (nodeId: string, newTodo: TodoType) =>
   client.post(`${URI}/${nodeId}`, newTodo);
 
 export const updateTodo = (todoId: string, updateTodo: TodoType) => {
-  console.log(updateTodo);
   return client.patch(`${URI}/${todoId}`, updateTodo);
 };
 
