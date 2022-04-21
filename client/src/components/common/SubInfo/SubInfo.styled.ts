@@ -5,7 +5,14 @@ export const SubInfoWrapper = styled.div`
   .writer {
     display: inline-block;
     color: ${theme.colors.primary.dark};
-    padding-right: 1em;
+    margin-right: 0.6em;
+    padding: 0.2em 0.4em;
+    ${theme.transition()}
+  }
+
+  .writerLink:hover {
+    border-radius: ${theme.borders.radius.square};
+    background-color: ${theme.colors.secondary.light}50;
   }
 
   .writtenDate {
