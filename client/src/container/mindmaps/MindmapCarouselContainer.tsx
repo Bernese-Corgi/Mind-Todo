@@ -18,8 +18,10 @@ const MindmapCarouselContainer = () => {
   }));
 
   useEffect(() => {
-    dispatch(listMindmapAsync());
-  }, [dispatch]);
+    if (user) {
+      dispatch(listMindmapAsync());
+    }
+  }, [dispatch, user]);
 
   if (!user) return null;
 

@@ -92,7 +92,11 @@ const PostViewer = ({
           />
         )}
       </div>
-      <SubInfo writer={usernameOfPost} writtenDate={post.createdAt} />
+      <SubInfo
+        isOwnPost={isOwnPost}
+        writer={usernameOfPost}
+        writtenDate={post.createdAt}
+      />
 
       {hasEdit && isOwnPost && (
         <EditDeleteButtonUnit
