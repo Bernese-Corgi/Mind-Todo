@@ -49,9 +49,19 @@ const PostViewerContainer = ({
     };
   }, [dispatch, nodePost, postId]);
 
-  const handleRemove = () => {
-    postId && dispatch(removePostAsync(postId));
-    history.push('/posts');
+  const handleRemove = async () => {
+    if (post) {
+      // Post Page인 경우
+      await dispatch(removePostAsync(post._id));
+      // Post List 페이지로 이동
+      history.push('/posts');
+    } else if (nodePost) {
+      // Node Paged인 경우
+      const { _id, mindmapId, nodeId } = nodePost;
+      _id && (await dispatch(removePostAsync(_id)));
+      // 노드 상세 페이지로 이동
+      history.push(`/mindmap/${mindmapId}/${nodeId}`);
+    }
   };
 
   return (
