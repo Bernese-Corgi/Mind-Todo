@@ -10,9 +10,7 @@
 
 MindTodo는 핵심 키워드를 중심으로 마인드맵을 생성하고 핵심 키워드의 페이지 내부에서 공부할 내용의 todo 목록과, 정리한 게시글을 담을 수 있는 학습 전용 애플리케이션입니다.
 
-### 시연 영상
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/bAki5mrOZKg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[시연 영상 🔗](https://www.youtube.com/embed/bAki5mrOZKg)
 
 ### 주요 기능
 
